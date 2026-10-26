@@ -1597,6 +1597,7 @@ it.effect(
           Effect.provide(
             Layer.mergeAll(
               Layer.mock(ForgejoCli.ForgejoCli)({
+                savedLogin: () => Effect.succeed(null),
                 getAccount: (input) => {
                   assert.strictEqual(scenario, "authenticated");
                   assert.deepStrictEqual(input, {

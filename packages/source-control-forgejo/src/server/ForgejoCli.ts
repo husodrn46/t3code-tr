@@ -15,11 +15,13 @@ import * as HostProcess from "@t3tools/shared/HostProcess";
 import * as SourceControlHost from "@t3tools/source-control-core/server/SourceControlHost";
 import { collectUint8StreamText } from "@t3tools/provider-core/server/collectStreamText";
 import type { SourceControlProviderContext } from "@t3tools/source-control-core/server/SourceControlProvider";
+import { readSourceControlHostSettings } from "@t3tools/source-control-core/shared/definition";
+import * as ForgejoClient from "../shared/definition.ts";
 
 const encodeApiBody = Schema.encodeEffect(Schema.fromJsonString(Schema.Unknown));
 
 export class ForgejoCliError extends Schema.TaggedError<ForgejoCliError>()("ForgejoCliError", {
-  command: Schema.Literals(["fj", "tea"]),
+  command: Schema.Literals(["fj", "tea", "api"]),
   cwd: Schema.String,
   detail: Schema.String,
   reason: Schema.optional(
@@ -109,7 +111,7 @@ export interface ForgejoRepositoryInput {
 }
 
 export interface ForgejoRepository {
-  readonly command?: "fj" | "tea";
+  readonly command?: "fj" | "tea" | "api";
   readonly login: string;
   readonly repository: string;
   readonly baseUrl: string;
@@ -124,6 +126,9 @@ export interface ForgejoApiInput extends ForgejoRepositoryInput {
 export class ForgejoCli extends Context.Service<
   ForgejoCli,
   {
+    readonly savedLogin: (
+      cwd: string,
+    ) => Effect.Effect<typeof ForgejoLoginSchema.Type | null, ForgejoCliError>;
     readonly execute: (input: {
       readonly command?: "fj" | "tea";
       readonly cwd: string;
@@ -210,11 +215,52 @@ export function matchForgejoLogin(
 }
 
 export const make = Effect.gen(function* () {
-  const { process } = yield* SourceControlHost.SourceControlHost;
+  const host = yield* SourceControlHost.SourceControlHost;
+  const { process } = host;
   const fileSystem = yield* FileSystem.FileSystem;
   const httpClient = yield* HttpClient.HttpClient;
   const authLock = yield* Semaphore.make(1);
   const authenticated = new Map<string, { token: string; time: number }>();
+  const readSavedConnection = Effect.fn("ForgejoCli.readSavedConnection")(function* (cwd: string) {
+    const saved = yield* host.settings.get.pipe(
+      Effect.map((current) =>
+        readSourceControlHostSettings(ForgejoClient.settings, current.sourceControlHosts.forgejo),
+      ),
+      Effect.mapError(
+        () =>
+          new ForgejoCliError({
+            command: "api",
+            cwd,
+            detail: "Could not read Forgejo / Gitea settings.",
+          }),
+      ),
+    );
+    if (!saved.accessToken) return null;
+    const url = URL.canParse(saved.serverUrl) ? new URL(saved.serverUrl) : null;
+    if (url === null) {
+      return yield* new ForgejoCliError({
+        command: "api",
+        cwd,
+        reason: "authentication",
+        detail: "Enter a full Forgejo / Gitea server URL in Settings → Source control.",
+      });
+    }
+    if (!/^https?:$/.test(url.protocol) || url.username || url.password || url.search || url.hash)
+      return yield* new ForgejoCliError({
+        command: "api",
+        cwd,
+        reason: "authentication",
+        detail: "Use an HTTP or HTTPS server URL without credentials, query, or fragment.",
+      });
+    const baseUrl = url.toString().replace(/\/+$/, "");
+    return {
+      token: saved.accessToken,
+      login: { name: "settings", url: baseUrl, user: "", default: "true" },
+    };
+  });
+  const savedLogin = Effect.fn("ForgejoCli.savedLogin")(function* (cwd: string) {
+    return (yield* readSavedConnection(cwd))?.login ?? null;
+  });
   const execute: ForgejoCli["Service"]["execute"] = (input) =>
     process
       .run({
@@ -335,6 +381,7 @@ export const make = Effect.gen(function* () {
 
   const requestFj = Effect.fn("ForgejoCli.requestFj")(
     function* (input: {
+      readonly command: "fj" | "api";
       readonly cwd: string;
       readonly baseUrl: string;
       readonly token: string;
@@ -351,7 +398,7 @@ export const make = Effect.gen(function* () {
         url.password
       )
         return yield* new ForgejoCliError({
-          command: "fj",
+          command: input.command,
           cwd: input.cwd,
           detail: "Invalid Forgejo API path.",
         });
@@ -373,7 +420,7 @@ export const make = Effect.gen(function* () {
             });
       if (body.truncated || body.invalidUtf8)
         return yield* new ForgejoCliError({
-          command: "fj",
+          command: input.command,
           cwd: input.cwd,
           reason: "invalid-response",
           detail: "Forgejo returned an oversized or invalid response.",
@@ -382,11 +429,11 @@ export const make = Effect.gen(function* () {
         const detail =
           status === 404
             ? "Forgejo repository or pull request was not found."
-            : body.text
+            : body.text && input.command === "fj"
               ? `Forgejo API request failed (HTTP ${status}): ${body.text}`
-              : `Forgejo API request failed (HTTP ${status}). Check this server's fj credentials and permissions.`;
+              : `Forgejo API request failed (HTTP ${status}). Check this server's ${input.command === "api" ? "saved token" : "fj credentials"} and permissions.`;
         return yield* new ForgejoCliError({
-          command: "fj",
+          command: input.command,
           cwd: input.cwd,
           httpStatus: status,
           ...(status === 401
@@ -416,7 +463,7 @@ export const make = Effect.gen(function* () {
           error._tag === "ForgejoCliError"
             ? error
             : new ForgejoCliError({
-                command: "fj",
+                command: input.command,
                 cwd: input.cwd,
                 detail: "Forgejo API request failed or timed out.",
               }),
@@ -450,6 +497,25 @@ export const make = Effect.gen(function* () {
   const getAccount: NonNullable<ForgejoCli["Service"]["getAccount"]> = Effect.fn(
     "ForgejoCli.getAccount",
   )(function* (input) {
+    const saved = yield* readSavedConnection(input.cwd);
+    if (saved?.login.url === input.baseUrl.replace(/\/+$/, "")) {
+      const response = yield* requestFj({
+        command: "api",
+        cwd: input.cwd,
+        baseUrl: saved.login.url,
+        token: saved.token,
+        path: "user",
+      });
+      const user = decodeJsonResult(Schema.Struct({ login: Schema.String }))(response.stdout);
+      if (Result.isFailure(user) || !user.success.login.trim())
+        return yield* new ForgejoCliError({
+          command: "api",
+          cwd: input.cwd,
+          reason: "invalid-response",
+          detail: "Forgejo / Gitea returned an invalid account response.",
+        });
+      return user.success.login;
+    }
     const logins = yield* listLogins({ cwd: input.cwd, command: "fj", remoteUrl: input.baseUrl });
     const login = logins.find(
       (item) => item.url.replace(/\/+$/, "") === input.baseUrl.replace(/\/+$/, ""),
@@ -463,6 +529,7 @@ export const make = Effect.gen(function* () {
       });
     const token = yield* authenticateFj(input.cwd, login);
     const currentUser = yield* requestFj({
+      command: "fj",
       cwd: input.cwd,
       baseUrl: login.url.replace(/\/+$/, ""),
       token,
@@ -483,6 +550,7 @@ export const make = Effect.gen(function* () {
     input: ForgejoRepositoryInput,
     hostOnly = false,
   ) {
+    const saved = yield* readSavedConnection(input.cwd);
     const referenceRemote = input.reference ? parseForgejoRemote(input.reference) : null;
     let remoteUrl = [input.reference, input.repository, input.context?.remoteUrl].find(
       (value) => value && parseForgejoRemote(value),
@@ -491,6 +559,15 @@ export const make = Effect.gen(function* () {
       referenceRemote ??
       (input.repository ? parseForgejoRemote(input.repository) : null) ??
       (input.context ? parseForgejoRemote(input.context.remoteUrl) : null);
+    if (
+      !remote &&
+      input.host &&
+      saved &&
+      new URL(saved.login.url).host === input.host.toLowerCase()
+    ) {
+      remoteUrl = saved.login.url;
+      remote = parseForgejoRemote(remoteUrl);
+    }
     if (!remote && (!input.repository || input.host)) {
       const result = yield* process
         .run({
@@ -550,11 +627,6 @@ export const make = Effect.gen(function* () {
         path: remote?.path ?? "",
       };
     const schemeRemoteUrl = remote?.ssh ? input.context?.provider.baseUrl : remoteUrl;
-    const fjLogins = yield* listLogins({
-      cwd: input.cwd,
-      command: "fj",
-      ...(schemeRemoteUrl ? { remoteUrl: schemeRemoteUrl } : {}),
-    });
     const requestedHost = input.host ?? input.context?.requestedHost;
     const matchHostOnly = hostOnly || (!!input.host && !remote?.path);
     const selectLogin = (logins: ReturnType<typeof parseForgejoLogins>) =>
@@ -562,8 +634,22 @@ export const make = Effect.gen(function* () {
         ? matchForgejoLogin(logins, remote, remote.ssh ? requestedHost : undefined, matchHostOnly)
         : (logins.find((item) => item.default === "true") ??
           (new Set(logins.map((item) => item.name)).size === 1 ? logins[0] : undefined));
-    let login = selectLogin(fjLogins);
-    let command: "fj" | "tea" = "fj";
+    const savedOriginMatches =
+      saved !== null &&
+      (!remote ||
+        remote.ssh ||
+        !remoteUrl ||
+        new URL(remoteUrl).origin === new URL(saved.login.url).origin);
+    let login = saved && savedOriginMatches ? selectLogin([saved.login]) : undefined;
+    let command: "fj" | "tea" | "api" = login ? "api" : "fj";
+    const fjLogins = login
+      ? []
+      : yield* listLogins({
+          cwd: input.cwd,
+          command: "fj",
+          ...(schemeRemoteUrl ? { remoteUrl: schemeRemoteUrl } : {}),
+        });
+    login ??= selectLogin(fjLogins);
     if (
       !login &&
       fjLogins.some(
@@ -584,7 +670,7 @@ export const make = Effect.gen(function* () {
         });
       if (available.failure.reason !== "missing-cli") return yield* available.failure;
     }
-    if (login) {
+    if (login && command === "fj") {
       const auth = yield* authenticateFj(input.cwd, login).pipe(Effect.result);
       if (Result.isFailure(auth)) {
         if (auth.failure.reason === "missing-cli") login = undefined;
@@ -617,7 +703,7 @@ export const make = Effect.gen(function* () {
         ? path.slice(basePath.length + 1)
         : path;
     const repositoryPath = relativePath.replace(/\/pulls\/\d+.*$/, "").replace(/\.git$/, "");
-    if (command === "fj" && !repositoryPath.includes("/")) {
+    if ((command === "fj" || command === "api") && !repositoryPath.includes("/")) {
       login = { ...login, user: yield* getAccount({ cwd: input.cwd, baseUrl: login.url }) };
     }
     const repository = repositoryPath.includes("/")
@@ -659,16 +745,26 @@ export const make = Effect.gen(function* () {
         path = `repos/${repository.repository.split("/").map(encodeURIComponent).join("/")}${path.slice(prefix.length)}`;
       }
     }
-    if (repository.command === "fj") {
-      const token = (yield* readKeys(input.cwd)).hosts[repository.login]?.token;
+    if (repository.command === "fj" || repository.command === "api") {
+      const saved = repository.command === "api" ? yield* readSavedConnection(input.cwd) : null;
+      const token =
+        repository.command === "api"
+          ? saved?.login.url === repository.baseUrl
+            ? saved.token
+            : undefined
+          : (yield* readKeys(input.cwd)).hosts[repository.login]?.token;
       if (!token)
         return yield* new ForgejoCliError({
-          command: "fj",
+          command: repository.command,
           cwd: input.cwd,
           reason: "authentication",
-          detail: "fj has no credentials for this server.",
+          detail:
+            repository.command === "api"
+              ? "The saved Forgejo / Gitea connection changed. Retry the operation."
+              : "fj has no credentials for this server.",
         });
       return yield* requestFj({
+        command: repository.command,
         cwd: input.cwd,
         baseUrl: repository.baseUrl,
         token,
@@ -719,7 +815,7 @@ export const make = Effect.gen(function* () {
       });
     return result;
   });
-  return ForgejoCli.of({ execute, listLogins, getAccount, resolveRepository, api });
+  return ForgejoCli.of({ execute, listLogins, getAccount, savedLogin, resolveRepository, api });
 });
 
 export const layer = Layer.effect(ForgejoCli, make);

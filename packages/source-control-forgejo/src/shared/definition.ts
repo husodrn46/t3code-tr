@@ -1,4 +1,10 @@
-import { SourceControlProviderKind } from "@t3tools/contracts";
+import {
+  makeProviderSettingsSchema,
+  SourceControlProviderKind,
+  TrimmedString,
+} from "@t3tools/contracts";
+import * as Effect from "effect/Effect";
+import * as Schema from "effect/Schema";
 import {
   changeRequestUrlBelow,
   type ChangeRequestHostIdentity,
@@ -21,6 +27,30 @@ const CHANGE_REQUEST_REFERENCE =
 const CHANGE_REQUEST_PATH = /^\/([^/]+(?:\/[^/]+)+)\/pulls\/(\d+)(?:\/|$)/u;
 
 const KIND = SourceControlProviderKind.make("forgejo");
+
+export const settings = makeProviderSettingsSchema(
+  {
+    serverUrl: TrimmedString.pipe(
+      Schema.withDecodingDefault(Effect.succeed("")),
+      Schema.annotateKey({
+        title: "Server URL",
+        description: "Your Forgejo or Gitea web address, including its port or subpath if needed.",
+        providerSettingsForm: { placeholder: "https://gitea.example.com" },
+      }),
+    ),
+    accessToken: TrimmedString.pipe(
+      Schema.withDecodingDefault(Effect.succeed("")),
+      Schema.annotateKey({
+        title: "Access token",
+        description:
+          "Create a token in your server's Settings → Applications with read:user, write:repository, and write:issue access. No CLI is required.",
+        settingsSecret: true,
+        providerSettingsForm: { control: "password" },
+      }),
+    ),
+  },
+  { order: ["serverUrl", "accessToken"] },
+);
 
 const changeRequestHeadRef = (number: number) => `refs/pull/${number}/head`;
 
@@ -57,6 +87,7 @@ export const definition = defineSourceControl({
   pickerLabel: "Forgejo / Gitea",
   icon,
   searchKeywords: ["gitea", "tea", "codeberg"],
+  settings,
   changeRequest: {
     shortLabel: "PR",
     shortLabelWithArticle: "a PR",

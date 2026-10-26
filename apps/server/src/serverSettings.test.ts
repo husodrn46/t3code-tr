@@ -1353,6 +1353,7 @@ it.layer(NodeServices.layer)("server settings", (it) => {
           sourceControlHosts: {
             bitbucket: { email: "me@example.com", accessToken: "bb-access" },
             github: { tokens: { "github.com": "ghp_dotcom", "ghe.acme.test": "ghp_ghe" } },
+            forgejo: { serverUrl: "https://git.example.test/gitea", accessToken: "gitea-access" },
           },
         });
         assert.deepEqual(saved.sourceControlHosts.bitbucket, {
@@ -1360,7 +1361,8 @@ it.layer(NodeServices.layer)("server settings", (it) => {
           accessToken: "bb-access",
         });
         const raw = yield* fileSystem.readFileString(serverConfig.settingsPath);
-        for (const secret of ["bb-access", "ghp_dotcom", "ghp_ghe"]) assert.notInclude(raw, secret);
+        for (const secret of ["bb-access", "ghp_dotcom", "ghp_ghe", "gitea-access"])
+          assert.notInclude(raw, secret);
         assert.include(raw, "me@example.com");
 
         const forClient =
@@ -1368,6 +1370,9 @@ it.layer(NodeServices.layer)("server settings", (it) => {
         assert.equal(forClient.bitbucket?.email, "me@example.com");
         assert.notInclude(String(forClient.bitbucket?.accessToken), "bb-access");
         assert.isAbove(String(forClient.bitbucket?.accessToken).length, 0);
+        assert.equal(forClient.forgejo?.serverUrl, "https://git.example.test/gitea");
+        assert.notInclude(String(forClient.forgejo?.accessToken), "gitea-access");
+        assert.isAbove(String(forClient.forgejo?.accessToken).length, 0);
 
         yield* serverSettings.updateSettings({ sourceControlHosts: forClient });
         yield* serverSettings.updateSettings({
@@ -1379,10 +1384,12 @@ it.layer(NodeServices.layer)("server settings", (it) => {
           "github.com": "ghp_dotcom",
           "ghe.acme.test": "ghp_ghe",
         });
+        assert.equal(kept.forgejo?.accessToken, "gitea-access");
 
         const cleared = yield* serverSettings.updateSettings({
           sourceControlHosts: {
             bitbucket: { accessToken: "" },
+            forgejo: { accessToken: "" },
             github: {
               tokens: {
                 "github.com": "",
@@ -1397,6 +1404,7 @@ it.layer(NodeServices.layer)("server settings", (it) => {
         const stored = (kind: string, field: string, serverHost: string | null) =>
           secrets.get(sourceControlHostSecretName({ kind, field, serverHost }));
         assert.isTrue(Option.isNone(yield* stored("bitbucket", "accessToken", null)));
+        assert.isTrue(Option.isNone(yield* stored("forgejo", "accessToken", null)));
         assert.isTrue(Option.isNone(yield* stored("github", "tokens", "github.com")));
         assert.isTrue(Option.isSome(yield* stored("github", "tokens", "ghe.acme.test")));
       }).pipe(Effect.provide(layerServerSettingsWithSecrets())),

@@ -3,6 +3,7 @@ import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
 import * as Schema from "effect/Schema";
 import * as Result from "effect/Result";
+import * as Option from "effect/Option";
 import { SourceControlProviderError } from "@t3tools/contracts";
 import * as SourceControlHost from "@t3tools/source-control-core/server/SourceControlHost";
 import * as ForgejoCli from "./ForgejoCli.ts";
@@ -58,7 +59,7 @@ export const discovery = {
       : null;
   },
   installHint:
-    "Install `fj` 0.6 or later from https://codeberg.org/forgejo-contrib/forgejo-cli and run `fj --host <server-url> auth add-token`, or install `tea` 0.16 or later from https://gitea.com/gitea/tea and run `tea login add` for each Forgejo or Gitea server.",
+    "Enter a server URL and access token in Settings → Source control → Forgejo / Gitea, or sign in with `fj` 0.6 or later or `tea` 0.16 or later.",
 } satisfies SourceControlCliDiscoverySpec;
 
 export const makeDiscovery = Effect.gen(function* () {
@@ -72,6 +73,45 @@ export const makeDiscovery = Effect.gen(function* () {
     label: discovery.label,
     installHint: discovery.installHint,
     probe: Effect.fn("ForgejoSourceControlProvider.discovery")(function* (cwd: string) {
+      if (cli.savedLogin) {
+        const saved = yield* cli.savedLogin(cwd).pipe(Effect.result);
+        if (Result.isFailure(saved) || saved.success) {
+          const login = Result.isSuccess(saved) ? saved.success : null;
+          const account =
+            login && cli.getAccount
+              ? yield* cli.getAccount({ cwd, baseUrl: login.url }).pipe(Effect.result)
+              : null;
+          return {
+            kind: discovery.kind,
+            label: discovery.label,
+            status: "available" as const,
+            version: Option.none<string>(),
+            installHint: discovery.installHint,
+            detail: Option.none<string>(),
+            auth:
+              account && Result.isSuccess(account)
+                ? providerAuth({
+                    status: "authenticated",
+                    account: account.success,
+                    host: login ? new URL(login.url).host : undefined,
+                  })
+                : providerAuth({
+                    status:
+                      account &&
+                      Result.isFailure(account) &&
+                      account.failure.reason !== "authentication"
+                        ? "unknown"
+                        : "unauthenticated",
+                    host: login ? new URL(login.url).host : undefined,
+                    detail: Result.isFailure(saved)
+                      ? saved.failure.detail
+                      : account && Result.isFailure(account)
+                        ? account.failure.detail
+                        : "Check the saved Forgejo / Gitea connection.",
+                  }),
+          };
+        }
+      }
       const remoteUrl = yield* process
         .run({
           operation: "source-control.discovery.remote",
@@ -150,6 +190,9 @@ export const makeDiscovery = Effect.gen(function* () {
       }) {
         const remote = ForgejoCli.parseForgejoRemote(input.context.remoteUrl);
         if (!remote) return null;
+        const saved = cli.savedLogin ? yield* cli.savedLogin(input.cwd) : null;
+        if (saved && ForgejoCli.matchForgejoLogin([saved], remote, input.context.requestedHost))
+          return { kind: discovery.kind, name: discovery.label, baseUrl: saved.url };
         let failure: ForgejoCli.ForgejoCliError | undefined;
         for (const command of ["fj", "tea"] as const) {
           const logins = yield* listLogins({
@@ -430,7 +473,7 @@ export const make = Effect.gen(function* () {
       function* (input) {
         const repo = yield* cli.resolveRepository(input);
         const pull = yield* getPull(input);
-        if (repo.command === "fj") {
+        if (repo.command === "fj" || repo.command === "api") {
           // fj checkout cannot target a repository outside the local remotes.
           const urls = yield* request(
             { ...input, path: repositoryPath(repo.repository) },

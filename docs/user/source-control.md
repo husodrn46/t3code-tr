@@ -36,6 +36,18 @@ custom server name as GitHub once it has a credential for that host.
 
 ### Forgejo and Gitea
 
+Open **Settings → Source control → Forgejo / Gitea** and enter your **Server URL** and
+**Access token**. Use the server's web address, including any port or URL subpath, such as
+`https://git.example.com/gitea`. Create a token under **Settings → Applications** on that
+server with `read:user`, `write:repository`, and `write:issue` access. The token is kept in
+the T3 Code server's secret store. No Forgejo or Gitea CLI is required.
+
+The saved connection takes precedence for repositories on that server. Replacing or removing
+the token applies immediately; a rejected token does not switch to a CLI account. Git push
+and clone still need Git credentials or an SSH key for that server.
+
+To connect additional servers through a CLI, or continue using an existing CLI login:
+
 Install [Forgejo CLI (`fj`)](https://codeberg.org/forgejo-contrib/forgejo-cli) or
 [Gitea CLI (`tea`)](https://gitea.com/gitea/tea) 0.16 or later on your T3 Code server.
 Sign in with `fj --host https://your-server auth add-token` or `tea login add`.
