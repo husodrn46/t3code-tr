@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type { AssistantCitation } from "@t3tools/contracts";
 import {
   assistantCitationLabel,
@@ -126,7 +126,7 @@ export function AssistantCitationChip({
     <Link
       {...sourceLinkProps}
       className="inline-flex h-full min-w-0 items-center gap-[0.33em] rounded-sm text-inherit no-underline focus-visible:outline-2 focus-visible:outline-foreground"
-      aria-label={`View cited assistant text: ${label}`}
+      aria-label={uiFormat("View cited assistant text: {0}", [label])}
     >
       <QuoteIcon aria-hidden="true" />
       <ContextChipLabel className="max-w-[16em]">{label}</ContextChipLabel>
@@ -147,7 +147,7 @@ export function AssistantCitationChip({
             render={<Button variant="outline" size="sm" render={<Link {...sourceLinkProps} />} />}
           >
             <ArrowUpRightIcon aria-hidden="true" />
-            Go to source
+            {uiText("Go to source")}
           </PopoverClose>
         </div>
       </ContextChipPopover>
@@ -174,7 +174,7 @@ export function AssistantCitationChip({
         >
           <PopoverTrigger
             aria-label={
-              citation.comment ? uiText("Edit citation comment") : "Add comment to citation"
+              citation.comment ? uiText("Edit citation comment") : uiText("Add comment to citation")
             }
             data-citation-comment-trigger="true"
             render={<ContextChipAction />}

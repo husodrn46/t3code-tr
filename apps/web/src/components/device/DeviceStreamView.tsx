@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type { DevicePlatform, EnvironmentId } from "@t3tools/contracts";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -386,7 +386,9 @@ export function DeviceStreamView(props: {
         )}
         tabIndex={0}
         role="application"
-        aria-label={`${props.platform === "ios" ? "iOS Simulator" : "Android Emulator"} screen`}
+        aria-label={uiFormat("{0} screen", [
+          props.platform === "ios" ? "iOS Simulator" : "Android Emulator",
+        ])}
         onKeyDown={(event) => {
           if (event.target !== event.currentTarget) return;
           if (event.metaKey && !["r", "R"].includes(event.key)) return;
@@ -525,21 +527,23 @@ export function DeviceStreamView(props: {
               aria-pressed={!showPhone}
               onClick={() => setPresentation("flat")}
             >
-              Flat
+              {uiText("Flat")}
             </Button>
           </div>
         ) : null}
         {status === "streaming" && !inputState.connected ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-2">
             <span className="rounded-md bg-background/85 px-2 py-1 text-xs text-muted-foreground">
-              Input disconnected{inputState.detail ? ` (${inputState.detail})` : ""}, reconnecting…
+              {uiText("Input disconnected")}
+              {inputState.detail ? ` (${inputState.detail})` : ""}
+              {uiText(", reconnecting…")}
             </span>
           </div>
         ) : null}
         {retainingFrame && showPhone && showRestartNotice ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-2">
             <span className="rounded-md bg-background/85 px-2 py-1 text-xs text-muted-foreground">
-              Waiting for device video…
+              {uiText("Waiting for device video…")}
             </span>
           </div>
         ) : null}
@@ -549,7 +553,9 @@ export function DeviceStreamView(props: {
               name={props.deviceName ?? "Device"}
               description={props.deviceDescription ?? ""}
               stage="stream"
-              message={status === "error" ? (detail ?? "Stream failed.") : "Connecting video…"}
+              message={
+                status === "error" ? (detail ?? "Stream failed.") : uiText("Connecting video…")
+              }
               error={status === "error"}
             >
               {status === "error" ? (

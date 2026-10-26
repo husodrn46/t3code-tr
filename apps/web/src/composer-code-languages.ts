@@ -1,6 +1,6 @@
 import { uiText } from "@t3tools/shared/ui-turkish";
 export const CODE_BLOCK_LANGUAGES = [
-  { id: "", label: "Plain text" },
+  { id: "", label: uiText("Plain text") },
   { id: "bash", label: "Bash" },
   { id: "c", label: "C" },
   { id: "cpp", label: "C++" },

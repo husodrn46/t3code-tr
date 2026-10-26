@@ -75,7 +75,7 @@ function useRunScopedPlan() {
             Cause.fail(
               new EnvironmentAuthorizationError({
                 requiredScope: missing,
-                message: "This connection lacks permission to change these settings.",
+                message: uiText("This connection lacks permission to change these settings."),
               }),
             ),
           );

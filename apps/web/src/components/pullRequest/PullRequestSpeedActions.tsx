@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import type { PullRequestAction } from "@t3tools/contracts";
 import { createContext, use, type ReactNode } from "react";
@@ -80,7 +80,7 @@ export function PullRequestSpeedActions<Entry extends PullRequestSpeedActionEntr
     <SpeedModeGroup
       busy={busy}
       pending={actionPending || closing}
-      label={`Quick actions for pull request #${entry.number}`}
+      label={uiFormat("Quick actions for pull request #{0}", [entry.number])}
     >
       {actions.map((action) => {
         const label = ACTIONS[action].label;
@@ -108,10 +108,10 @@ export function PullRequestSpeedActions<Entry extends PullRequestSpeedActionEntr
             </TooltipTrigger>
             <TooltipPopup>
               {action === "merge" && entry.stack
-                ? "Open this pull request to merge its stack"
+                ? uiText("Open this pull request to merge its stack")
                 : action === "close" && onCloseSweepStart
-                  ? "Close immediately, or drag across rows to close several"
-                  : `${label} immediately`}
+                  ? uiText("Close immediately, or drag across rows to close several")
+                  : uiFormat("{0} immediately", [label])}
             </TooltipPopup>
           </Tooltip>
         );
@@ -163,5 +163,5 @@ const ACTIONS = {
   close: { label: uiText("Close"), Icon: PullRequestGlyph.closed },
   merge: { label: uiText("Merge"), Icon: PullRequestGlyph.merged },
   ready: { label: uiText("Ready for review"), Icon: PullRequestGlyph.pullRequest },
-  reopen: { label: "Reopen", Icon: PullRequestGlyph.reopen },
+  reopen: { label: uiText("Reopen"), Icon: PullRequestGlyph.reopen },
 } as const;

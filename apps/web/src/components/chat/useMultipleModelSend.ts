@@ -1,3 +1,4 @@
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   type EnvironmentId,
   type ModelSelection,
@@ -221,7 +222,10 @@ export function useMultipleModelSend(input: MultipleModelSendInput) {
         toastManager.add(
           stackedThreadToast({
             type: "success",
-            title: `Started ${startedCount} ${startedCount === 1 ? "thread" : "threads"} in background`,
+            title: uiFormat("Started {0} {1} in background", [
+              startedCount,
+              startedCount === 1 ? "thread" : "threads",
+            ]),
           }),
         );
       }
@@ -255,9 +259,10 @@ export function useMultipleModelSend(input: MultipleModelSendInput) {
         const recoveryToastId = toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "A background prompt could not be sent",
-            description:
+            title: uiText("A background prompt could not be sent"),
+            description: uiText(
               "Your newer draft is unchanged. Restore the failed prompt when this composer is empty.",
+            ),
             timeout: 0,
             actionProps: {
               children: "Restore prompt",
@@ -271,8 +276,9 @@ export function useMultipleModelSend(input: MultipleModelSendInput) {
                   )
                 ) {
                   toastManager.update(recoveryToastId, {
-                    description:
+                    description: uiText(
                       "Return to the original draft and send or clear its current prompt before restoring.",
+                    ),
                   });
                   return;
                 }

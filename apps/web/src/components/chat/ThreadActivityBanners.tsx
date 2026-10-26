@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type {
   OrchestrationV2PendingBackgroundTask,
   OrchestrationV2ProviderGoal,
@@ -45,7 +45,7 @@ export function childInputBannerItem(input: {
     )),
     actions: (
       <Button size="xs" variant="ghost" onClick={() => onOpenThread(first.id)}>
-        {first.hasPendingApprovals ? "Open approval" : "Open question"}
+        {first.hasPendingApprovals ? uiText("Open approval") : uiText("Open question")}
       </Button>
     ),
   };
@@ -77,7 +77,7 @@ export function goalBannerItem(input: {
             variant="ghost"
             onClick={() => void onSendCommand("/goal resume", "Failed to resume goal.")}
           >
-            Resume
+            {uiText("Resume")}
           </Button>
         ) : null}
         <Button
@@ -135,7 +135,10 @@ export function backgroundWorkBannerItem(input: {
                   <span className="whitespace-nowrap">
                     <InlineButton
                       tone="muted"
-                      aria-label={`${presentation.items.length === 1 ? "Show" : "Open"} subagent ${item.label}`}
+                      aria-label={uiFormat("{0} subagent {1}", [
+                        presentation.items.length === 1 ? "Show" : "Open",
+                        item.label,
+                      ])}
                       onClick={() => onOpenThread(childThreadId)}
                     >
                       {presentation.items.length === 1 ? uiText("Show") : item.label}
@@ -153,7 +156,7 @@ export function backgroundWorkBannerItem(input: {
         disabled={input.stopDisabled}
         onClick={() => void input.onStop()}
       >
-        {input.stopping ? "Stopping..." : uiText("Stop")}
+        {input.stopping ? uiText("Stopping...") : uiText("Stop")}
       </Button>
     ),
   };
@@ -175,7 +178,9 @@ export function branchMismatchBannerItem(input: {
     icon: <GitBranchIcon />,
     title: (
       <span className="flex min-w-0 items-baseline gap-1.5">
-        <span className="shrink-0 font-normal text-muted-foreground">Branch changed — was</span>
+        <span className="shrink-0 font-normal text-muted-foreground">
+          {uiText("Branch changed — was")}
+        </span>
         <Tooltip>
           <TooltipTrigger
             render={
@@ -185,15 +190,17 @@ export function branchMismatchBannerItem(input: {
             }
           />
           <TooltipPopup side="top">
-            This thread last ran on {mismatch.threadBranch}. Sending will continue on{" "}
-            {mismatch.currentBranch}.
+            {uiFormat("This thread last ran on {0}. Sending will continue on {1}.", [
+              mismatch.threadBranch,
+              mismatch.currentBranch,
+            ])}
           </TooltipPopup>
         </Tooltip>
       </span>
     ),
     actions: (
       <Button size="xs" variant="ghost" disabled={input.restoreDisabled} onClick={input.onRestore}>
-        {input.restoring ? "Restoring..." : "Restore branch"}
+        {input.restoring ? uiText("Restoring...") : uiText("Restore branch")}
       </Button>
     ),
     dismissLabel: "Dismiss branch change notice",

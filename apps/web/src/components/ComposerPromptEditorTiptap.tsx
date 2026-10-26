@@ -1,3 +1,4 @@
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { isProviderSkillUserInvocable } from "@t3tools/client-runtime/providerSkills";
 import { formatProviderSkillDisplayName } from "@t3tools/shared/inlineSkills";
 import {
@@ -268,7 +269,7 @@ function ComposerMentionNodeView({ node }: NodeViewProps) {
       dir="ltr"
       render={<button type="button" />}
       onClick={() => actions.openMention(path)}
-      aria-label={`Preview ${path}`}
+      aria-label={uiFormat("Preview {0}", [path])}
       contentEditable={false}
       spellCheck={false}
       data-composer-mention-chip="true"
@@ -366,7 +367,7 @@ function ComposerSkillNodeView({ node }: NodeViewProps) {
           <p>{description || "No description is available for this skill."}</p>
           {skill?.path && actions.environmentId ? (
             <Button variant="outline" size="sm" onClick={() => actions.openMention(skill.path)}>
-              View instructions
+              {uiText("View instructions")}
             </Button>
           ) : null}
         </div>

@@ -1,3 +1,4 @@
+import { uiFormat } from "@t3tools/shared/ui-turkish";
 import {
   type ClientSettings,
   type EnvironmentId,
@@ -30,7 +31,11 @@ export function useEnvironmentLookups() {
         environment.environmentId,
         {
           kind: isLocal ? "local" : "remote",
-          label: isPrimary ? "Local" : isLocal ? `${environment.label} (Local)` : environment.label,
+          label: isPrimary
+            ? "Local"
+            : isLocal
+              ? uiFormat("{0} (Local)", [environment.label])
+              : environment.label,
           machine: resolveEnvironmentMachineKind(environment.serverConfig),
         },
       ] as const;

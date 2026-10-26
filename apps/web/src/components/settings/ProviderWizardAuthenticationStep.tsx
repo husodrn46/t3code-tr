@@ -60,7 +60,7 @@ export function ProviderWizardAuthenticationStep({
               title={uiText("Account")}
               description={
                 isDiscovering
-                  ? "Discovering sign-in methods…"
+                  ? uiText("Discovering sign-in methods…")
                   : (query.error ??
                     auth?.message ??
                     "No in-app sign-in advertised. Follow the provider's docs to finish setup.")
@@ -78,7 +78,7 @@ export function ProviderWizardAuthenticationStep({
                       <a href={provider.setup.documentationUrl} target="_blank" rel="noreferrer" />
                     }
                   >
-                    Open docs
+                    {uiText("Open docs")}
                   </Button>
                 ) : undefined
               }
@@ -93,7 +93,7 @@ export function ProviderWizardAuthenticationStep({
           disabled={active}
           onClick={onFinish}
         >
-          {signedIn ? uiText("Done") : "Skip for now"}
+          {signedIn ? uiText("Done") : uiText("Skip for now")}
         </Button>
       </WizardFooter>
     </>

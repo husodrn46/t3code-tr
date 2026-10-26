@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type {
   GitRunStackedActionResult,
   GitStackedAction,
@@ -176,7 +176,7 @@ export function buildMenuItems(
     pushItem,
     {
       id: "pr",
-      label: `Create ${terminology.shortLabel}`,
+      label: uiFormat("Create {0}", [terminology.shortLabel]),
       disabled: !canCreatePr,
       icon: "pr",
       kind: "open_dialog",
@@ -227,10 +227,15 @@ export function resolveQuickAction(
       return { label: "Commit", disabled: false, kind: "run_action", action: "commit" };
     }
     if (hasOpenPr || isDefaultRef) {
-      return { label: "Commit & push", disabled: false, kind: "run_action", action: "commit_push" };
+      return {
+        label: uiText("Commit & push"),
+        disabled: false,
+        kind: "run_action",
+        action: "commit_push",
+      };
     }
     return {
-      label: `Commit, push & ${terminology.shortLabel}`,
+      label: uiFormat("Commit, push & {0}", [terminology.shortLabel]),
       disabled: false,
       kind: "run_action",
       action: "commit_push_pr",
@@ -270,7 +275,7 @@ export function resolveQuickAction(
       };
     }
     return {
-      label: `Push & create ${terminology.shortLabel}`,
+      label: uiFormat("Push & create {0}", [terminology.shortLabel]),
       disabled: false,
       kind: "run_action",
       action: "create_pr",
@@ -279,7 +284,7 @@ export function resolveQuickAction(
 
   if (isDiverged) {
     return {
-      label: "Sync ref",
+      label: uiText("Sync ref"),
       disabled: true,
       kind: "show_hint",
       hint: "Branch has diverged from upstream. Rebase/merge first.",
@@ -288,7 +293,7 @@ export function resolveQuickAction(
 
   if (isBehind) {
     return {
-      label: "Pull",
+      label: uiText("Pull"),
       disabled: false,
       kind: "run_pull",
     };
@@ -304,7 +309,7 @@ export function resolveQuickAction(
       };
     }
     return {
-      label: `Push & create ${terminology.shortLabel}`,
+      label: uiFormat("Push & create {0}", [terminology.shortLabel]),
       disabled: false,
       kind: "run_action",
       action: "create_pr",
@@ -322,7 +327,7 @@ export function resolveQuickAction(
 
   if (hasDefaultBranchDelta && !isDefaultRef) {
     return {
-      label: `Create ${terminology.shortLabel}`,
+      label: uiFormat("Create {0}", [terminology.shortLabel]),
       disabled: false,
       kind: "run_action",
       action: "create_pr",
@@ -363,28 +368,34 @@ export function resolveDefaultBranchActionDialogCopy(input: {
   if (input.action === "push" || input.action === "commit_push") {
     if (input.includesCommit) {
       return {
-        title: "Commit & push to default ref?",
-        description: `This action will commit and push changes${suffix}`,
+        title: uiText("Commit & push to default ref?"),
+        description: uiFormat("This action will commit and push changes{0}", [suffix]),
         continueLabel: `Commit & push to ${branchLabel}`,
       };
     }
     return {
-      title: "Push to default ref?",
-      description: `This action will push local commits${suffix}`,
+      title: uiText("Push to default ref?"),
+      description: uiFormat("This action will push local commits{0}", [suffix]),
       continueLabel: `Push to ${branchLabel}`,
     };
   }
 
   if (input.includesCommit) {
     return {
-      title: `Commit, push & create ${terminology.shortLabel} from default ref?`,
-      description: `This action will commit, push, and create a ${terminology.singular}${suffix}`,
+      title: uiFormat("Commit, push & create {0} from default ref?", [terminology.shortLabel]),
+      description: uiFormat("This action will commit, push, and create a {0}{1}", [
+        terminology.singular,
+        suffix,
+      ]),
       continueLabel: `Commit, push & create ${terminology.shortLabel}`,
     };
   }
   return {
-    title: `Push & create ${terminology.shortLabel} from default ref?`,
-    description: `This action will push local commits and create a ${terminology.singular}${suffix}`,
+    title: uiFormat("Push & create {0} from default ref?", [terminology.shortLabel]),
+    description: uiFormat("This action will push local commits and create a {0}{1}", [
+      terminology.singular,
+      suffix,
+    ]),
     continueLabel: `Push & create ${terminology.shortLabel}`,
   };
 }

@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { BookmarkIcon } from "lucide-react";
 import { memo } from "react";
 
@@ -36,7 +36,7 @@ export const ComposerStashBadge = memo(function ComposerStashBadge(props: {
       <ComposerBanner.Row
         render={<button type="button" />}
         data-prompt-stash-badge="true"
-        aria-label={`Stashed prompts: ${props.count}. Open stash.`}
+        aria-label={uiFormat("Stashed prompts: {0}. Open stash.", [props.count])}
         aria-expanded={props.menuOpen}
         className={cn(
           "transition-colors duration-200",

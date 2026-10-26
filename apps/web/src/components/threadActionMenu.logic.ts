@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type { ContextMenuItem } from "@t3tools/contracts";
 import type { SnoozePreset } from "@t3tools/client-runtime/state/thread-settled";
 
@@ -112,7 +112,7 @@ export function buildThreadActionMenuItems(
       ? [
           {
             id: "new-thread-on-branch" as const,
-            label: `New thread on ${state.branch}`,
+            label: uiFormat("New thread on {0}", [state.branch]),
             icon: "message-square-plus",
           },
         ]
@@ -121,7 +121,7 @@ export function buildThreadActionMenuItems(
       ? [
           state.isPinned
             ? { id: "unpin" as const, label: uiText("Unpin thread"), icon: "pin-off" }
-            : { id: "pin" as const, label: "Pin thread", icon: "pin" },
+            : { id: "pin" as const, label: uiText("Pin thread"), icon: "pin" },
         ]
       : []),
     ...(state.supports.settlement
@@ -134,7 +134,7 @@ export function buildThreadActionMenuItems(
     ...(state.supports.snooze
       ? [
           state.isSnoozed
-            ? { id: "unsnooze" as const, label: "Wake thread", icon: "clock" }
+            ? { id: "unsnooze" as const, label: uiText("Wake thread"), icon: "clock" }
             : {
                 id: "snooze" as const,
                 label: uiText("Snooze"),
@@ -168,7 +168,7 @@ export function buildThreadActionMenuItems(
             id: "filter-by-project" as const,
             label: state.projectFilter.isActive
               ? "Show all projects"
-              : `Filter by ${state.projectFilter.label}`,
+              : uiFormat("Filter by {0}", [state.projectFilter.label]),
             icon: "folder-tree",
           },
         ]
@@ -177,12 +177,12 @@ export function buildThreadActionMenuItems(
       ? [
           {
             id: "auto-settle" as const,
-            label: "Auto-settle behavior",
+            label: uiText("Auto-settle behavior"),
             icon: "timer",
             children: [
               {
                 id: "auto-settle:enabled" as const,
-                label: "Enabled",
+                label: uiText("Enabled"),
                 checked: state.autoSettleEnabled,
               },
               {
@@ -204,13 +204,13 @@ export function buildThreadActionMenuItems(
         ...(state.branch
           ? [{ id: "copy-branch" as const, label: uiText("Branch"), icon: "git-branch" }]
           : []),
-        { id: "copy-thread-id", label: "Thread ID", icon: "hash" },
+        { id: "copy-thread-id", label: uiText("Thread ID"), icon: "hash" },
       ],
     },
     { id: "project-settings", label: uiText("Project settings"), icon: "settings" },
     {
       id: "archive",
-      label: "Archive thread",
+      label: uiText("Archive thread"),
       icon: "archive",
       disabled: state.isRunning,
       separatorBefore: true,

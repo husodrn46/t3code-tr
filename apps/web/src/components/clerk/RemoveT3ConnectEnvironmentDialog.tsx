@@ -39,13 +39,16 @@ export function RemoveT3ConnectEnvironmentDialog({
           <AlertDialogHeader>
             <AlertDialogTitle>
               {uiText("Remove ")}
-              {shownLabel} from this device?
+              {shownLabel}
+              {uiText(" from this device?")}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This forgets its pairing, credentials, and cached threads here.
+              {uiText("This forgets its pairing, credentials, and cached threads here.")}
             </AlertDialogDescription>
             <AlertDialogDescription>
-              It stays on your T3 Connect account and keeps its host space. Deregister it in{" "}
+              {uiText(
+                "It stays on your T3 Connect account and keeps its host space. Deregister it in",
+              )}{" "}
               {openAccountPage ? (
                 <InlineButton
                   onClick={() => {
@@ -58,7 +61,7 @@ export function RemoveT3ConnectEnvironmentDialog({
               ) : (
                 uiText("T3 Connect settings")
               )}{" "}
-              to free it.
+              {uiText("to free it.")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -66,7 +69,7 @@ export function RemoveT3ConnectEnvironmentDialog({
               {uiText("Cancel")}
             </AlertDialogClose>
             <Button variant="destructive" onClick={onConfirm}>
-              Remove from this device
+              {uiText("Remove from this device")}
             </Button>
           </AlertDialogFooter>
         </AlertDialogPopup>

@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useStableCallback } from "../../hooks/useStableCallback";
 import { type EnvironmentId } from "@t3tools/contracts";
 import { type EnvironmentConnectionPresentation } from "@t3tools/client-runtime/connection";
@@ -112,7 +112,7 @@ export function useSystemComposerBanners(input: SystemComposerBannersInput) {
       toastManager.add(
         stackedThreadToast({
           type: "error",
-          title: "Could not reconnect environment",
+          title: uiText("Could not reconnect environment"),
           description: error instanceof Error ? error.message : "Failed to reconnect.",
         }),
       );
@@ -140,7 +140,7 @@ export function useSystemComposerBanners(input: SystemComposerBannersInput) {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Could not disconnect server",
+            title: uiText("Could not disconnect server"),
             description: error instanceof Error ? error.message : "Failed to disconnect.",
           }),
         );
@@ -194,14 +194,14 @@ export function useSystemComposerBanners(input: SystemComposerBannersInput) {
           size="xs"
           variant="ghost"
           disabled={disconnectingEnvironment}
-          title="Hide this server's threads. Switch it on again in Connections."
+          title={uiText("Hide this server's threads. Switch it on again in Connections.")}
           onClick={() =>
             void handleDisconnectActiveEnvironmentStable(
               activeEnvironmentUnavailableState.environmentId,
             )
           }
         >
-          Disconnect server
+          {uiText("Disconnect server")}
         </Button>
       ) : undefined;
     const environmentReconnecting =
@@ -215,7 +215,10 @@ export function useSystemComposerBanners(input: SystemComposerBannersInput) {
         id: `environment-unavailable:${activeEnvironmentUnavailableState.environmentId}`,
         variant: unavailableConnection.phase === "error" ? "error" : "warning",
         icon: <WifiOffIcon />,
-        title: `${activeEnvironmentUnavailableState.label} is ${environmentReconnecting ? "reconnecting" : "offline"}`,
+        title: uiFormat("{0} is {1}", [
+          activeEnvironmentUnavailableState.label,
+          environmentReconnecting ? "reconnecting" : "offline",
+        ]),
         description: activeEnvironment ? (
           <ConnectionDiagnosisHeadline environment={activeEnvironment} />
         ) : undefined,
@@ -264,7 +267,7 @@ export function useSystemComposerBanners(input: SystemComposerBannersInput) {
                     type="button"
                     className="block max-w-full cursor-help truncate rounded-sm text-left"
                   >
-                    Server update available
+                    {uiText("Server update available")}
                   </button>
                 }
               />

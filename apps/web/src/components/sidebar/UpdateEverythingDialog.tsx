@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { EnvironmentId } from "@t3tools/contracts";
 import { Atom } from "effect/reactivity";
@@ -96,10 +96,13 @@ function UpdateEverythingDialogContent({
         {running > 0 ? (
           <p className="pt-2 text-sm">
             {stopped === 0
-              ? `${threads} will be interrupted and can resume after the restart.`
+              ? uiFormat("{0} will be interrupted and can resume after the restart.", [threads])
               : continuing === 0
-                ? `${threads} will be interrupted.`
-                : `${threads} will be interrupted. ${continuing} can resume after the restart.`}
+                ? uiFormat("{0} will be interrupted.", [threads])
+                : uiFormat("{0} will be interrupted. {1} can resume after the restart.", [
+                    threads,
+                    continuing,
+                  ])}
           </p>
         ) : null}
         {skipped.length > 0 ? (

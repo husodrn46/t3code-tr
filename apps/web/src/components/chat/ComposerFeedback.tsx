@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   codexFeedbackNotice,
   type CodexFeedbackSubmission,
@@ -32,14 +33,14 @@ export function feedbackBannerItem(
               (error: unknown) => {
                 toastManager.add({
                   type: "error",
-                  title: "Could not copy thread ID",
+                  title: uiText("Could not copy thread ID"),
                   description: error instanceof Error ? error.message : "An error occurred.",
                 });
               },
             );
           }}
         >
-          Copy ID
+          {uiText("Copy ID")}
         </Button>
       ) : undefined,
     ...(submission.status !== "uploading"

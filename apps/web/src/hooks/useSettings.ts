@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useEffect, useRef, useSyncExternalStore, use } from "react";
 import { useSyncExternalStoreWithSelector } from "use-sync-external-store/with-selector";
 import { RegistryContext, useAtomValue } from "@effect/atom-react";
@@ -445,8 +445,8 @@ export function useUpdateEnvironmentModelPreferences(environmentId: EnvironmentI
     } catch {
       toastManager.add({
         type: "error",
-        title: "Model preferences not saved",
-        description: "Could not load saved model preferences. Try again.",
+        title: uiText("Model preferences not saved"),
+        description: uiText("Could not load saved model preferences. Try again."),
       });
       return;
     }
@@ -472,8 +472,8 @@ export function useToggleEnvironmentModelFavorite(environmentId: EnvironmentId |
       } catch {
         toastManager.add({
           type: "error",
-          title: "Favorites not saved",
-          description: "Could not load saved model preferences. Try again.",
+          title: uiText("Favorites not saved"),
+          description: uiText("Could not load saved model preferences. Try again."),
         });
         return;
       }
@@ -611,7 +611,12 @@ function useUpdateSettingsTarget(environmentId: EnvironmentId | null) {
       toastManager.add({
         type: "error",
         title: uiText("Setting not saved"),
-        description: `Could not save on ${label}: ${error instanceof Error ? error.message : "The save failed. Try reconnecting and saving again."}`,
+        description: uiFormat("Could not save on {0}: {1}", [
+          label,
+          error instanceof Error
+            ? error.message
+            : "The save failed. Try reconnecting and saving again.",
+        ]),
       });
     }
     return result;
@@ -629,7 +634,10 @@ function useUpdateSettingsTarget(environmentId: EnvironmentId | null) {
       toastManager.add({
         type: "warning",
         title: uiText("Setting not saved"),
-        description: `This connection lacks permission to change settings on ${environments.find((target) => target.environmentId === environmentId)?.label ?? "the selected environment"}.`,
+        description: uiFormat("This connection lacks permission to change settings on {0}.", [
+          environments.find((target) => target.environmentId === environmentId)?.label ??
+            "the selected environment",
+        ]),
       });
     }
     if (Object.keys(serverPatch).length > 0 && canWriteServerPatch) {

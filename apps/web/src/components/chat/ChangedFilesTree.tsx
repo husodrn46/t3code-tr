@@ -61,7 +61,9 @@ export const ChangedFilesCard = memo(function ChangedFilesCard(props: {
       >
         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-foreground">
           <span>
-            {files.length} changed file{files.length === 1 ? "" : "s"}
+            {files.length}
+            {uiText(" changed file")}
+            {files.length === 1 ? "" : "s"}
           </span>
           {hasNonZeroStat(summaryStat) && (
             <DiffStatLabel
@@ -118,7 +120,7 @@ export const ChangedFilesCard = memo(function ChangedFilesCard(props: {
               <FileDiffIcon className="size-3" />
               <span className="hidden @[24rem]/changed-files:inline">{uiText("Open diff")}</span>
             </TooltipTrigger>
-            <TooltipPopup side="top">Open the full diff</TooltipPopup>
+            <TooltipPopup side="top">{uiText("Open the full diff")}</TooltipPopup>
           </Tooltip>
         </div>
       </div>

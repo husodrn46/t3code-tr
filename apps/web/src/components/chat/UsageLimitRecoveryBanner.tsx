@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   type OrchestrationV2LimitRecovery,
   type OrchestrationV2LimitRecoveryUpdate,
@@ -29,7 +29,7 @@ export function usageLimitRecoveryBannerItem(props: RecoveryProps): ComposerBann
     icon: <GaugeIcon />,
     title: uiText("Usage limit reached"),
     description: resetAt
-      ? `Resets ${new Date(resetAt).toLocaleString()}`
+      ? uiFormat("Resets {0}", [new Date(resetAt).toLocaleString()])
       : "Reset time unavailable; retry manually",
     actions: canSchedule ? <RecoveryActions key={`${runId}:${resetAt}`} {...props} /> : null,
   };
@@ -59,8 +59,8 @@ function RecoveryActions({ runId, resetAt, recovery, snoozedUntil, onChange }: R
     if (action === "snooze" && !snoozed && Date.parse(resetAt) <= Date.now()) {
       toastManager.add({
         type: "error",
-        title: "Could not snooze thread",
-        description: "The reset time has passed. Retry the thread manually.",
+        title: uiText("Could not snooze thread"),
+        description: uiText("The reset time has passed. Retry the thread manually."),
       });
       setNowMs(Date.now());
       return;
@@ -86,7 +86,11 @@ function RecoveryActions({ runId, resetAt, recovery, snoozedUntil, onChange }: R
   return (
     <>
       <Button size="xs" variant="ghost" disabled={pending} onClick={() => void toggle("resume")}>
-        {pending ? uiText("Saving...") : scheduled ? "Cancel auto-resume" : "Resume at reset"}
+        {pending
+          ? uiText("Saving...")
+          : scheduled
+            ? uiText("Cancel auto-resume")
+            : uiText("Resume at reset")}
       </Button>
       {!snoozed ? (
         <Button
@@ -95,7 +99,7 @@ function RecoveryActions({ runId, resetAt, recovery, snoozedUntil, onChange }: R
           disabled={pending || Date.parse(resetAt!) <= nowMs}
           onClick={() => void toggle("snooze")}
         >
-          {pending ? uiText("Saving...") : "Snooze until reset"}
+          {pending ? uiText("Saving...") : uiText("Snooze until reset")}
         </Button>
       ) : null}
     </>

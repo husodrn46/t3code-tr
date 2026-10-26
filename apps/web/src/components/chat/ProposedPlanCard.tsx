@@ -69,7 +69,7 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
       toastManager.add(
         stackedThreadToast({
           type: "error",
-          title: "Could not copy plan",
+          title: uiText("Could not copy plan"),
           description: error instanceof Error ? error.message : "An error occurred while copying.",
         }),
       );
@@ -104,8 +104,8 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
       toastManager.add(
         stackedThreadToast({
           type: "error",
-          title: "Workspace path is unavailable",
-          description: "This thread does not have a workspace path to save into.",
+          title: uiText("Workspace path is unavailable"),
+          description: uiText("This thread does not have a workspace path to save into."),
         }),
       );
       return;
@@ -121,7 +121,7 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
     if (!relativePath) {
       toastManager.add({
         type: "warning",
-        title: "Enter a workspace path",
+        title: uiText("Enter a workspace path"),
       });
       return;
     }
@@ -142,7 +142,7 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
         setIsSaveDialogOpen(false);
         toastManager.add({
           type: "success",
-          title: "Plan saved to workspace",
+          title: uiText("Plan saved to workspace"),
           description: result.value.relativePath,
         });
         return;
@@ -152,7 +152,7 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Could not save plan",
+            title: uiText("Could not save plan"),
             description: error instanceof Error ? error.message : "An error occurred while saving.",
           }),
         );
@@ -172,20 +172,20 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
         </div>
         <Menu>
           <MenuTrigger
-            render={<Button aria-label="Plan actions" size="icon-xs" variant="outline" />}
+            render={<Button aria-label={uiText("Plan actions")} size="icon-xs" variant="outline" />}
           >
             <EllipsisIcon aria-hidden="true" className="size-4" />
           </MenuTrigger>
           <MenuPopup align="end">
             <MenuItem onClick={handleCopyPlan}>
-              {isCopied ? uiText("Copied!") : "Copy to clipboard"}
+              {isCopied ? uiText("Copied!") : uiText("Copy to clipboard")}
             </MenuItem>
-            <MenuItem onClick={handleDownload}>Download as markdown</MenuItem>
+            <MenuItem onClick={handleDownload}>{uiText("Download as markdown")}</MenuItem>
             <MenuItem
               onClick={openSaveDialog}
               disabled={!canWriteFiles || !workspaceRoot || isSavingToWorkspace}
             >
-              Save to workspace
+              {uiText("Save to workspace")}
             </MenuItem>
           </MenuPopup>
         </Menu>
@@ -228,7 +228,7 @@ export const ProposedPlanCard = memo(function ProposedPlanCard({
               data-scroll-anchor-ignore
               onClick={() => setExpanded((value) => !value)}
             >
-              {expanded ? "Collapse plan" : "Expand plan"}
+              {expanded ? uiText("Collapse plan") : uiText("Expand plan")}
             </Button>
           </div>
         ) : null}
@@ -281,14 +281,15 @@ function SavePlanToWorkspaceForm({
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Save plan to workspace</DialogTitle>
+        <DialogTitle>{uiText("Save plan to workspace")}</DialogTitle>
         <DialogDescription>
-          Enter a path relative to <code>{workspaceRoot ?? "the workspace"}</code>.
+          {uiText("Enter a path relative to ")}
+          <code>{workspaceRoot ?? "the workspace"}</code>.
         </DialogDescription>
       </DialogHeader>
       <DialogPanel>
         <label htmlFor={savePathInputId} className="grid gap-1.5">
-          <span className="text-xs font-medium text-foreground">Workspace path</span>
+          <span className="text-xs font-medium text-foreground">{uiText("Workspace path")}</span>
           <Input
             id={savePathInputId}
             value={savePath}

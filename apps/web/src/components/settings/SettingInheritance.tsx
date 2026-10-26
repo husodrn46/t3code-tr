@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   DEFAULT_SERVER_SETTINGS,
   PROJECT_FILE_BACKED_SETTINGS,
@@ -33,9 +33,9 @@ interface InheritanceLayer {
 }
 
 const WRITING_STYLE_LABELS: Record<string, string> = {
-  repo_conventions: "Repository conventions",
+  repo_conventions: uiText("Repository conventions"),
   conventional_commits: "Conventional Commits",
-  custom: "Custom instructions",
+  custom: uiText("Custom instructions"),
 };
 
 function formatValue(key: keyof ServerSettings, value: unknown): string {
@@ -243,7 +243,7 @@ export function SettingInheritance({
                 <Button
                   size="icon-micro"
                   variant="ghost-muted"
-                  aria-label={`${overrideSummary}. Show where this value comes from`}
+                  aria-label={uiFormat("{0}. Show where this value comes from", [overrideSummary])}
                 />
               }
             />
@@ -368,7 +368,7 @@ export function SettingInheritance({
                     {chain}
                     {hasMultipleEnvironments ? (
                       <p className="px-2 pt-1.5 text-xs text-muted-foreground">
-                        Same on all machines
+                        {uiText("Same on all machines")}
                       </p>
                     ) : null}
                   </>
@@ -387,14 +387,15 @@ export function SettingInheritance({
                             aria-hidden
                             className="size-3 [[data-panel-open]_&]:rotate-90"
                           />
-                          Overridden by
+                          {uiText("Overridden by")}
                         </CollapsibleTrigger>
                       ) : (
-                        <span>Overridden by</span>
+                        <span>{uiText("Overridden by")}</span>
                       )}
                       {onClearOverrides ? (
                         <InlineButton onClick={() => onClearOverrides(overriding)}>
-                          Reset {overriding.length === 1 ? "it" : "all"}
+                          {uiText("Reset ")}
+                          {overriding.length === 1 ? uiText("it") : "all"}
                         </InlineButton>
                       ) : null}
                     </div>

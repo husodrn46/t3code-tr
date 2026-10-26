@@ -20,7 +20,13 @@ export function isWindowsPlatform(platform: string): boolean {
 }
 
 export function normalizeSearchText(value: string): string {
-  return value.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase().replace(/\s+/g, " ").trim();
+  return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/ı/g, "i")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function getLocalFileManagerName(platform: string): string {

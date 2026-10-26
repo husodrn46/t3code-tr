@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { ThreadDetailsControl } from "./ThreadDetailsControl";
 import { useNavigate } from "@tanstack/react-router";
@@ -44,13 +44,13 @@ function taskScheduleLine(task: ScheduledTask) {
       {scheduleLabel(task.schedule)}
       {task.enabled && task.nextRunAt !== null ? (
         <>
-          {" · next "}
+          {uiText(" · next ")}
           <ScheduledRelativeLabel value={task.nextRunAt} />
         </>
       ) : task.enabled ? (
         ""
       ) : (
-        " · paused"
+        uiText(" · paused")
       )}
     </>
   );
@@ -130,7 +130,7 @@ export function ThreadAutomationsPanel(props: {
   return (
     <ThreadDetailsSection
       headingId="thread-details-automations-heading"
-      title="Automations"
+      title={uiText("Automations")}
       data-thread-automations-panel
       actions={
         <Tooltip>
@@ -158,7 +158,8 @@ export function ThreadAutomationsPanel(props: {
     >
       {tasksQuery.error !== null ? (
         <p className="px-2.5 py-1.5 text-2xs text-destructive">
-          Could not load automations: {tasksQuery.error}
+          {uiText("Could not load automations: ")}
+          {tasksQuery.error}
         </p>
       ) : null}
 
@@ -200,7 +201,7 @@ export function ThreadAutomationsPanel(props: {
                     size="icon-xs"
                     variant="ghost"
                     part="icon"
-                    aria-label={`Edit ${task.title}`}
+                    aria-label={uiFormat("Edit {0}", [task.title])}
                     onClick={() =>
                       void navigate({
                         to: "/settings/scheduled-tasks",
@@ -212,7 +213,7 @@ export function ThreadAutomationsPanel(props: {
                   </ThreadDetailsControl>
                 }
               />
-              <TooltipPopup>Edit automation</TooltipPopup>
+              <TooltipPopup>{uiText("Edit automation")}</TooltipPopup>
             </Tooltip>
             {/* A webhook task runs from its URL; there is no request to run it with. */}
             {task.schedule.type === "webhook" ? null : (
@@ -223,7 +224,7 @@ export function ThreadAutomationsPanel(props: {
                       size="icon-xs"
                       variant="ghost"
                       part="icon"
-                      aria-label={`Run ${task.title} now`}
+                      aria-label={uiFormat("Run {0} now", [task.title])}
                       disabled={
                         !canOperate || busyTaskId !== null || task.lastRunStatus === "running"
                       }
@@ -239,7 +240,11 @@ export function ThreadAutomationsPanel(props: {
             <Switch
               checked={task.enabled}
               disabled={!canOperate || busyTaskId !== null}
-              aria-label={task.enabled ? `Pause ${task.title}` : `Resume ${task.title}`}
+              aria-label={
+                task.enabled
+                  ? uiFormat("Pause {0}", [task.title])
+                  : uiFormat("Resume {0}", [task.title])
+              }
               onCheckedChange={(enabled) => void toggleEnabled(task, enabled)}
             />
           </li>

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   ServerProvider,
   ServerProviderVersionAdvisory,
@@ -115,9 +116,9 @@ export function getProviderVersionLabel(version: string | null | undefined) {
 }
 
 const COMPATIBILITY_TITLES = {
-  graceful: "Limited support",
-  unsupported: "Unsupported version",
-  broken: "Known broken version",
+  graceful: uiText("Limited support"),
+  unsupported: uiText("Unsupported version"),
+  broken: uiText("Known broken version"),
 } as const;
 
 export function getProviderVersionAdvisoryPresentation(

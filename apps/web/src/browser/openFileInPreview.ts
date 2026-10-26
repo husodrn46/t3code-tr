@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   AssetCreateUrlResult,
   AssetResource,
@@ -125,7 +126,7 @@ export async function openFileInPreview<AssetError, PreviewError>(input: {
     return AsyncResult.failure(
       Cause.fail(
         new BrowserPreviewUnavailableError({
-          message: "The integrated browser is unavailable in this runtime.",
+          message: uiText("The integrated browser is unavailable in this runtime."),
         }),
       ),
     );

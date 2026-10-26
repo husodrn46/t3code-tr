@@ -67,7 +67,7 @@ export function resolveSettingsScope(
   ): ResolvedSettingsScope => ({
     kind: "unavailable",
     reason,
-    label: "Unavailable selection",
+    label: uiText("Unavailable selection"),
     message,
     members: [],
     environmentIds: [],

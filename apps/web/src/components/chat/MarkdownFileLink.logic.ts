@@ -35,7 +35,12 @@ export function markdownFileCopyMenuItems({
   workspaceRelativePath,
 }: Pick<MarkdownFileLinkMeta, "targetPath" | "workspaceRelativePath">) {
   const items = [
-    { id: "copy-full", label: uiText("Copy full path"), value: targetPath, title: "Full path" },
+    {
+      id: "copy-full",
+      label: uiText("Copy full path"),
+      value: targetPath,
+      title: uiText("Full path"),
+    },
   ];
   if (workspaceRelativePath !== null) {
     const position = targetPath.slice(splitFilePathPosition(targetPath).path.length);
@@ -43,7 +48,7 @@ export function markdownFileCopyMenuItems({
       id: "copy-relative",
       label: uiText("Copy relative path"),
       value: `${workspaceRelativePath}${position}`,
-      title: "Relative path",
+      title: uiText("Relative path"),
     });
   }
   return items;

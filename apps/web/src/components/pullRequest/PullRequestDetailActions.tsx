@@ -121,24 +121,24 @@ export function PullRequestCheckoutMenu({
             />
           }
         />
-        <TooltipPopup>Check out this pull request</TooltipPopup>
+        <TooltipPopup>{uiText("Check out this pull request")}</TooltipPopup>
       </Tooltip>
       <MenuPopup align="end" side="bottom">
         <MenuItem disabled={!canPrepareWorktree} onClick={() => onCheckout("worktree")}>
           <GitBranchIcon className="mt-1 size-3.5 shrink-0 self-start" />
           <span className="flex min-w-0 flex-col">
-            <span>In a separate worktree</span>
+            <span>{uiText("In a separate worktree")}</span>
             <span className="text-xs text-muted-foreground">
-              Its own folder and thread. Nothing you have open moves.
+              {uiText("Its own folder and thread. Nothing you have open moves.")}
             </span>
           </span>
         </MenuItem>
         <MenuItem disabled={!canCheckoutHere} onClick={() => onCheckout("local")}>
           <FolderGit2Icon className="mt-1 size-3.5 shrink-0 self-start" />
           <span className="flex min-w-0 flex-col">
-            <span>In this repository</span>
+            <span>{uiText("In this repository")}</span>
             <span className="text-xs text-muted-foreground">
-              Switches the branch you are working in, like `gh pr checkout`.
+              {uiText("Switches the branch you are working in, like `gh pr checkout`.")}
             </span>
           </span>
         </MenuItem>
@@ -234,7 +234,8 @@ export function PullRequestPrimaryAction({
             }
           />
           <TooltipPopup side="top">
-            {armedAutoMergeLabel}: the host will merge this on its own once its requirements are met
+            {armedAutoMergeLabel}
+            {uiText(": the host will merge this on its own once its requirements are met")}
           </TooltipPopup>
         </Tooltip>
       ) : null}
@@ -325,7 +326,8 @@ export function PullRequestPrimaryAction({
             }
           />
           <TooltipPopup side="top">
-            {armedAutoMergeLabel}: the host will merge this on its own once its requirements are met
+            {armedAutoMergeLabel}
+            {uiText(": the host will merge this on its own once its requirements are met")}
           </TooltipPopup>
         </Tooltip>
       ) : primaryAction === "merge" ? (

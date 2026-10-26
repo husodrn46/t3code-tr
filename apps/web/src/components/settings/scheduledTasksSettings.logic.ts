@@ -1,3 +1,4 @@
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { isWebhookDedupeTemplate } from "@t3tools/contracts";
 import {
   EnvironmentId,
@@ -104,8 +105,10 @@ export function webhookDraftErrors(draft: DraftState) {
   if (parseMaxDeliveryAge(draft.maxDeliveryAgeMinutes) === undefined)
     return [
       {
-        title: "Invalid age limit",
-        description: `Enter whole minutes from 1 to ${MAX_WEBHOOK_DELIVERY_AGE_MINUTES}, or leave it blank.`,
+        title: uiText("Invalid age limit"),
+        description: uiFormat("Enter whole minutes from 1 to {0}, or leave it blank.", [
+          MAX_WEBHOOK_DELIVERY_AGE_MINUTES,
+        ]),
       },
     ];
   const errors: Array<{ title: string; description: string }> = [];
@@ -115,15 +118,15 @@ export function webhookDraftErrors(draft: DraftState) {
   ] as const) {
     if (value.trim() && !isWebhookDedupeTemplate(value.trim()))
       errors.push({
-        title: "Invalid webhook settings",
-        description: `${label} must contain a valid request placeholder.`,
+        title: uiText("Invalid webhook settings"),
+        description: uiFormat("{0} must contain a valid request placeholder.", [label]),
       });
   }
   const window = draft.coalesceWindowSeconds.trim();
   if (window && (!Number.isInteger(Number(window)) || Number(window) < 10 || Number(window) > 3600))
     errors.push({
-      title: "Invalid webhook settings",
-      description: "Coalesce window must be whole seconds from 10 to 3600.",
+      title: uiText("Invalid webhook settings"),
+      description: uiText("Coalesce window must be whole seconds from 10 to 3600."),
     });
   return errors;
 }

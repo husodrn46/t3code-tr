@@ -1,3 +1,4 @@
+import { uiFormat } from "@t3tools/shared/ui-turkish";
 import { useParams } from "@tanstack/react-router";
 import { scopeProjectRef } from "@t3tools/client-runtime/environment";
 import {
@@ -119,7 +120,7 @@ function EnvironmentCloneToasts({ environmentId }: { environmentId: EnvironmentI
       if (clone.phase === "running") {
         const options = stackedThreadToast({
           type: "loading",
-          title: `Cloning ${name}`,
+          title: uiFormat("Cloning {0}", [name]),
           description: projectCloneProgressSummary(clone),
           timeout: 0,
           actionProps: {
@@ -145,7 +146,7 @@ function EnvironmentCloneToasts({ environmentId }: { environmentId: EnvironmentI
       if (clone.phase === "done") {
         const options = stackedThreadToast({
           type: "success",
-          title: `Cloned ${name}`,
+          title: uiFormat("Cloned {0}", [name]),
           description: clone.destinationPath,
           timeout: 8_000,
           actionProps: {
@@ -170,7 +171,9 @@ function EnvironmentCloneToasts({ environmentId }: { environmentId: EnvironmentI
       const cancelled = clone.phase === "cancelled";
       const options = stackedThreadToast({
         type: cancelled ? "info" : "error",
-        title: cancelled ? `Cancelled cloning ${name}` : `Failed to clone ${name}`,
+        title: cancelled
+          ? uiFormat("Cancelled cloning {0}", [name])
+          : uiFormat("Failed to clone {0}", [name]),
         description: cancelled ? clone.destinationPath : (clone.error ?? "The clone failed."),
         timeout: 0,
         actionProps: {

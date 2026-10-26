@@ -26,8 +26,8 @@ export function NoProjectsHero() {
               <EmptyTitle>{uiText("What should we work on?")}</EmptyTitle>
               <EmptyDescription>
                 {scratchTargetEnvironmentId === null
-                  ? "Add a project to start your first thread."
-                  : "Add a project, or start without one."}
+                  ? uiText("Add a project to start your first thread.")
+                  : uiText("Add a project, or start without one.")}
               </EmptyDescription>
               <div className="mt-6 flex justify-center gap-2">
                 <Button size="sm" onClick={() => openCommandPalette({ open: "add-project" })}>
@@ -41,7 +41,7 @@ export function NoProjectsHero() {
                     onClick={() => void startScratchThread(scratchTargetEnvironmentId)}
                   >
                     <MessageSquareDashedIcon className="size-4" />
-                    Start without a project
+                    {uiText("Start without a project")}
                   </Button>
                 )}
               </div>

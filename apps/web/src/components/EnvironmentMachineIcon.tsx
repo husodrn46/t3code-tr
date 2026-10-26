@@ -51,12 +51,12 @@ const ICON_BY_KIND: Record<EnvironmentMachineKind, FunctionComponent<LucideProps
 
 export const ENVIRONMENT_MACHINE_KIND_LABELS: Record<EnvironmentMachineKind, string> = {
   server: uiText("Server"),
-  cloud: "Cloud VM",
-  linux: "Linux/WSL",
+  cloud: uiText("Cloud VM"),
+  linux: uiText("Linux/WSL"),
   desktop: uiText("Desktop"),
-  laptop: "Laptop",
-  "mac-mini": "Mini PC",
-  "mac-studio": "Workstation",
+  laptop: uiText("Laptop"),
+  "mac-mini": uiText("Mini PC"),
+  "mac-studio": uiText("Workstation"),
 };
 
 export function environmentMachineIcon(

@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   type AuthMcpApprovalDecision,
   type AuthMcpApprovalDetails,
@@ -31,7 +31,7 @@ const accessConfig: Record<
 > = {
   "read-only": {
     label: uiText("Read only"),
-    description: "Read projects and threads. Cannot start, message or change anything.",
+    description: uiText("Read projects and threads. Cannot start, message or change anything."),
     icon: EyeIcon,
   },
   ...runtimeModeConfig,
@@ -143,8 +143,8 @@ export function ConnectAgentSurface() {
     return (
       <AuthSurfaceShell>
         <ConnectAgentHeading
-          title="Checking the sign-in request"
-          description="One moment while this environment verifies the agent's request."
+          title={uiText("Checking the sign-in request")}
+          description={uiText("One moment while this environment verifies the agent's request.")}
         />
         <Spinner className="mt-6" size="lg" tone="muted" />
       </AuthSurfaceShell>
@@ -154,9 +154,12 @@ export function ConnectAgentSurface() {
   if (loaded.status === "invalid") {
     return (
       <AuthSurfaceShell>
-        <ConnectAgentHeading title="This sign-in cannot continue" description={loaded.message} />
+        <ConnectAgentHeading
+          title={uiText("This sign-in cannot continue")}
+          description={loaded.message}
+        />
         <p className="mt-4 text-sm text-muted-foreground">
-          Close this page and start the sign-in again from your agent.
+          {uiText("Close this page and start the sign-in again from your agent.")}
         </p>
       </AuthSurfaceShell>
     );
@@ -169,10 +172,10 @@ export function ConnectAgentSurface() {
   return (
     <AuthSurfaceShell>
       <ConnectAgentHeading
-        title={`Connect ${details.clientName}`}
+        title={uiFormat("Connect {0}", [details.clientName])}
         description={
           <>
-            This agent wants to use the threads in every project on{" "}
+            {uiText("This agent wants to use the threads in every project on")}{" "}
             <span className="font-medium text-foreground">{details.environmentHost}</span>.
           </>
         }
@@ -180,14 +183,17 @@ export function ConnectAgentSurface() {
       <p className="mt-2 text-xs text-muted-foreground">
         {redirectsToThisComputer(details.redirectHost) ? (
           <>
-            The name is chosen by the agent. Approval returns to {details.redirectHost} on the
-            computer that opened this page. Only approve a sign-in you just started.
+            {uiText("The name is chosen by the agent. Approval returns to ")}
+            {details.redirectHost}
+            {uiText(
+              " on the computer that opened this page. Only approve a sign-in you just started.",
+            )}
           </>
         ) : (
           <>
-            The name is chosen by the agent. Approval gives access to whoever runs{" "}
-            <span className="font-medium text-foreground">{details.redirectHost}</span>. Only
-            approve a sign-in you just started there.
+            {uiText("The name is chosen by the agent. Approval gives access to whoever runs")}{" "}
+            <span className="font-medium text-foreground">{details.redirectHost}</span>
+            {uiText(". Only approve a sign-in you just started there.")}
           </>
         )}
       </p>
@@ -201,7 +207,7 @@ export function ConnectAgentSurface() {
       >
         <div className="space-y-2">
           <span id="connect-agent-access-label" className="text-sm font-medium">
-            What it may do
+            {uiText("What it may do")}
           </span>
           <RadioGroup
             aria-labelledby="connect-agent-access-label"
@@ -213,8 +219,9 @@ export function ConnectAgentSurface() {
             ))}
           </RadioGroup>
           <p className="text-xs text-muted-foreground">
-            Beyond read only, it can start, message and stop threads, and none of them can run with
-            more than the mode you pick.
+            {uiText(
+              "Beyond read only, it can start, message and stop threads, and none of them can run with more than the mode you pick.",
+            )}
           </p>
         </div>
 
@@ -231,13 +238,14 @@ export function ConnectAgentSurface() {
               disabled={pending !== null}
               nativeInput
               onChange={(event) => setPairingCode(event.currentTarget.value)}
-              placeholder="Paste a one-time pairing code"
+              placeholder={uiText("Paste a one-time pairing code")}
               spellCheck={false}
               value={pairingCode}
             />
             <p className="text-xs text-muted-foreground">
-              Create one in Settings → Connections, or run <code>t3 auth pairing create</code> on
-              this machine.
+              {uiText("Create one in Settings → Connections, or run ")}
+              <code>t3 auth pairing create</code>
+              {uiText(" on this machine.")}
             </p>
           </div>
         )}
@@ -250,7 +258,7 @@ export function ConnectAgentSurface() {
 
         <div className="flex flex-wrap gap-2">
           <Button disabled={!canApprove} type="submit">
-            {pending === "approve" ? "Approving…" : uiText("Approve")}
+            {pending === "approve" ? uiText("Approving…") : uiText("Approve")}
           </Button>
           <Button
             disabled={pending !== null}
@@ -258,7 +266,7 @@ export function ConnectAgentSurface() {
             type="button"
             variant="outline"
           >
-            {pending === "deny" ? "Denying…" : "Deny"}
+            {pending === "deny" ? uiText("Denying…") : uiText("Deny")}
           </Button>
         </div>
       </form>
@@ -275,7 +283,9 @@ function ConnectAgentHeading({
 }) {
   return (
     <>
-      <p className="text-3xs font-semibold tracking-widest text-primary uppercase">Agent sign-in</p>
+      <p className="text-3xs font-semibold tracking-widest text-primary uppercase">
+        {uiText("Agent sign-in")}
+      </p>
       <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h1>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
     </>

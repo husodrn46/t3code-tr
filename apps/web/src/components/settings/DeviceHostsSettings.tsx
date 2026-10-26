@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { DeviceToolVersions } from "../device/DeviceToolVersions";
 import { DeviceHostAvailability } from "../device/DeviceHostAvailability";
 import { useAtomValue } from "@effect/atom-react";
@@ -101,8 +101,10 @@ export function DeviceHostsSettings(props: { environmentId: EnvironmentId | null
     } else {
       toastManager.add({
         type: "error",
-        title: "Device hosts not saved on all environments",
-        description: `Could not update ${failed.map((environment) => environment.label).join(", ")}.`,
+        title: uiText("Device hosts not saved on all environments"),
+        description: uiFormat("Could not update {0}.", [
+          failed.map((environment) => environment.label).join(", "),
+        ]),
       });
     }
   };
@@ -116,10 +118,16 @@ export function DeviceHostsSettings(props: { environmentId: EnvironmentId | null
       toastManager.add({
         type: failed.length ? "error" : "success",
         title: failed.length
-          ? `${host.label}: ${failed.length} of ${targets.length} environments failed`
-          : `${host.label}: connection checks passed`,
+          ? uiFormat("{0}: {1} of {2} environments failed", [
+              host.label,
+              failed.length,
+              targets.length,
+            ])
+          : uiFormat("{0}: connection checks passed", [host.label]),
         description: failed.length
-          ? `Could not connect from ${failed.map((target) => target.label).join(", ")}.`
+          ? uiFormat("Could not connect from {0}.", [
+              failed.map((target) => target.label).join(", "),
+            ])
           : "Connected or already available locally on each selected environment.",
       });
       return results;
@@ -136,7 +144,9 @@ export function DeviceHostsSettings(props: { environmentId: EnvironmentId | null
       title={uiText("Device hosts")}
       serverScoped
       settingKeys={["deviceHosts"]}
-      description="Add remote machines with simulator or emulator runtimes installed, and the selected environments will connect over SSH and set up device tools automatically."
+      description={uiText(
+        "Add remote machines with simulator or emulator runtimes installed, and the selected environments will connect over SSH and set up device tools automatically.",
+      )}
       control={
         <Button
           size="sm"
@@ -149,14 +159,15 @@ export function DeviceHostsSettings(props: { environmentId: EnvironmentId | null
             setEditing({ kind: "ssh", id: randomUUID(), label: "", target: "" });
           }}
         >
-          <PlusIcon className="size-3.5" /> Add host
+          <PlusIcon className="size-3.5" />
+          {uiText(" Add host")}
         </Button>
       }
     >
       <div className="pt-3 pb-2">
         {!props.environmentId ? (
           <p className="text-sm text-muted-foreground">
-            Connect a selected environment to manage device hosts.
+            {uiText("Connect a selected environment to manage device hosts.")}
           </p>
         ) : (
           <>
@@ -270,7 +281,7 @@ function DeviceHostList({
   return (
     <>
       {rows.length === 0 ? (
-        <p className="py-2 text-sm text-muted-foreground">No device hosts.</p>
+        <p className="py-2 text-sm text-muted-foreground">{uiText("No device hosts.")}</p>
       ) : null}
       {rows.map(({ host, members }) => {
         const hostChecks = checks[deviceHostConnectionKey(host)];
@@ -449,7 +460,7 @@ function DeviceHostList({
                 <Collapsible>
                   <div className="min-w-0 text-xs [--inline-button-white-space:normal]">
                     <CollapsibleTrigger
-                      aria-label={`${host.label} machine details`}
+                      aria-label={uiFormat("{0} machine details", [host.label])}
                       render={<InlineButton tone="muted" />}
                     >
                       <span className="line-clamp-1 break-all text-left">
@@ -509,7 +520,7 @@ function DeviceHostList({
               {!compact && error ? (
                 <div className="mt-1" role="status">
                   <details className="text-xs text-destructive">
-                    <summary>Connection failed</summary>
+                    <summary>{uiText("Connection failed")}</summary>
                     <p className="mt-1 whitespace-pre-wrap break-words">{error}</p>
                   </details>
                 </div>
@@ -563,8 +574,8 @@ function DeviceHostList({
                           retryHost(result.environmentId, result.host.id, result.environmentId)
                         }
                       >
-                        {retrying === result.environmentId ? "Retrying" : uiText("Retry")} from{" "}
-                        {result.label}
+                        {retrying === result.environmentId ? uiText("Retrying") : uiText("Retry")}
+                        {uiText(" from")} {result.label}
                         {result.address ? ` (${result.address})` : null}
                       </MenuItem>
                     ))
@@ -586,7 +597,7 @@ function DeviceHostList({
                 ? retrying === host.id
                   ? uiText("Retrying…")
                   : uiText("Retry")
-                : "Test connection"}
+                : uiText("Test connection")}
             </Button>
           </div>
         );

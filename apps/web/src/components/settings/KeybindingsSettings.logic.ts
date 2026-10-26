@@ -127,7 +127,7 @@ export function parseWhenExpressionDraft(
   if (!ast) {
     return {
       ok: false,
-      message: "Use variables with !, &&, ||, and parentheses.",
+      message: uiText("Use variables with !, &&, ||, and parentheses."),
     };
   }
 
@@ -207,13 +207,13 @@ export interface KeybindingGroup {
 const KEYBINDING_GROUPS = [
   {
     id: "navigation",
-    title: "Navigation",
+    title: uiText("Navigation"),
     prefixes: ["sidebar", "rightPanel", "commandPalette", "filePicker", "projectSearch", "editor"],
   },
   { id: "threads", title: uiText("Threads"), prefixes: ["thread", "chat", "pullRequest"] },
-  { id: "composer", title: "Composer", prefixes: ["composer", "modelPicker"] },
+  { id: "composer", title: uiText("Composer"), prefixes: ["composer", "modelPicker"] },
   { id: "terminal", title: uiText("Terminal"), prefixes: ["terminal"] },
-  { id: "preview", title: "Preview & diff", prefixes: ["preview", "diff"] },
+  { id: "preview", title: uiText("Preview & diff"), prefixes: ["preview", "diff"] },
   {
     id: "appearance",
     title: uiText("Appearance"),
@@ -221,7 +221,7 @@ const KEYBINDING_GROUPS = [
   },
   { id: "scripts", title: uiText("Project scripts"), prefixes: ["script"] },
 ] as const;
-const OTHER_KEYBINDING_GROUP = { id: "other", title: "Other" } as const;
+const OTHER_KEYBINDING_GROUP = { id: "other", title: uiText("Other") } as const;
 
 function keybindingGroupFor(command: KeybindingCommand): { id: string; title: string } {
   const prefix = String(command).split(".")[0] ?? "";

@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   formatFilePathForClipboard,
   type MediaActionId,
@@ -145,15 +145,19 @@ export function MediaActions({
         if (reference.relativePath)
           items.push({ id: "copy-relative-path", label: uiText("Copy relative path") });
       } else if (reference?.kind === "url") {
-        items.push({ id: "copy-url", label: "Copy URL" });
+        items.push({ id: "copy-url", label: uiText("Copy URL") });
       }
       if (source.onOpenFile)
-        items.push({ id: "open-file", label: "Open in file viewer", disabled: !canReadMedia });
-      items.push({ id: "save", label: `Save ${noun}`, disabled: unavailable });
+        items.push({
+          id: "open-file",
+          label: uiText("Open in file viewer"),
+          disabled: !canReadMedia,
+        });
+      items.push({ id: "save", label: uiFormat("Save {0}", [noun]), disabled: unavailable });
       if (source.kind === "image") {
         items.push({
           id: "copy-image",
-          label: "Copy image",
+          label: uiText("Copy image"),
           disabled: unavailable || !canCopyImage,
         });
       }
@@ -183,7 +187,7 @@ export function MediaActions({
       } else if (action === "save" || action === "copy-image") {
         progressToast = toastManager.add({
           type: "loading",
-          title: action === "save" ? `Preparing ${noun} download…` : "Copying image…",
+          title: action === "save" ? uiFormat("Preparing {0} download…", [noun]) : "Copying image…",
         });
         await (action === "save" ? save() : copyImage());
         toastManager.update(progressToast, {

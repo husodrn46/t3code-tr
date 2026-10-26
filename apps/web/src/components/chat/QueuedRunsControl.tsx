@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { scopeThreadRef } from "@t3tools/client-runtime/environment";
 import { deriveThreadQueueWorkflowState } from "@t3tools/client-runtime/state/thread-workflows";
 import { assistantCitationsToPlainText } from "@t3tools/shared/assistantCitations";
@@ -232,14 +232,19 @@ export function QueuedRunsControl({
     <ComposerBanner.Attachment>
       <ComposerBanner.Root
         role="region"
-        aria-label={`${items.length} queued message${items.length === 1 ? "" : "s"}`}
+        aria-label={uiFormat("{0} queued message{1}", [
+          items.length,
+          uiText(items.length === 1 ? "" : "s", { context: "plural-suffix" }),
+        ])}
         aria-live="polite"
         data-chat-composer-collapsed-controls="true"
         className="relative z-0"
       >
         <ComposerBanner.Row
           render={<button type="button" />}
-          aria-label={expanded ? "Collapse queued messages" : "Expand queued messages"}
+          aria-label={
+            expanded ? uiText("Collapse queued messages") : uiText("Expand queued messages")
+          }
           aria-expanded={expanded}
           aria-controls={queueListId}
           onPointerDown={(event) => event.preventDefault()}
@@ -330,7 +335,9 @@ export function QueuedRunsControl({
                       <Button
                         size="icon-xs"
                         variant="ghost-muted"
-                        aria-label="Reorder queued message (drag, or press the arrow keys)"
+                        aria-label={uiText(
+                          "Reorder queued message (drag, or press the arrow keys)",
+                        )}
                         className="cursor-grab active:cursor-grabbing disabled:cursor-default"
                         disabled={busyRunId !== null}
                         onPointerDown={() => {
@@ -353,10 +360,12 @@ export function QueuedRunsControl({
                     ) : null}
                   </ComposerBanner.Icon>
                   <ComposerBanner.Content className="text-foreground/80">
-                    {isEditing ? <span className="sr-only">Editing queued message: </span> : null}
+                    {isEditing ? (
+                      <span className="sr-only">{uiText("Editing queued message: ")}</span>
+                    ) : null}
                     {item.pending ? (
                       <Clock3Icon
-                        aria-label="Saving queued message"
+                        aria-label={uiText("Saving queued message")}
                         className="size-3 shrink-0 text-muted-foreground/60"
                       />
                     ) : null}
@@ -397,7 +406,7 @@ export function QueuedRunsControl({
                       <Button
                         size="xs"
                         variant="ghost"
-                        aria-label="Cancel editing queued message"
+                        aria-label={uiText("Cancel editing queued message")}
                         onClick={props.onCancelEdit}
                       >
                         {uiText("Cancel")}
@@ -410,7 +419,7 @@ export function QueuedRunsControl({
                               <Button
                                 size="icon-xs"
                                 variant="ghost-muted"
-                                aria-label="Edit queued message"
+                                aria-label={uiText("Edit queued message")}
                                 disabled={item.runId === null || busyRunId !== null}
                                 onClick={() => {
                                   if (item.runId !== null && item.messageId !== null) {
@@ -428,7 +437,11 @@ export function QueuedRunsControl({
                             <PencilIcon />
                           </TooltipTrigger>
                           <TooltipPopup>
-                            {`Edit in the composer${item.serverIndex === queued.length - 1 && props.editShortcutLabel ? ` (${props.editShortcutLabel})` : ""}`}
+                            {uiFormat("Edit in the composer{0}", [
+                              item.serverIndex === queued.length - 1 && props.editShortcutLabel
+                                ? ` (${props.editShortcutLabel})`
+                                : "",
+                            ])}
                           </TooltipPopup>
                         </Tooltip>
                         <Tooltip>
@@ -444,7 +457,7 @@ export function QueuedRunsControl({
                               }}
                             >
                               <CornerUpRightIcon />
-                              {workflow?.canSendNow ? "Send now" : uiText("Steer")}
+                              {workflow?.canSendNow ? uiText("Send now") : uiText("Steer")}
                             </Button>
                           </TooltipTrigger>
                           <TooltipPopup>
@@ -455,7 +468,7 @@ export function QueuedRunsControl({
                           <TooltipTrigger
                             render={
                               <ComposerBanner.Dismiss
-                                aria-label="Remove queued message"
+                                aria-label={uiText("Remove queued message")}
                                 disabled={item.runId === null || busyRunId !== null}
                                 onClick={() => {
                                   if (item.runId !== null) void remove(item.runId);
@@ -463,7 +476,7 @@ export function QueuedRunsControl({
                               />
                             }
                           />
-                          <TooltipPopup>Remove from queue</TooltipPopup>
+                          <TooltipPopup>{uiText("Remove from queue")}</TooltipPopup>
                         </Tooltip>
                       </>
                     )}

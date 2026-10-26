@@ -192,7 +192,7 @@ export function AttachmentFilePreview(props: {
         const cause = Cause.squash(result.cause);
         toastManager.add({
           type: "error",
-          title: "Could not save file",
+          title: uiText("Could not save file"),
           description: cause instanceof Error ? cause.message : "Please try again.",
         });
       }
@@ -253,10 +253,10 @@ export function AttachmentFilePreview(props: {
     </div>
   ) : (
     <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-1 px-6 text-center">
-      <p className="text-sm font-medium">No preview for this file</p>
+      <p className="text-sm font-medium">{uiText("No preview for this file")}</p>
       <p className="max-w-sm text-xs leading-relaxed text-muted-foreground">
-        Save it to open in an app that supports {props.name.split(".").at(-1) || "this format"}{" "}
-        files.
+        {uiText("Save it to open in an app that supports ")}
+        {props.name.split(".").at(-1) || "this format"} {uiText("files.")}
       </p>
     </div>
   );
@@ -292,7 +292,7 @@ export function AttachmentFilePreview(props: {
         ) : null}
         {showsRawText ? (
           <FileSurfaceAction
-            label={wordWrap ? "Disable word wrap" : "Enable word wrap"}
+            label={wordWrap ? uiText("Disable word wrap") : uiText("Enable word wrap")}
             pressed={wordWrap}
             onPress={() => updateClientSettings({ wordWrap: !wordWrap })}
           >
@@ -302,7 +302,11 @@ export function AttachmentFilePreview(props: {
         {content ? (
           <FileSurfaceAction
             label={
-              isCopied ? uiText("Copied") : content.truncated ? "Copy preview" : "Copy contents"
+              isCopied
+                ? uiText("Copied")
+                : content.truncated
+                  ? uiText("Copy preview")
+                  : uiText("Copy contents")
             }
             onPress={() => copyToClipboard(content.text, undefined)}
           >
@@ -311,7 +315,7 @@ export function AttachmentFilePreview(props: {
         ) : null}
         {url ? (
           <FileSurfaceAction
-            label={saving ? "Preparing file…" : "Save file"}
+            label={saving ? uiText("Preparing file…") : uiText("Save file")}
             disabled={saving}
             onPress={save}
           >
@@ -319,7 +323,7 @@ export function AttachmentFilePreview(props: {
           </FileSurfaceAction>
         ) : null}
         {props.onRemove ? (
-          <FileSurfaceAction label="Remove from draft" onPress={props.onRemove}>
+          <FileSurfaceAction label={uiText("Remove from draft")} onPress={props.onRemove}>
             <Trash2Icon className="size-3.5" />
           </FileSurfaceAction>
         ) : null}
@@ -331,9 +335,9 @@ export function AttachmentFilePreview(props: {
       </div>
       {content?.truncated ? (
         <FileSurfaceNotice>
-          Preview limited to the first 1 MB
-          {props.sizeBytes > 0 ? ` of a ${props.sizeBytes.toLocaleString()} byte file` : ""}. Save
-          the file to read it in full.
+          {uiText("Preview limited to the first 1 MB")}
+          {props.sizeBytes > 0 ? ` of a ${props.sizeBytes.toLocaleString()} byte file` : ""}
+          {uiText(". Save the file to read it in full.")}
         </FileSurfaceNotice>
       ) : null}
       {body}

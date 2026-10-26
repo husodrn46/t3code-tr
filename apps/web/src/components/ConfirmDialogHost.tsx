@@ -47,7 +47,7 @@ function resolveConfirmDialogCopy(message: string): ConfirmationCopy {
   }
 
   return {
-    title: "Confirm action",
+    title: uiText("Confirm action"),
     description: normalizedMessage || "This action requires your confirmation.",
   };
 }

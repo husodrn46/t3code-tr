@@ -61,7 +61,7 @@ export function usageLimitsBannerItem(
     variant: "info",
     priority: "notice",
     icon: <GaugeIcon />,
-    title: "Usage limits",
+    title: uiText("Usage limits"),
     description: summary,
     dismissLabel: "Dismiss usage limits",
     onDismiss,

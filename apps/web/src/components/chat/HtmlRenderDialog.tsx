@@ -26,7 +26,8 @@ export function HtmlRenderDialog(props: {
       >
         <DialogTitle className="sr-only">
           {uiText("Expanded ")}
-          {props.title} preview
+          {props.title}
+          {uiText(" preview")}
         </DialogTitle>
         <div className="relative w-[92vw]">
           <Button

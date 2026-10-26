@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { ThreadHoverCardPopup } from "../ThreadHoverCard";
 import { AgentElapsed } from "./AgentElapsed";
 import { projectedSubagentsToRuntime } from "@t3tools/client-runtime/state/subagentRuntime";
@@ -144,7 +144,9 @@ export function V2LifecycleRow(props: {
     return (
       <TimelineSystemDivider
         label={
-          item.source.type === "run" ? "Forked from conversation" : uiText("Conversation fork")
+          item.source.type === "run"
+            ? uiText("Forked from conversation")
+            : uiText("Conversation fork")
         }
         icon={GitForkIcon}
         actionLabel={item.source.type === "run" ? "Open source conversation" : "Open fork"}
@@ -168,7 +170,7 @@ export function V2LifecycleRow(props: {
           <Button
             size="xs"
             variant="outline"
-            aria-label={`Open ${item.title ?? "created thread"}`}
+            aria-label={uiFormat("Open {0}", [item.title ?? "created thread"])}
             onClick={() => props.onOpenThread(item.targetThreadId)}
           >
             {uiText("Open chat")}
@@ -188,7 +190,7 @@ export function V2LifecycleRow(props: {
         }
         trailing={
           <InlineButton
-            aria-label={`Open ${item.title ?? "created thread"}`}
+            aria-label={uiFormat("Open {0}", [item.title ?? "created thread"])}
             onClick={() => props.onOpenThread(item.targetThreadId)}
           >
             {uiText("Open chat")}
@@ -226,7 +228,7 @@ const STATUS_VISUALS: Record<
   pending: { dotClass: "bg-info", label: uiText("Queued") },
   running: { dotClass: "bg-info", label: uiText("Running") },
   waiting: { dotClass: "bg-info", label: uiText("Waiting") },
-  idle: { dotClass: "bg-muted-foreground/50", label: "Idle · resumable" },
+  idle: { dotClass: "bg-muted-foreground/50", label: uiText("Idle · resumable") },
   completed: { dotClass: "bg-success", label: uiText("Completed") },
   failed: { dotClass: "bg-destructive", label: uiText("Failed") },
   cancelled: { dotClass: "bg-muted-foreground/60", label: uiText("Stopped") },
@@ -508,7 +510,7 @@ function SubagentTimelineLink(props: {
             <button
               type="button"
               data-v2-item-type="subagent"
-              aria-label={`Open ${props.title}`}
+              aria-label={uiFormat("Open {0}", [props.title])}
               aria-description={statusLabel}
               onClick={() => props.onOpenThread(threadId)}
               className={cn(
@@ -604,7 +606,7 @@ export function HandoffRow(props: {
   const entries = settings ? applyProviderInstanceSettings(derived, settings, null) : derived;
   return (
     <TimelineSystemDivider
-      label={props.pending ? "Context handoff pending" : uiText("Context handoff")}
+      label={props.pending ? uiText("Context handoff pending") : uiText("Context handoff")}
       icon={ArrowRightLeftIcon}
       showDetailSeparator={false}
       tone={props.failed ? "danger" : "neutral"}

@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type { EnvironmentId } from "@t3tools/contracts";
 import type { SourceControlClientDefinition } from "@t3tools/client-runtime/source-control-clients";
 import { useState } from "react";
@@ -25,7 +25,7 @@ export function SourceControlHostSettings({
     (settings) => settings.sourceControlHosts[definition.kind],
   );
   const updateSettings = useAtomCommand(serverEnvironment.updateSettings, {
-    label: `save ${definition.label} settings`,
+    label: uiFormat("save {0} settings", [definition.label]),
   });
   const [saving, setSaving] = useState(false);
   const formDefinition = { settingsSchema: definition.settings };

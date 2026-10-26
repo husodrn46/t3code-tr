@@ -201,8 +201,9 @@ export function DevicePanel(props: {
           <DeviceHostUpdates state={state} environmentId={environmentId} />
           {bootingDevices.length > 0 ? (
             <div role="status" className="border-b px-3 py-2 text-xs text-muted-foreground">
-              Starting {bootingDevices.map((device) => device.name).join(", ")}… This can take a
-              minute.
+              {uiText("Starting ")}
+              {bootingDevices.map((device) => device.name).join(", ")}
+              {uiText("… This can take a minute.")}
             </div>
           ) : null}
           {operationError ? (
@@ -240,11 +241,11 @@ export function DevicePanel(props: {
               message={
                 pendingDevice
                   ? pendingDevice.booted
-                    ? "Opening device…"
-                    : "Starting device…"
+                    ? uiText("Opening device…")
+                    : uiText("Starting device…")
                   : state.hostStatus === "installing"
                     ? (state.hostStatusDetail ?? "Installing device support…")
-                    : "Finding devices…"
+                    : uiText("Finding devices…")
               }
             />
           ) : (
@@ -264,7 +265,7 @@ export function DevicePanel(props: {
                     >
                       {state.hostStatus === "failed"
                         ? (state.hostStatusDetail ?? "The device hub failed to start.")
-                        : "No simulators or emulators were found on this environment."}
+                        : uiText("No simulators or emulators were found on this environment.")}
                     </p>
                   </>
                 ) : null}
@@ -307,7 +308,7 @@ export function DevicePanel(props: {
                                 ) : (
                                   <Play />
                                 )}
-                                {device.booted ? uiText("Open") : "Start"}
+                                {device.booted ? uiText("Open") : uiText("Start")}
                               </Button>
                             </div>
                           ))}
@@ -321,8 +322,9 @@ export function DevicePanel(props: {
                 !state.devices.some((device) => device.platform === "android") &&
                 !unavailablePlatforms.some((platform) => platform.platform === "android") ? (
                   <p className="max-w-sm text-xs">
-                    No Android virtual devices found. Create one in Android Studio's Device Manager,
-                    then refresh.
+                    {uiText(
+                      "No Android virtual devices found. Create one in Android Studio's Device Manager, then refresh.",
+                    )}
                   </p>
                 ) : null}
                 {loaded && !hostBusy ? (
@@ -332,7 +334,7 @@ export function DevicePanel(props: {
                     size="sm"
                     onClick={() => void list({ environmentId, input: {} })}
                   >
-                    Refresh devices
+                    {uiText("Refresh devices")}
                   </Button>
                 ) : null}
               </div>
@@ -369,7 +371,11 @@ function DeviceNotice(props: {
       <Button
         size="icon-xs"
         variant="ghost"
-        aria-label={props.tone === "warning" ? "Dismiss device warning" : "Dismiss device error"}
+        aria-label={
+          props.tone === "warning"
+            ? uiText("Dismiss device warning")
+            : uiText("Dismiss device error")
+        }
         onClick={props.onDismiss}
       >
         <X />
@@ -383,7 +389,10 @@ function DeviceDiscoveryWarning(props: { readonly label: string; readonly detail
   if (dismissed) return null;
   return (
     <DeviceNotice tone="warning" onDismiss={() => setDismissed(true)}>
-      <p className="font-medium">Device discovery warning · {props.label}</p>
+      <p className="font-medium">
+        {uiText("Device discovery warning · ")}
+        {props.label}
+      </p>
       {props.detail}
     </DeviceNotice>
   );

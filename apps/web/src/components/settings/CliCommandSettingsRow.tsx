@@ -64,7 +64,7 @@ export function CliCommandSettingsRow() {
           disabled={pending}
           onClick={() => change(installed ? "uninstall" : "install")}
         >
-          {installed ? uiText("Remove") : "Install"}
+          {installed ? uiText("Remove") : uiText("Install")}
         </Button>
       }
     />

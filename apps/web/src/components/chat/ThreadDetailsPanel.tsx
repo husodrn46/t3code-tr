@@ -161,7 +161,7 @@ export function ThreadDetailsPanel(props: ThreadDetailsPanelProps) {
           {props.gitCwd ? (
             <ThreadDetailsSection
               headingId="thread-details-version-control-heading"
-              title="Version Control"
+              title={uiText("Version Control")}
               showHeading={false}
               separated={density === "full"}
             >

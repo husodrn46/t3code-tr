@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   type DesktopPendingSnapShot,
   type DesktopSnapShotEvent,
@@ -354,8 +354,8 @@ export function SnapShotCoordinator() {
               "missing-project",
               stackedThreadToast({
                 type: "error",
-                title: "Snapshot taken, but no project is available",
-                description: "Add a project, then capture the window again.",
+                title: uiText("Snapshot taken, but no project is available"),
+                description: uiText("Add a project, then capture the window again."),
               }),
             );
             continue;
@@ -379,9 +379,10 @@ export function SnapShotCoordinator() {
               stackedThreadToast({
                 type: "error",
                 title: uiText("Snapshot failed"),
-                description: `Capture ${item.id}: ${
-                  error instanceof Error ? error.message : "Try the capture again."
-                }`,
+                description: uiFormat("Capture {0}: {1}", [
+                  item.id,
+                  error instanceof Error ? error.message : "Try the capture again.",
+                ]),
               }),
             );
           }

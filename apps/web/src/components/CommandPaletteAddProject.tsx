@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   type AddProjectRemoteSource,
   type NewProjectPublishTarget,
@@ -102,7 +102,7 @@ export function NewProjectPublishHostPicker(props: {
           if (kind !== null) props.onValueChange(kind);
         }}
       >
-        <SelectTrigger size="xs" variant="ghost" aria-label="Host for the new repository">
+        <SelectTrigger size="xs" variant="ghost" aria-label={uiText("Host for the new repository")}>
           <SelectValue>
             {(kind: SourceControlProviderKind) => sourceControlClients.get(kind).label}
           </SelectValue>
@@ -140,8 +140,8 @@ export function NewProjectSummary(props: {
           </span>
           <span className="truncate text-muted-foreground/85 text-xs">
             {props.name.length > 0
-              ? `Creates ${props.pathPreview}`
-              : `Goes in ${props.projectsRoot}`}
+              ? uiFormat("Creates {0}", [props.pathPreview])
+              : uiFormat("Goes in {0}", [props.projectsRoot])}
             {props.environmentLabel === null ? null : ` on ${props.environmentLabel}`}
           </span>
         </span>

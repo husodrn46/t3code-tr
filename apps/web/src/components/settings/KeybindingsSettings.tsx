@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useEnvironmentScope } from "../../state/session";
 import { useEnvironmentsWithScope, readEnvironmentScope } from "../../state/session";
 import {
@@ -135,8 +135,8 @@ function KeybindingsSearchInput({
           if (query.length > 0) onChange("");
           else event.currentTarget.blur();
         }}
-        placeholder="Search keybindings"
-        aria-label="Search keybindings"
+        placeholder={uiText("Search keybindings")}
+        aria-label={uiText("Search keybindings")}
         size="sm"
       />
     </InputGroup>
@@ -253,8 +253,9 @@ function UnknownWhenVariableWarning({
 
   return (
     <WarningTooltipIcon label={label} focusable={focusable} className="size-4.5">
-      T3 Code does not recognize this condition yet. It can still be saved, but it may not match
-      unless the runtime provides it.
+      {uiText(
+        "T3 Code does not recognize this condition yet. It can still be saved, but it may not match unless the runtime provides it.",
+      )}
     </WarningTooltipIcon>
   );
 }
@@ -268,7 +269,8 @@ function KeybindingConflictWarning({ labels }: { labels: ReadonlyArray<string> }
 
   return (
     <WarningTooltipIcon label={description}>
-      {description} The most recent matching binding wins when both conditions can apply.
+      {description}
+      {uiText(" The most recent matching binding wins when both conditions can apply.")}
     </WarningTooltipIcon>
   );
 }
@@ -363,12 +365,12 @@ function WhenExpressionNodeEditor({
         <Toggle
           pressed={condition.negated}
           onPressedChange={(pressed) => onChange(setConditionNegated(node, pressed))}
-          aria-label={`Negate ${condition.identifier}`}
+          aria-label={uiFormat("Negate {0}", [condition.identifier])}
           variant="outline"
           size="compact"
           className="min-w-10"
         >
-          Not
+          {uiText("Not")}
         </Toggle>
         <WhenVariableSelect
           value={condition.identifier}
@@ -398,12 +400,12 @@ function WhenExpressionNodeEditor({
           <Toggle
             pressed
             onPressedChange={(pressed) => onChange(pressed ? node : node.node)}
-            aria-label="Negate group"
+            aria-label={uiText("Negate group")}
             variant="outline"
             size="compact"
             className="min-w-10"
           >
-            Not
+            {uiText("Not")}
           </Toggle>
           {onRemove ? (
             <WhenExpressionRemoveButton
@@ -502,8 +504,8 @@ function WhenExpressionNodeEditor({
             <SelectValue />
           </SelectTrigger>
           <SelectContent alignItemWithTrigger={false} matchTriggerWidth={false}>
-            <SelectItem value="and">and</SelectItem>
-            <SelectItem value="or">or</SelectItem>
+            <SelectItem value="and">{uiText("and")}</SelectItem>
+            <SelectItem value="or">{uiText("or")}</SelectItem>
           </SelectContent>
         </Select>
         <Button type="button" variant="outline" size="compact" onClick={addCondition}>
@@ -625,9 +627,9 @@ function WhenExpressionBuilder({
           <InputGroupInput
             value={expressionDraft}
             onChange={(event) => updateExpressionDraft(event.currentTarget.value)}
-            placeholder="Always"
+            placeholder={uiText("Always")}
             aria-invalid={Boolean(parseError)}
-            aria-label="When expression"
+            aria-label={uiText("When expression")}
             size="compact"
             font="mono"
           />
@@ -669,7 +671,7 @@ function WhenExpressionBuilder({
         )}
         {parseError ? (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg border border-destructive/30 bg-background/75 p-4 text-center text-xs text-destructive backdrop-blur-xs">
-            Fix the expression above to continue editing visually.
+            {uiText("Fix the expression above to continue editing visually.")}
           </div>
         ) : null}
       </div>
@@ -810,7 +812,10 @@ function KeybindingKeyControl({
         <button
           type="button"
           onClick={() => setDraft({ isRecording: true })}
-          aria-label={`Edit shortcut for ${commandLabel(row.command)}: ${formatShortcutLabel(row.binding.shortcut)}`}
+          aria-label={uiFormat("Edit shortcut for {0}: {1}", [
+            commandLabel(row.command),
+            formatShortcutLabel(row.binding.shortcut),
+          ])}
           className={cn(
             "inline-flex h-8 cursor-pointer items-center rounded-md border border-transparent px-1.5 sm:h-7 outline-none transition-colors hover:border-border/70 hover:bg-accent focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/24",
             pillClassName,
@@ -822,9 +827,9 @@ function KeybindingKeyControl({
         <Input
           data-keybinding-capture=""
           autoFocus={isRecording}
-          aria-label={`Keybinding for ${commandLabel(row.command)}`}
+          aria-label={uiFormat("Keybinding for {0}", [commandLabel(row.command)])}
           value={isRecording ? "" : keyDraft}
-          placeholder={isRecording ? uiText("Press shortcut") : "Unassigned"}
+          placeholder={isRecording ? uiText("Press shortcut") : uiText("Unassigned")}
           size="sm"
           font="mono"
           className="w-44"
@@ -863,7 +868,7 @@ function WhenClauseControl({
             className="min-w-0 shrink"
           />
         }
-        aria-label={`Edit when clause for ${label}`}
+        aria-label={uiFormat("Edit when clause for {0}", [label])}
       >
         <span className="truncate font-mono">{expression || "Always"}</span>
         <ChevronDownIcon className="size-3.5 shrink-0 opacity-60" />
@@ -904,7 +909,7 @@ function KeybindingRowMenu({
             variant="ghost-muted"
             size="icon-sm"
             disabled={isSaving}
-            aria-label={`Actions for ${commandLabel(row.command)}`}
+            aria-label={uiFormat("Actions for {0}", [commandLabel(row.command)])}
           />
         }
       >
@@ -913,7 +918,7 @@ function KeybindingRowMenu({
       <MenuPopup align="end">
         {canReset ? (
           <MenuItem disabled={isSaving} onClick={() => onReset(row)}>
-            Reset to default
+            {uiText("Reset to default")}
           </MenuItem>
         ) : null}
         {canRemove ? (
@@ -1130,9 +1135,9 @@ function NewKeybindingKeyInput({
     <Input
       data-keybinding-capture=""
       autoFocus={autoFocus}
-      aria-label={`Keybinding for ${draft.commandLabelText}`}
+      aria-label={uiFormat("Keybinding for {0}", [draft.commandLabelText])}
       value={draft.isRecording ? "" : draft.keyDraft}
-      placeholder={draft.isRecording ? uiText("Press shortcut") : "Unassigned"}
+      placeholder={draft.isRecording ? uiText("Press shortcut") : uiText("Unassigned")}
       size="sm"
       font="mono"
       className={className}
@@ -1179,7 +1184,7 @@ function NewKeybindingCancelIcon({
             variant="ghost-muted"
             size="icon-sm"
             disabled={isSaving}
-            aria-label="Cancel new keybinding"
+            aria-label={uiText("Cancel new keybinding")}
             onClick={onCancel}
           />
         }
@@ -1198,7 +1203,7 @@ function NewKeybindingSettingsRow(props: NewKeybindingProps) {
   return (
     <SettingsRow
       className="bg-muted/15"
-      title="New keybinding"
+      title={uiText("New keybinding")}
       description={
         <span className="flex h-6 items-center gap-1.5">
           <span className="text-xs leading-none text-muted-foreground/70">{uiText("When")}</span>
@@ -1380,7 +1385,7 @@ export function KeybindingsSettingsPanel() {
       if (!isAtomCommandInterrupted(failed)) {
         const error = squashAtomCommandFailure(failed);
         toastManager.add({
-          title: "Unable to save keybinding",
+          title: uiText("Unable to save keybinding"),
           description: error instanceof Error ? error.message : "The keybinding was not saved.",
           type: "error",
         });
@@ -1411,7 +1416,7 @@ export function KeybindingsSettingsPanel() {
       if (result?._tag === "Failure" && !isAtomCommandInterrupted(result)) {
         const error = squashAtomCommandFailure(result);
         toastManager.add({
-          title: "Unable to remove keybinding",
+          title: uiText("Unable to remove keybinding"),
           description: error instanceof Error ? error.message : "The keybinding was not removed.",
           type: "error",
         });
@@ -1458,7 +1463,7 @@ export function KeybindingsSettingsPanel() {
             onClick={() => setIsAddingBinding(true)}
           >
             <PlusIcon aria-hidden className="size-4" />
-            Add keybinding
+            {uiText("Add keybinding")}
           </Button>
           <Tooltip>
             <TooltipTrigger
@@ -1483,8 +1488,8 @@ export function KeybindingsSettingsPanel() {
       {!canWriteSettings ? (
         <p className="text-xs text-muted-foreground">
           {connectedEnvironments.length === 0
-            ? "Connect an environment to change keybindings."
-            : "This connection can view keybindings but cannot change them."}
+            ? uiText("Connect an environment to change keybindings.")
+            : uiText("This connection can view keybindings but cannot change them.")}
         </p>
       ) : null}
       <div inert={!canWriteSettings} className="flex flex-col gap-8">
@@ -1511,7 +1516,7 @@ export function KeybindingsSettingsPanel() {
         ) : (
           <SettingsGroup>
             <div className="px-4 py-12 text-center text-sm text-muted-foreground">
-              No keybindings match your search.
+              {uiText("No keybindings match your search.")}
             </div>
           </SettingsGroup>
         )}

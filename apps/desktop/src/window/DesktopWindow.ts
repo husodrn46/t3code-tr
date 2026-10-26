@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import * as Clock from "effect/Clock";
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
@@ -557,7 +558,7 @@ export const make = Effect.gen(function* () {
             });
           }
           if (params.dictionarySuggestions.length === 0) {
-            menuTemplate.push({ label: "No suggestions", enabled: false });
+            menuTemplate.push({ label: uiText("No suggestions"), enabled: false });
           }
           menuTemplate.push({ type: "separator" });
         }
@@ -565,7 +566,7 @@ export const make = Effect.gen(function* () {
         if (Option.isSome(ElectronShell.parseSafeExternalUrl(params.linkURL))) {
           menuTemplate.push(
             {
-              label: "Copy Link",
+              label: uiText("Copy Link"),
               click: () => {
                 void runPromise(electronShell.copyText(params.linkURL));
               },
@@ -576,7 +577,7 @@ export const make = Effect.gen(function* () {
 
         if (params.mediaType === "image") {
           menuTemplate.push({
-            label: "Copy Image",
+            label: uiText("Copy Image"),
             click: () => {
               void runPromise(
                 Effect.tryPromise(() => copyContextMenuImage(contents, params)).pipe(
@@ -589,10 +590,14 @@ export const make = Effect.gen(function* () {
         }
 
         menuTemplate.push(
-          { role: "cut", enabled: params.editFlags.canCut },
-          { role: "copy", enabled: params.editFlags.canCopy },
-          { role: "paste", enabled: params.editFlags.canPaste },
-          { role: "selectAll", enabled: params.editFlags.canSelectAll },
+          { role: "cut", label: uiText("Cut"), enabled: params.editFlags.canCut },
+          { role: "copy", label: uiText("Copy"), enabled: params.editFlags.canCopy },
+          { role: "paste", label: uiText("Paste"), enabled: params.editFlags.canPaste },
+          {
+            role: "selectAll",
+            label: uiText("Select All"),
+            enabled: params.editFlags.canSelectAll,
+          },
         );
 
         void runPromise(

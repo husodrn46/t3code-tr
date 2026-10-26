@@ -335,7 +335,7 @@ export function DraftHeroHeadline({
             />
           }
         >
-          or start without a project
+          {uiText("or start without a project")}
         </TooltipTrigger>
         {noProjectShortcut ? <TooltipPopup side="bottom">{noProjectShortcut}</TooltipPopup> : null}
       </Tooltip>
@@ -352,9 +352,12 @@ export function DraftHeroHeadline({
           {isScratchDraft ? (
             <>{uiText("What should we work on?")}</>
           ) : canChooseProject ? (
-            <>{projectSelector} to start</>
+            <>
+              {projectSelector}
+              {uiText(" to start")}
+            </>
           ) : (
-            <>Add a project to start</>
+            <>{uiText("Add a project to start")}</>
           )}
         </h1>
       )}

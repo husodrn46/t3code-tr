@@ -38,17 +38,17 @@ export const PULL_REQUEST_STATE_PRESENTATION = {
     Icon: PullRequestGlyph.pullRequest,
   },
   draft: {
-    label: "Draft",
+    label: uiText("Draft"),
     toneClassName: "text-zinc-500 dark:text-zinc-400/80",
     Icon: PullRequestGlyph.draft,
   },
   closed: {
-    label: "Closed",
+    label: uiText("Closed"),
     toneClassName: "text-red-600 dark:text-red-300/90",
     Icon: PullRequestGlyph.closed,
   },
   merged: {
-    label: "Merged",
+    label: uiText("Merged"),
     toneClassName: "text-violet-600 dark:text-violet-300/90",
     Icon: PullRequestGlyph.merged,
   },

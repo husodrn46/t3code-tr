@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import {
   AuthEnvironmentMaintainScope,
@@ -97,7 +97,7 @@ export function useServerUpdate() {
       if (!quiet) {
         toastManager.add({
           type: "error",
-          title: `${serverLabel} update failed`,
+          title: uiFormat("{0} update failed", [serverLabel]),
           description: message,
         });
       }
@@ -106,11 +106,11 @@ export function useServerUpdate() {
     if (!quiet) {
       toastManager.add({
         type: "success",
-        title: `${serverLabel} updated`,
+        title: uiFormat("{0} updated", [serverLabel]),
         description:
           selfUpdate === "desktop-managed"
-            ? `Desktop app relaunched on ${result.value.targetVersion}.`
-            : `Reconnected on t3@${result.value.targetVersion}.`,
+            ? uiFormat("Desktop app relaunched on {0}.", [result.value.targetVersion])
+            : uiFormat("Reconnected on t3@{0}.", [result.value.targetVersion]),
       });
     }
     return { status: "updated" };
@@ -234,14 +234,20 @@ export function ServerUpdateAction({
           installation?.kind === "npm-global" ? "Update command copied" : "Relaunch command copied",
         description:
           installation?.kind === "npm-global"
-            ? `Run \`${command}\` on ${serverLabel}, then restart t3 with your usual options.`
-            : `Stop t3 on ${serverLabel}, then relaunch with \`${command}\` using the same subcommand and options. This does not update an installed t3 command.`,
+            ? uiFormat("Run `{0}` on {1}, then restart t3 with your usual options.", [
+                command,
+                serverLabel,
+              ])
+            : uiFormat(
+                "Stop t3 on {0}, then relaunch with `{1}` using the same subcommand and options. This does not update an installed t3 command.",
+                [serverLabel, command],
+              ),
       });
     },
     onError: (error) => {
       toastManager.add({
         type: "error",
-        title: "Could not copy update command",
+        title: uiText("Could not copy update command"),
         description: error.message,
       });
     },
@@ -278,7 +284,7 @@ export function ServerUpdateAction({
   if (selfUpdate === "desktop-managed" && !desktopAppUpdate) {
     return (
       <span className="text-muted-foreground text-xs">
-        Update the desktop app on that machine to update this server.
+        {uiText("Update the desktop app on that machine to update this server.")}
       </span>
     );
   }
@@ -305,7 +311,7 @@ export function ServerUpdateAction({
               size="icon-xs"
               variant="ghost-muted"
               className={className}
-              aria-label={`${actionLabel} for ${serverLabel}`}
+              aria-label={uiFormat("{0} for {1}", [actionLabel, serverLabel])}
               disabled={manualCommand === null && !canUpdate}
               onClick={onClick}
             />
@@ -361,15 +367,15 @@ export function OutdatedServerUpdateAction({
       if (isAtomCommandInterrupted(result)) return;
       toastManager.add({
         type: "error",
-        title: `${serverLabel} update failed`,
+        title: uiFormat("{0} update failed", [serverLabel]),
         description: updateFailureMessage(squashAtomCommandFailure(result)),
       });
       return;
     }
     toastManager.add({
       type: "success",
-      title: `${serverLabel} updated`,
-      description: `Reconnected on t3@${result.value.targetVersion}.`,
+      title: uiFormat("{0} updated", [serverLabel]),
+      description: uiFormat("Reconnected on t3@{0}.", [result.value.targetVersion]),
     });
   };
   return (

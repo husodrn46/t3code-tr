@@ -1,3 +1,4 @@
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   parseScopedThreadKey,
   scopeProjectRef,
@@ -192,7 +193,7 @@ export async function navigateAfterThreadDeletion(navigate: () => Promise<void>)
     toastManager.add(
       stackedThreadToast({
         type: "error",
-        title: "Thread deleted, but navigation failed",
+        title: uiText("Thread deleted, but navigation failed"),
         description: error instanceof Error ? error.message : "An error occurred.",
       }),
     );
@@ -238,7 +239,7 @@ function threadOperationFailure(target: ScopedThreadRef) {
     : AsyncResult.failure(
         Cause.fail(
           new EnvironmentAuthorizationError({
-            message: "This connection cannot change threads.",
+            message: uiText("This connection cannot change threads."),
             requiredScope: AuthOrchestrationOperateScope,
           }),
         ),
@@ -551,7 +552,7 @@ export function useThreadActions() {
       : AsyncResult.failure(
           Cause.fail(
             new EnvironmentAuthorizationError({
-              message: "This connection can no longer remove worktrees.",
+              message: uiText("This connection can no longer remove worktrees."),
               requiredScope: AuthSourceControlWriteScope,
             }),
           ),
@@ -586,7 +587,10 @@ export function useThreadActions() {
             ? "Failed to delete worktree"
             : "Worktree deleted, but Git status refresh failed",
           description: removalFailed
-            ? `Could not remove ${displayWorktreePath ?? orphanedWorktreePath}. ${message}`
+            ? uiFormat("Could not remove {0}. {1}", [
+                displayWorktreePath ?? orphanedWorktreePath,
+                message,
+              ])
             : message,
         }),
       );

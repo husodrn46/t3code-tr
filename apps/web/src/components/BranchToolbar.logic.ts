@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   EnvironmentId,
   EnvironmentMachineKind,
@@ -98,9 +99,9 @@ export function resolveEnvModeLabel(mode: EnvMode): string {
 }
 
 export const WORKTREE_SUBMODULES_LABELS: Record<WorktreeSubmodules, string> = {
-  recursive: "Recursive",
-  "top-level": "Top level only",
-  none: "Skip",
+  recursive: uiText("Recursive"),
+  "top-level": uiText("Top level only"),
+  none: uiText("Skip"),
 };
 
 export function resolveCurrentWorkspaceLabel(activeWorktreePath: string | null): string {

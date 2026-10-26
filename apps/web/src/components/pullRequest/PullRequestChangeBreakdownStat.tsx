@@ -11,10 +11,10 @@ import { PullRequestDiffStat } from "./pullRequestPresentation";
 
 const KIND_LABELS = {
   code: uiText("Code"),
-  tests: "Tests",
-  mocks: "Mocks",
-  generated: "Generated",
-  docs: "Docs",
+  tests: uiText("Tests"),
+  mocks: uiText("Mocks"),
+  generated: uiText("Generated"),
+  docs: uiText("Docs"),
 } satisfies Record<keyof NonNullable<PullRequestChangeBreakdown>, string>;
 
 type DiffTotals = { additions: number; deletions: number };
@@ -65,7 +65,7 @@ export function PullRequestChangeBreakdownStat({
           <ChangeBreakdownGrid breakdown={breakdown} total={{ additions, deletions }} />
         </TooltipPopup>
       ) : query.isPending ? (
-        <TooltipPopup side="bottom">Loading breakdown</TooltipPopup>
+        <TooltipPopup side="bottom">{uiText("Loading breakdown")}</TooltipPopup>
       ) : null}
     </Tooltip>
   );

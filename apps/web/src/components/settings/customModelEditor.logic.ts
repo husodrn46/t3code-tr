@@ -51,11 +51,11 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
     { id: "reasoningEffort", label: "Reasoning", type: "select", choices: EFFORT_CHOICES },
     {
       id: "serviceTier",
-      label: "Speed",
+      label: uiText("Speed"),
       type: "select",
       choices: [
         { id: "default", label: uiText("Standard"), isDefault: true },
-        { id: "fast", label: "Fast" },
+        { id: "fast", label: uiText("Fast") },
       ],
     },
   ],
@@ -72,12 +72,12 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
         { id: "max", label: "Max" },
       ],
     },
-    { id: "fastMode", label: "Fast Mode", type: "boolean" },
+    { id: "fastMode", label: uiText("Fast Mode"), type: "boolean" },
     { id: "thinking", label: uiText("Thinking"), type: "boolean" },
   ],
   [ProviderDriverKind.make("cursor")]: [
     { id: "reasoning", label: "Reasoning", type: "select", choices: EFFORT_CHOICES },
-    { id: "fastMode", label: "Fast Mode", type: "boolean" },
+    { id: "fastMode", label: uiText("Fast Mode"), type: "boolean" },
     { id: "thinking", label: uiText("Thinking"), type: "boolean" },
   ],
   [ProviderDriverKind.make("grok")]: [
@@ -90,7 +90,7 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
       type: "select",
       choices: [
         { id: "off", label: uiText("Off") },
-        { id: "minimal", label: "Minimal" },
+        { id: "minimal", label: uiText("Minimal") },
         { id: "low", label: "Low" },
         { id: "medium", label: "Medium", isDefault: true },
         { id: "high", label: "High" },

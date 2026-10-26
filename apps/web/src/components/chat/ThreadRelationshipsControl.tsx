@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { ThreadDetailsControl } from "./ThreadDetailsControl";
 import { ThreadHoverCardPopup } from "../ThreadHoverCard";
@@ -102,7 +102,7 @@ function ThreadLineageRowList(props: {
         max-height-only virtual viewport measures badly.
       */}
       <ul
-        aria-label="Related threads"
+        aria-label={uiText("Related threads")}
         className="m-0 max-h-[13.5rem] list-none overflow-y-auto overscroll-contain p-0 has-data-workflow-expanded:max-h-[min(28rem,55dvh)]"
       >
         {props.children}
@@ -115,7 +115,8 @@ function ThreadLineageRowList(props: {
         >
           <PlusIcon aria-hidden className="size-4 shrink-0" />
           {uiText("Show ")}
-          {Math.min(props.hiddenCount, THREAD_LINEAGE_PAGE_COUNT)} more
+          {Math.min(props.hiddenCount, THREAD_LINEAGE_PAGE_COUNT)}
+          {uiText(" more")}
         </button>
       ) : null}
     </>
@@ -143,7 +144,12 @@ function ThreadLineageGroup(props: {
           expanded={expanded}
           onClick={() => setExpanded(!expanded)}
           accessory={
-            failedCount > 0 ? <SectionHeaderStatus>{failedCount} failed</SectionHeaderStatus> : null
+            failedCount > 0 ? (
+              <SectionHeaderStatus>
+                {failedCount}
+                {uiText(" failed")}
+              </SectionHeaderStatus>
+            ) : null
           }
         >
           {props.label}
@@ -323,7 +329,7 @@ export function ThreadRelationshipsPanel(props: {
   const groups = [
     { id: "related", label: null, rows: related, expanded: true },
     { id: "active", label: null, rows: active, expanded: true },
-    { id: "previous", label: "Previous agents", rows: previous, expanded: false },
+    { id: "previous", label: uiText("Previous agents"), rows: previous, expanded: false },
   ];
   const runningCount =
     (projection?.subagents.filter(
@@ -378,7 +384,7 @@ export function ThreadRelationshipsPanel(props: {
     });
     setStoppingId(null);
     if (result._tag === "Failure") {
-      toastManager.add({ type: "error", title: "Could not stop subagent" });
+      toastManager.add({ type: "error", title: uiText("Could not stop subagent") });
     }
   };
 
@@ -391,7 +397,7 @@ export function ThreadRelationshipsPanel(props: {
     });
     setStoppingId(null);
     if (result._tag === "Failure") {
-      toastManager.add({ type: "error", title: "Could not stop workflow" });
+      toastManager.add({ type: "error", title: uiText("Could not stop workflow") });
     }
   };
 
@@ -403,7 +409,9 @@ export function ThreadRelationshipsPanel(props: {
   return (
     <ThreadDetailsSection
       headingId="thread-details-lineage-heading"
-      title={runningCount > 0 ? `Lineage · ${runningCount} running` : "Lineage"}
+      title={
+        runningCount > 0 ? uiFormat("Lineage · {0} running", [runningCount]) : uiText("Lineage")
+      }
       data-thread-relationships-panel
       actions={
         canDetach ? (
@@ -414,7 +422,7 @@ export function ThreadRelationshipsPanel(props: {
                   size="icon-xs"
                   variant="ghost"
                   part="icon"
-                  aria-label="More thread actions"
+                  aria-label={uiText("More thread actions")}
                   disabled={busyAction !== null}
                 />
               }
@@ -424,7 +432,7 @@ export function ThreadRelationshipsPanel(props: {
             <MenuPopup align="end" className="min-w-60 max-w-(--available-width)">
               <MenuItem onClick={() => void detach()}>
                 <UnplugIcon className="size-3.5" />
-                Disconnect agent session
+                {uiText("Disconnect agent session")}
               </MenuItem>
             </MenuPopup>
           </Menu>
@@ -630,8 +638,8 @@ export function ThreadRelationshipsPanel(props: {
                               part="secondary"
                               aria-label={
                                 parentTitle
-                                  ? `Merge back to ${parentTitle}`
-                                  : "Merge back to source conversation"
+                                  ? uiFormat("Merge back to {0}", [parentTitle])
+                                  : uiText("Merge back to source conversation")
                               }
                               disabled={!canMerge || busyAction !== null}
                               onClick={() => void merge()}
@@ -646,10 +654,10 @@ export function ThreadRelationshipsPanel(props: {
                         />
                         <TooltipPopup side="left">
                           {latestMergeBackRun === null
-                            ? "Complete a run in this fork before merging it back"
+                            ? uiText("Complete a run in this fork before merging it back")
                             : parentTitle
-                              ? `Merge this conversation back into ${parentTitle}`
-                              : "Merge this conversation back into its source"}
+                              ? uiFormat("Merge this conversation back into {0}", [parentTitle])
+                              : uiText("Merge this conversation back into its source")}
                         </TooltipPopup>
                       </Tooltip>
                       <span className="shrink-0 border border-transparent ps-1 pe-2.5 text-2xs font-medium text-muted-foreground">
@@ -669,7 +677,7 @@ export function ThreadRelationshipsPanel(props: {
                               variant="ghost"
                               part="icon"
                               tone="destructive"
-                              aria-label={`Stop subagent ${threadTitle}`}
+                              aria-label={uiFormat("Stop subagent {0}", [threadTitle])}
                               disabled={stoppingId !== null}
                               onClick={() => void stopSubagent(threadId, agent)}
                             />
@@ -681,7 +689,7 @@ export function ThreadRelationshipsPanel(props: {
                             <SquareIcon aria-hidden className="size-3 fill-current" />
                           )}
                         </TooltipTrigger>
-                        <TooltipPopup side="left">Stop subagent</TooltipPopup>
+                        <TooltipPopup side="left">{uiText("Stop subagent")}</TooltipPopup>
                       </Tooltip>
                     </div>
                   ) : null}

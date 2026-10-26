@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
@@ -74,17 +74,19 @@ const checkForUpdatesFromMenu = Effect.gen(function* () {
   if (updateState.status === "up-to-date") {
     yield* electronDialog.showMessageBox({
       type: "info",
-      title: "You're up to date!",
-      message: `T3 Code ${updateState.currentVersion} is currently the newest version available.`,
-      buttons: ["OK"],
+      title: uiText("You're up to date!"),
+      message: uiFormat("T3 Code {0} is currently the newest version available.", [
+        updateState.currentVersion,
+      ]),
+      buttons: [uiText("OK")],
     });
   } else if (updateState.status === "error") {
     yield* electronDialog.showMessageBox({
       type: "warning",
-      title: "Update check failed",
-      message: "Could not check for updates.",
-      detail: updateState.message ?? "An unknown error occurred. Please try again later.",
-      buttons: ["OK"],
+      title: uiText("Update check failed"),
+      message: uiText("Could not check for updates."),
+      detail: updateState.message ?? uiText("An unknown error occurred. Please try again later."),
+      buttons: [uiText("OK")],
     });
   }
 }).pipe(Effect.withSpan("desktop.menu.checkForUpdates"));
@@ -100,9 +102,9 @@ const handleCheckForUpdatesMenuClick = Effect.gen(function* () {
     yield* electronDialog.showMessageBox({
       type: "info",
       title: uiText("Updates unavailable"),
-      message: "Automatic updates are not available right now.",
+      message: uiText("Automatic updates are not available right now."),
       detail: disabledReason.value,
-      buttons: ["OK"],
+      buttons: [uiText("OK")],
     });
     return;
   }
@@ -168,7 +170,7 @@ export const make = Effect.gen(function* () {
       template.push({
         label: environment.displayName,
         submenu: [
-          { role: "about", label: `About ${environment.displayName}` },
+          { role: "about", label: uiFormat("About {0}", [environment.displayName]) },
           {
             label: uiText("Check for Updates..."),
             click: checkForUpdatesClick,
@@ -180,13 +182,13 @@ export const make = Effect.gen(function* () {
             click: settingsClick,
           },
           { type: "separator" },
-          { role: "services" },
+          { role: "services", label: uiText("Services") },
           { type: "separator" },
-          { role: "hide", label: `Hide ${environment.displayName}` },
-          { role: "hideOthers" },
-          { role: "unhide" },
+          { role: "hide", label: uiFormat("Hide {0}", [environment.displayName]) },
+          { role: "hideOthers", label: uiText("Hide Others") },
+          { role: "unhide", label: uiText("Show All") },
           { type: "separator" },
-          { role: "quit", label: `Quit ${environment.displayName}` },
+          { role: "quit", label: uiFormat("Quit {0}", [environment.displayName]) },
         ],
       });
     }
@@ -205,32 +207,38 @@ export const make = Effect.gen(function* () {
                 },
                 { type: "separator" as const },
               ]),
-          { role: environment.platform === "darwin" ? "close" : "quit" },
+          {
+            role: environment.platform === "darwin" ? "close" : "quit",
+            label: uiText(environment.platform === "darwin" ? "Close" : "Exit"),
+          },
         ],
       },
       {
         label: uiText("Edit"),
         submenu: [
-          { role: "undo" },
-          { role: "redo" },
+          { role: "undo", label: uiText("Undo") },
+          { role: "redo", label: uiText("Redo") },
           { type: "separator" },
-          { role: "cut" },
-          { role: "copy" },
-          { role: "paste" },
+          { role: "cut", label: uiText("Cut") },
+          { role: "copy", label: uiText("Copy") },
+          { role: "paste", label: uiText("Paste") },
           {
             label: uiText("Paste as Text"),
             accelerator: "CmdOrCtrl+Shift+V",
             click: pasteAsTextClick,
           },
-          { role: "delete" },
+          { role: "delete", label: uiText("Delete") },
           { type: "separator" },
-          { role: "selectAll" },
+          { role: "selectAll", label: uiText("Select All") },
           ...(environment.platform === "darwin"
             ? [
                 { type: "separator" as const },
                 {
-                  label: "Speech",
-                  submenu: [{ role: "startSpeaking" as const }, { role: "stopSpeaking" as const }],
+                  label: uiText("Speech"),
+                  submenu: [
+                    { role: "startSpeaking" as const, label: uiText("Start Speaking") },
+                    { role: "stopSpeaking" as const, label: uiText("Stop Speaking") },
+                  ],
                 },
               ]
             : []),
@@ -300,12 +308,13 @@ export const make = Effect.gen(function* () {
             click: zoomClick("out"),
           },
           { type: "separator" },
-          { role: "togglefullscreen" },
+          { role: "togglefullscreen", label: uiText("Toggle Full Screen") },
         ],
       },
-      { role: "windowMenu" },
+      { role: "windowMenu", label: uiText("Window") },
       {
         role: "help",
+        label: uiText("Help"),
         submenu: [
           {
             label: uiText("Check for Updates..."),

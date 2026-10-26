@@ -1,3 +1,4 @@
+import { uiFormat } from "@t3tools/shared/ui-turkish";
 import type { RefObject } from "react";
 import type { ChatComposerProps } from "./ChatComposer";
 import {
@@ -143,8 +144,8 @@ export function useComposerContextImport(input: {
     const fail = (reason: string) => {
       toastManager.add({
         type: "error",
-        title: `Couldn't bring ${record.name} into this message`,
-        description: `${reason} Remove the chip or attach the file again.`,
+        title: uiFormat("Couldn't bring {0} into this message", [record.name]),
+        description: uiFormat("{0} Remove the chip or attach the file again.", [reason]),
       });
     };
     let file = copiedComposerAttachmentFile(sourceEnvironmentId, record.attachmentId);

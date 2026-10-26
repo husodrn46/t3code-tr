@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { ThreadStructure } from "@t3tools/client-runtime/state/shell";
 import {
   PROVIDER_SEND_TURN_MAX_ATTACHMENTS,
@@ -271,7 +272,7 @@ export function useQueuedRunEdit(input: {
       toastManager.add(
         stackedThreadToast({
           type: recovery === "kept" ? "info" : "warning",
-          title: "Queued message is no longer queued",
+          title: uiText("Queued message is no longer queued"),
           description:
             recovery === "kept"
               ? "Your unsaved edit was kept in the composer."

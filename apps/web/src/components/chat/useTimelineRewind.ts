@@ -1,3 +1,4 @@
+import { uiFormat } from "@t3tools/shared/ui-turkish";
 import type { EnvironmentThreadShell, ThreadStructure } from "@t3tools/client-runtime/state/shell";
 import type { ComposerThreadTarget } from "../../composerDraftStore";
 import type { ComposerHandleRef } from "../../composerHandleContext";
@@ -239,7 +240,7 @@ export function useTimelineRewind(input: TimelineRewindInput) {
         sourceThreadId: input.sourceThreadId,
         targetThreadId,
         runId: input.runId,
-        title: `${activeThread.title} fork`,
+        title: uiFormat("{0} fork", [activeThread.title]),
       },
     });
     if (result._tag === "Failure") {

@@ -1,8 +1,17 @@
 import { describe, expect, it } from "vite-plus/test";
-import { uiText } from "./ui-turkish.ts";
+import { uiFormat, uiText } from "./ui-turkish.ts";
 const turkishText = (source: string) => uiText(source, { locale: "tr-TR" });
 
 describe("personal Turkish UI", () => {
+  it("reorders dynamic values without treating their contents as replacements", () => {
+    expect(uiFormat("Open {0}", ["İş $& {1}"], { locale: "tr-TR" })).toBe("İş $& {1} aç");
+    expect(uiFormat("{0} of {1} updated", [2, 5], { locale: "tr-TR" })).toBe(
+      "5 öğeden 2 tanesi güncellendi",
+    );
+    expect(uiFormat("Open {0}", ["İş"], { locale: "en" })).toBe("Open İş");
+    expect(uiFormat("Unknown {0} and {1}", ["$1"]).toString()).toBe("Unknown $1 and {1}");
+  });
+
   it("preserves JSX boundary whitespace around translated text", () => {
     expect(turkishText("  Settings\n")).toBe("  Ayarlar\n");
     expect(turkishText("\u00a0Cancel ")).toBe("\u00a0İptal ");

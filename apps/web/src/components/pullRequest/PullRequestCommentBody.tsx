@@ -52,7 +52,7 @@ export function PullRequestCommentBody({
             setExpanded(!expanded);
           }}
         >
-          {expanded ? uiText("Show less") : "Show full comment"}
+          {expanded ? uiText("Show less") : uiText("Show full comment")}
         </Button>
       ) : null}
     </div>

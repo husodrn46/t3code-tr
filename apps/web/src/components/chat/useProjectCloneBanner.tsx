@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useStableCallback } from "../../hooks/useStableCallback";
 import {
   isAtomCommandInterrupted,
@@ -80,7 +80,7 @@ export function useProjectCloneBanner(activeProjectRef: ScopedProjectRef | null)
         variant: "info",
         priority: "activity",
         icon: <DownloadIcon />,
-        title: `Cloning ${name}`,
+        title: uiFormat("Cloning {0}", [name]),
         description: projectCloneProgressSummary(activeProjectClone),
         actions: (
           <Button
@@ -102,7 +102,9 @@ export function useProjectCloneBanner(activeProjectRef: ScopedProjectRef | null)
       id: `project-clone:${projectId}`,
       variant: cancelled ? "warning" : "error",
       icon: <DownloadIcon />,
-      title: cancelled ? `Cancelled cloning ${name}` : `Failed to clone ${name}`,
+      title: cancelled
+        ? uiFormat("Cancelled cloning {0}", [name])
+        : uiFormat("Failed to clone {0}", [name]),
       description: cancelled ? "Retry to bring in the repository." : activeProjectClone.error,
       actions: (
         <>

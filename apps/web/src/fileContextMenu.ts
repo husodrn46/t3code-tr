@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   EDITORS,
   type ContextMenuItem,
@@ -77,7 +77,7 @@ function buildFileContextMenuItems(input: {
   if (editorIds.length > 0) {
     items.push({
       id: "open-with",
-      label: "Open with",
+      label: uiText("Open with"),
       children: editorIds.map((editorId) => ({
         id: `editor:${editorId}` as FileContextMenuAction,
         label: EDITOR_LABEL_BY_ID.get(editorId) ?? editorId,
@@ -133,7 +133,7 @@ export function useFileContextMenu(environmentId: EnvironmentId | null) {
           ? "Could not open file"
           : reveal
             ? "Unable to reveal file"
-            : `Could not open in ${EDITOR_LABEL_BY_ID.get(editor) ?? editor}`,
+            : uiFormat("Could not open in {0}", [EDITOR_LABEL_BY_ID.get(editor) ?? editor]),
       description: absolutePath,
     });
   };

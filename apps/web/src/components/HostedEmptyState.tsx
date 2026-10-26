@@ -37,20 +37,22 @@ export function HostedEmptyState() {
         <Empty className="flex-1">
           <EmptyHeader>
             <EmptyTitle>
-              {localEnvironmentOff ? "This computer is off" : "No computer connected"}
+              {localEnvironmentOff
+                ? uiText("This computer is off")
+                : uiText("No computer connected")}
             </EmptyTitle>
             <EmptyDescription>
               {localEnvironmentOff
-                ? "Turn it back on, or connect a different computer."
+                ? uiText("Turn it back on, or connect a different computer.")
                 : cloudEnabled
-                  ? "Your agents run on your computer."
-                  : "Your agents run on your computer. Start T3 Code there first."}
+                  ? uiText("Your agents run on your computer.")
+                  : uiText("Your agents run on your computer. Start T3 Code there first.")}
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
             {localEnvironmentOff ? (
               <Button render={<Link to="/settings/connections" />} size="sm">
-                Open Connections
+                {uiText("Open Connections")}
               </Button>
             ) : (
               <ol className="w-full space-y-4 text-left">
@@ -107,7 +109,11 @@ function T3ConnectSteps() {
                     return next;
                   }),
               }}
-              empty={<p className="text-xs text-muted-foreground">Waiting for your computer…</p>}
+              empty={
+                <p className="text-xs text-muted-foreground">
+                  {uiText("Waiting for your computer…")}
+                </p>
+              }
             />
           </div>
         ) : null}
@@ -124,7 +130,7 @@ function PairingSteps() {
       </SetupStep>
       <SetupStep number={2}>
         <Button render={<Link to="/settings/connections" />} size="sm">
-          Add pairing link
+          {uiText("Add pairing link")}
         </Button>
       </SetupStep>
     </>
@@ -149,7 +155,7 @@ function SetupStep({
 function RunOnComputer({ command }: { readonly command: string }) {
   return (
     <>
-      <p>Run on your computer:</p>
+      <p>{uiText("Run on your computer:")}</p>
       <CommandBlock command={command} className="mt-2" />
       <a
         className="mt-2 inline-block text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
@@ -157,7 +163,7 @@ function RunOnComputer({ command }: { readonly command: string }) {
         target="_blank"
         rel="noreferrer noopener"
       >
-        Or download the desktop app
+        {uiText("Or download the desktop app")}
       </a>
     </>
   );

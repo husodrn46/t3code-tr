@@ -58,7 +58,11 @@ export function costTypeSegments(cost: CategoryCost): readonly ShareSegment[] {
     { label: uiText("Cache read"), value: cost.cacheRead, color: TYPE_COLORS.cacheRead },
     { label: uiText("Cache write"), value: cost.cacheWrite, color: TYPE_COLORS.cacheWrite },
     { label: uiText("Output"), value: cost.output, color: TYPE_COLORS.output },
-    { label: "Other", value: cost.unsplit >= 0.005 ? cost.unsplit : 0, color: TYPE_COLORS.other },
+    {
+      label: uiText("Other"),
+      value: cost.unsplit >= 0.005 ? cost.unsplit : 0,
+      color: TYPE_COLORS.other,
+    },
   ];
 }
 
@@ -80,7 +84,7 @@ export function tokenTypeSegments(
 export function speedCostSegments(cost: SpeedCost): readonly ShareSegment[] {
   return [
     { label: uiText("Standard"), value: cost.standard, color: ink(34) },
-    { label: "Fast", value: cost.fast, color: ink(66) },
-    { label: "Ultrafast", value: cost.ultrafast, color: ink(100) },
+    { label: uiText("Fast"), value: cost.fast, color: ink(66) },
+    { label: uiText("Ultrafast"), value: cost.ultrafast, color: ink(100) },
   ];
 }

@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { scopeProjectRef } from "@t3tools/client-runtime/environment";
 import {
   getNewProjectRepository,
@@ -50,8 +50,10 @@ export function useNewProject() {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: `Could not create the ${label} repository`,
-            description: `${errorMessage(squashAtomCommandFailure(result))} Use Publish Repository in the Git menu to try again.`,
+            title: uiFormat("Could not create the {0} repository", [label]),
+            description: uiFormat("{0} Use Publish Repository in the Git menu to try again.", [
+              errorMessage(squashAtomCommandFailure(result)),
+            ]),
           }),
         );
       }
@@ -60,7 +62,7 @@ export function useNewProject() {
     toastManager.add(
       stackedThreadToast({
         type: "success",
-        title: `Published to ${label}`,
+        title: uiFormat("Published to {0}", [label]),
         description: result.value.repository.nameWithOwner,
       }),
     );
@@ -80,7 +82,7 @@ export function useNewProject() {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Could not create the project",
+            title: uiText("Could not create the project"),
             description: errorMessage(squashAtomCommandFailure(result)),
           }),
         );
@@ -92,11 +94,15 @@ export function useNewProject() {
     toastManager.add(
       stackedThreadToast(
         commitError === undefined
-          ? { type: "success", title: `Created ${input.name}`, description: workspaceRoot }
+          ? {
+              type: "success",
+              title: uiFormat("Created {0}", [input.name]),
+              description: workspaceRoot,
+            }
           : {
               type: "warning",
-              title: `Created ${input.name} without a first commit`,
-              description: `${commitError} The project is in ${workspaceRoot}.`,
+              title: uiFormat("Created {0} without a first commit", [input.name]),
+              description: uiFormat("{0} The project is in {1}.", [commitError, workspaceRoot]),
             },
       ),
     );
@@ -116,7 +122,9 @@ export function useNewProject() {
         stackedThreadToast({
           type: "error",
           title: uiText("Failed to open project"),
-          description: `${errorMessage(error)} It will appear in the sidebar once this client catches up.`,
+          description: uiFormat("{0} It will appear in the sidebar once this client catches up.", [
+            errorMessage(error),
+          ]),
         }),
       );
       return null;

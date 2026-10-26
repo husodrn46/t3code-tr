@@ -1,3 +1,4 @@
+import { uiFormat } from "@t3tools/shared/ui-turkish";
 import {
   CommandId,
   type EnvironmentId,
@@ -108,7 +109,7 @@ export async function startFanoutThread(input: {
     const failureToastId = toastManager.add(
       stackedThreadToast({
         type: "error",
-        title: `Could not start ${input.model}`,
+        title: uiFormat("Could not start {0}", [input.model]),
         description: error instanceof Error ? error.message : "Failed to send message.",
         ...(retainedThreadId
           ? {

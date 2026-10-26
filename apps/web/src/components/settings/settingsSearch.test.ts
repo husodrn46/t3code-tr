@@ -43,6 +43,21 @@ const ITEMS: ReadonlyArray<SettingsSearchItem> = [
 ];
 
 describe("searchSettings", () => {
+  it("finds Turkish settings with dotted, dotless and ASCII keyboard input", () => {
+    const items: ReadonlyArray<SettingsSearchItem> = [
+      { id: "light", title: "Işık ve görünüm", to: "/settings/appearance" },
+      { id: "links", title: "Bağlantılar", to: "/settings/connections" },
+      { id: "advanced", title: "Gelişmiş ayarlar", to: "/settings/general" },
+    ];
+    for (const query of ["ışık", "IŞIK", "isik", "IŞIK GÖRÜNÜM"]) {
+      expect(searchSettings(query, items).map((item) => item.id)).toEqual(["light"]);
+    }
+    for (const query of ["bağlantılar", "BAGLANTILAR", "baglantilar"]) {
+      expect(searchSettings(query, items).map((item) => item.id)).toEqual(["links"]);
+    }
+    expect(searchSettings("GELİŞMİŞ", items).map((item) => item.id)).toEqual(["advanced"]);
+  });
+
   it("matches titles, sections, and remembered setting details", () => {
     expect(searchSettings("word", ITEMS).map((item) => item.id)).toEqual(["word-wrap"]);
     expect(searchSettings("network", ITEMS).map((item) => item.id)).toEqual(["network-access"]);

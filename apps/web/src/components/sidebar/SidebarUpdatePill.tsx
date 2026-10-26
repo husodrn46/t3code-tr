@@ -367,7 +367,7 @@ function SidebarUpdateControl() {
       toastManager.add(
         stackedThreadToast({
           type: "error",
-          title: "Could not update everything",
+          title: uiText("Could not update everything"),
           description: error instanceof Error ? error.message : "An unexpected error occurred.",
         }),
       );
@@ -538,7 +538,7 @@ function SidebarUpdateControl() {
         {showReleaseNotesPopover && state ? (
           <PopoverPopup
             align="center"
-            aria-label="Nightly update release notes"
+            aria-label={uiText("Nightly update release notes")}
             initialFocus={false}
             onKeyDownCapture={(event) => {
               if (

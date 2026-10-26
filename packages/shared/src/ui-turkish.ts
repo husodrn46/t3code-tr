@@ -26,3 +26,13 @@ export function uiText(
       : undefined;
   return translated === undefined ? source : `${parts[1]}${translated}${parts[3]}`;
 }
+
+export function uiFormat(
+  source: string,
+  values: ReadonlyArray<unknown>,
+  options: { locale?: string; context?: string } = {},
+): string {
+  return uiText(source, options).replace(/\{(\d+)\}/g, (placeholder, index: string) =>
+    Number(index) < values.length ? String(values[Number(index)]) : placeholder,
+  );
+}

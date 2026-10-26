@@ -64,8 +64,8 @@ export function readPromptUltrathink(prompt: string): PromptUltrathink {
 
 const SAVED_OPTION_LABELS: Readonly<Record<string, string>> = {
   agent: uiText("Agent"),
-  effort: "Effort",
-  reasoningEffort: "Reasoning effort",
+  effort: uiText("Effort"),
+  reasoningEffort: uiText("Reasoning effort"),
   variant: "Reasoning",
 };
 
@@ -441,8 +441,9 @@ export const TraitsMenuContent = memo(function TraitsMenuContentImpl({
               </div>
               {ultrathinkInBodyText && descriptor.id === primarySelectDescriptor?.id ? (
                 <div className="px-2 pb-1.5 text-muted-foreground/80 text-xs">
-                  Your prompt contains &quot;ultrathink&quot; in the text. Remove it to change this
-                  option.
+                  {uiText(
+                    'Your prompt contains "ultrathink" in the text. Remove it to change this option.',
+                  )}
                 </div>
               ) : null}
               <MenuRadioGroup

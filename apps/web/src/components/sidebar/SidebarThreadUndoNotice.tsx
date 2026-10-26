@@ -1,3 +1,4 @@
+import { uiFormat } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 
 import { undoLatestThreadAction, useThreadUndoNotice } from "../../hooks/showThreadUndoNotice";
@@ -19,7 +20,7 @@ export function SidebarThreadUndoNotice() {
       <AlertDescription>
         {notice.action} {notice.count} {noun},{" "}
         <InlineButton onClick={undoLatestThreadAction}>
-          {shortcut ? `${shortcut} to undo` : "Undo"}
+          {shortcut ? uiFormat("{0} to undo", [shortcut]) : "Undo"}
         </InlineButton>
       </AlertDescription>
     </Alert>

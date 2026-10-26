@@ -91,15 +91,20 @@ export function AddCodexAccountDialog({
     >
       <WizardPopup size="wide">
         <WizardHeader
-          title={instanceId ? displayName : "Add ChatGPT account"}
-          description="Each account has its own Codex instance and sign-in. Choose the other account on the sign-in page."
+          title={instanceId ? displayName : uiText("Add ChatGPT account")}
+          description={uiText(
+            "Each account has its own Codex instance and sign-in. Choose the other account on the sign-in page.",
+          )}
         />
         <WizardPanel>
           {instanceId ? (
             provider?.setup ? (
               renderSetup(instanceId, provider)
             ) : (
-              <SettingsRow title="Codex runtime" description="Preparing managed setup." />
+              <SettingsRow
+                title={uiText("Codex runtime")}
+                description={uiText("Preparing managed setup.")}
+              />
             )
           ) : (
             <form
@@ -110,15 +115,15 @@ export function AddCodexAccountDialog({
               }}
             >
               <SettingsRow
-                title="Account name"
-                description="Shown in the provider list and model picker."
+                title={uiText("Account name")}
+                description={uiText("Shown in the provider list and model picker.")}
                 control={
                   <Input
-                    aria-label="Account name"
+                    aria-label={uiText("Account name")}
                     value={name}
                     disabled={pending}
                     onChange={(event) => setName(event.target.value)}
-                    placeholder="e.g. Personal or Work"
+                    placeholder={uiText("e.g. Personal or Work")}
                   />
                 }
               />
@@ -128,7 +133,7 @@ export function AddCodexAccountDialog({
         <WizardFooter>
           {instanceId ? (
             <Button variant="outline" onClick={onClose}>
-              Finish later
+              {uiText("Finish later")}
             </Button>
           ) : (
             <>
@@ -140,7 +145,7 @@ export function AddCodexAccountDialog({
                 form="add-codex-account"
                 disabled={pending || !name.trim() || !canManageProviders}
               >
-                {pending ? "Adding account…" : uiText("Continue")}
+                {pending ? uiText("Adding account…") : uiText("Continue")}
               </Button>
             </>
           )}

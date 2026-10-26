@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   ClientSettingsSchema,
   type ClientSettingsPatch,
@@ -487,7 +488,7 @@ export async function persistScopedSettingsPatch(
       return [
         {
           ...environment,
-          message: "This environment does not support this setting. Update T3 Code on it.",
+          message: uiText("This environment does not support this setting. Update T3 Code on it."),
         },
       ];
     }

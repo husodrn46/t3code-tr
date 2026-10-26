@@ -1053,7 +1053,7 @@ const ConversationTimeline = memo(function ConversationTimeline({
         style={{ paddingBottom: emptyPlaceholderInset }}
       >
         <p className="text-sm text-muted-foreground/30">
-          Send a message to start the conversation.
+          {uiText("Send a message to start the conversation.")}
         </p>
       </div>
     );
@@ -1159,7 +1159,7 @@ function TimelineHistoryControl(props: MessagesTimelineHistoryControls) {
           >
             <span aria-hidden="true" className="h-px flex-1 bg-border/70" />
             <span className="shrink-0">
-              {props.loading ? "Loading earlier turns…" : uiText("Load earlier turns")}
+              {props.loading ? uiText("Loading earlier turns…") : uiText("Load earlier turns")}
             </span>
             <span aria-hidden="true" className="h-px flex-1 bg-border/70" />
           </button>
@@ -1309,7 +1309,8 @@ function ContextCompactionTimelineRow({
           {uiText("Context compacted ")}
           {row.tokenCounts.before}
           <ArrowRightIcon aria-hidden="true" className="size-3" />
-          {row.tokenCounts.after} tokens
+          {row.tokenCounts.after}
+          {uiText(" tokens")}
         </>
       ) : (
         row.label
@@ -1376,7 +1377,7 @@ function AttemptFoldTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "at
         icon={row.expanded ? ChevronDown : ChevronRight}
       />
       <span className="text-xs font-medium text-foreground/80">{row.label}</span>
-      <span className="text-2xs text-muted-foreground">Cut off by a steer</span>
+      <span className="text-2xs text-muted-foreground">{uiText("Cut off by a steer")}</span>
     </button>
   );
 }

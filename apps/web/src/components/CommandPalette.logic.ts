@@ -606,7 +606,7 @@ export function buildBrowseGroups(input: {
     });
   }
 
-  return [{ value: "directories", label: "Directories", items }];
+  return [{ value: "directories", label: uiText("Directories"), items }];
 }
 
 export function filterPinnedBrowseEntries(input: {
@@ -649,7 +649,7 @@ export function buildRootGroups(input: {
   if (input.recentThreadItems.length > 0) {
     groups.push({
       value: "recent-threads",
-      label: "Recent Threads",
+      label: uiText("Recent Threads"),
       items: input.recentThreadItems,
     });
   }

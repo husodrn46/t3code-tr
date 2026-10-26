@@ -88,12 +88,12 @@ export function PendingReviewCommentCard({
     >
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
         <MessageSquareIcon className="size-3.5" />
-        <span>Pending — sent when you submit the review</span>
+        <span>{uiText("Pending — sent when you submit the review")}</span>
         <Button
           size="icon-xs"
           variant="ghost"
           className="ml-auto"
-          aria-label="Discard this comment"
+          aria-label={uiText("Discard this comment")}
           onClick={onRemove}
         >
           <Trash2Icon className="size-3.5" />
@@ -232,9 +232,9 @@ export function ReviewThreadCard({
           onClick={() => setExpanded((current) => !current)}
         >
           {thread.isResolved ? uiText("Resolved") : uiText("Open", { context: "status" })} ·{" "}
-          {commentCount} {commentCount === 1 ? "comment" : "comments"}
+          {commentCount} {commentCount === 1 ? uiText("comment") : uiText("comments")}
         </button>
-        {thread.isOutdated ? <span>outdated</span> : null}
+        {thread.isOutdated ? <span>{uiText("outdated")}</span> : null}
         {onFix ? (
           <Button
             size="xs"
@@ -255,7 +255,7 @@ export function ReviewThreadCard({
             disabled={pending}
             onClick={onToggleResolved}
           >
-            {thread.isResolved ? "Unresolve" : uiText("Resolve")}
+            {thread.isResolved ? uiText("Unresolve") : uiText("Resolve")}
           </Button>
         ) : null}
       </div>
@@ -318,7 +318,7 @@ export function ReviewThreadCard({
                 disabled={loadingMore}
                 onClick={() => void loadMore()}
               >
-                {loadingMore ? "Loading..." : "Load more comments"}
+                {loadingMore ? uiText("Loading...") : uiText("Load more comments")}
               </Button>
             </div>
           ) : null}
@@ -331,7 +331,7 @@ export function ReviewThreadCard({
                   size="sm"
                   value={reply}
                   placeholder={uiText("Reply")}
-                  aria-label="Reply to this conversation"
+                  aria-label={uiText("Reply to this conversation")}
                   onChange={(event) => setReply(event.target.value)}
                   onKeyDown={(event) =>
                     submitKeys({

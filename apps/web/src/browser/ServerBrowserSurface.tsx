@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import {
   createPreviewFramePainter,
   createPreviewStreamClient,
@@ -105,7 +105,7 @@ async function copyPageText(text: string) {
   } catch {
     const id = toastManager.add({
       type: "info",
-      title: "The page copied text",
+      title: uiText("The page copied text"),
       actionProps: {
         children: "Copy",
         onClick: () => {
@@ -120,7 +120,7 @@ async function copyPageText(text: string) {
 function offerDownload(download: PreviewStreamDownload) {
   const id = toastManager.add({
     type: "info",
-    title: `Downloaded ${download.fileName}`,
+    title: uiFormat("Downloaded {0}", [download.fileName]),
     actionProps: {
       children: "Save",
       onClick: () => {
@@ -185,7 +185,7 @@ export function ServerBrowserSurface(props: {
     void uploadPreviewStreamFiles(chooser, files).catch((cause: unknown) =>
       toastManager.add({
         type: "error",
-        title: "Could not send the files to the page",
+        title: uiText("Could not send the files to the page"),
         description: cause instanceof Error ? cause.message : undefined,
       }),
     );
@@ -730,7 +730,7 @@ export function ServerBrowserSurface(props: {
               send({ type: control.controller === "you" ? "releaseControl" : "takeControl" })
             }
           >
-            {control.controller === "you" ? "Release control" : "Take control"}
+            {control.controller === "you" ? uiText("Release control") : uiText("Take control")}
           </Button>
         ) : null}
       </div>
@@ -739,7 +739,7 @@ export function ServerBrowserSurface(props: {
           <embed
             src={pdfUrl}
             type="application/pdf"
-            title="PDF document"
+            title={uiText("PDF document")}
             className="absolute inset-0 z-10 size-full border-0"
           />
         ) : null}
@@ -763,7 +763,7 @@ export function ServerBrowserSurface(props: {
           scrolls the surface; 16px keeps iOS from zooming the app on focus. */}
         <textarea
           ref={inputRef}
-          aria-label="Browser page"
+          aria-label={uiText("Browser page")}
           aria-description="Press Shift+Escape to leave the browser page."
           autoCapitalize="off"
           autoComplete="off"
@@ -795,10 +795,11 @@ export function ServerBrowserSurface(props: {
           <div
             className="absolute inset-x-2 top-2 z-10 flex flex-col gap-2 rounded-lg border border-border bg-background p-3 shadow-lg"
             role="dialog"
-            aria-label="Choose files for the page"
+            aria-label={uiText("Choose files for the page")}
           >
             <p className="text-sm">
-              The page asks for {fileChooser.multiple ? uiText("files") : "a file"}.
+              {uiText("The page asks for ")}
+              {fileChooser.multiple ? uiText("files") : "a file"}.
             </p>
             <input
               ref={fileInputRef}
@@ -817,7 +818,8 @@ export function ServerBrowserSurface(props: {
                 {uiText("Cancel")}
               </Button>
               <Button size="sm" onClick={() => fileInputRef.current?.click()}>
-                Choose {fileChooser.multiple ? uiText("files") : uiText("file")}
+                {uiText("Choose ")}
+                {fileChooser.multiple ? uiText("files") : uiText("file")}
               </Button>
             </div>
           </div>
@@ -826,14 +828,14 @@ export function ServerBrowserSurface(props: {
           <div
             className="absolute inset-x-2 top-2 z-10 flex flex-col gap-2 rounded-lg border border-border bg-background p-3 shadow-lg"
             role="dialog"
-            aria-label="Browser dialog"
+            aria-label={uiText("Browser dialog")}
           >
             <p className="break-words text-sm">{control.dialog.message}</p>
             {control.controller === "you" ? (
               <>
                 {control.dialog.type === "prompt" ? (
                   <Input
-                    aria-label="Dialog response"
+                    aria-label={uiText("Dialog response")}
                     value={promptText}
                     onChange={(event) => setPromptText(event.target.value)}
                   />
@@ -856,12 +858,12 @@ export function ServerBrowserSurface(props: {
                       })
                     }
                   >
-                    Accept
+                    {uiText("Accept")}
                   </Button>
                 </div>
               </>
             ) : (
-              <p className="text-xs text-muted-foreground">Take control to respond.</p>
+              <p className="text-xs text-muted-foreground">{uiText("Take control to respond.")}</p>
             )}
           </div>
         ) : null}
@@ -881,7 +883,7 @@ export function ServerBrowserSurface(props: {
         // The page can be invisible beneath an empty or unreachable state; reconnect must remain reachable.
         <div className="visible absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 bg-background p-3 text-center">
           <p role="alert" className="text-xs text-muted-foreground">
-            Browser connection was refused.
+            {uiText("Browser connection was refused.")}
           </p>
           <Button
             variant="outline"

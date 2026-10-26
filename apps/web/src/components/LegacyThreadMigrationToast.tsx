@@ -1,3 +1,4 @@
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { useEffect, useRef } from "react";
 
@@ -17,10 +18,14 @@ export function LegacyThreadMigrationToast() {
       }
       toastIdRef.current = toastManager.add({
         type: "loading",
-        title: "Restoring your threads…",
-        description: `Migrating ${migration.totalThreadCount.toLocaleString()} ${
-          migration.totalThreadCount === 1 ? "thread" : "threads"
-        } from the previous version. You can keep working while this finishes.`,
+        title: uiText("Restoring your threads…"),
+        description: uiFormat(
+          "Migrating {0} {1} from the previous version. You can keep working while this finishes.",
+          [
+            migration.totalThreadCount.toLocaleString(),
+            migration.totalThreadCount === 1 ? "thread" : "threads",
+          ],
+        ),
         timeout: 0,
       });
       return;

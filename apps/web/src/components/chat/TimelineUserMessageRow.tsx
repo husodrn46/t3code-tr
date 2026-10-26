@@ -1,4 +1,4 @@
-import { uiText } from "@t3tools/shared/ui-turkish";
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import { findRevealRef } from "./markdownFindContext";
 import { type MessageId, type ServerProviderSkill, ThreadId } from "@t3tools/contracts";
 import { resolveUserMessagePresentation } from "@t3tools/client-runtime/user-message";
@@ -168,7 +168,7 @@ function AutomationMessageRow({ row }: { row: Extract<TimelineRow, { kind: "mess
       >
         <FoldedMessageHeader
           icon={CalendarClockIcon}
-          label="Automation"
+          label={uiText("Automation")}
           summary={summary}
           expanded={expanded}
           onToggle={() => setExpanded((value) => !value)}
@@ -195,7 +195,7 @@ function AutomationMessageRow({ row }: { row: Extract<TimelineRow, { kind: "mess
                 search={{ environmentId: ctx.activeThreadEnvironmentId, taskId: scheduledTaskId }}
                 className="rounded-sm text-xs text-muted-foreground hover:underline focus-visible:outline-2 focus-visible:outline-ring"
               >
-                Open automation
+                {uiText("Open automation")}
               </Link>
             ) : null}
             <TimelineRowTimestamp
@@ -425,7 +425,7 @@ function UserTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "message" 
           className="me-1 text-2xs text-muted-foreground/70"
           data-user-message-attribution="t3code"
         >
-          Sent by T3 Code
+          {uiText("Sent by T3 Code")}
         </p>
       ) : null}
       {row.message.inputIntent === "steer" ||
@@ -458,7 +458,7 @@ function UserTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "message" 
               folded && !ctx.findActive && "max-h-96 overflow-auto",
             )}
           >
-            <MessageAuthorHeading>You</MessageAuthorHeading>
+            <MessageAuthorHeading>{uiText("You")}</MessageAuthorHeading>
             {(regularImages.length > 0 || userVideos.length > 0) && (
               <div className="mb-2 grid max-w-[210px] grid-cols-2 gap-2">
                 {regularImages.map((image) => (
@@ -475,7 +475,7 @@ function UserTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "message" 
                       <button
                         type="button"
                         className="block h-full w-full cursor-zoom-in"
-                        aria-label={`Preview ${image.name}`}
+                        aria-label={uiFormat("Preview {0}", [image.name])}
                         onClick={() => {
                           const preview = buildExpandedImagePreview(regularImages, image.id);
                           if (!preview) return;
@@ -524,7 +524,7 @@ function UserTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "message" 
                       <div key={file.id} className="flex min-w-0 items-center gap-1">
                         <button
                           type="button"
-                          aria-label={`Preview ${file.name}`}
+                          aria-label={uiFormat("Preview {0}", [file.name])}
                           onClick={() => ctx.onFileOpen(file)}
                           className="focus-visible:ring-ring/70 flex min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-md py-1 text-left text-sm hover:underline focus-visible:ring-2 focus-visible:ring-inset focus-visible:outline-none"
                         >
@@ -537,7 +537,7 @@ function UserTimelineRow({ row }: { row: Extract<TimelineRow, { kind: "message" 
                               <Button
                                 size="icon-xs"
                                 variant="ghost-muted"
-                                aria-label={`Download ${file.name}`}
+                                aria-label={uiFormat("Download {0}", [file.name])}
                                 onClick={() => ctx.onFileDownload(file)}
                               />
                             }
@@ -653,8 +653,8 @@ function UserMessageIntentMarker({
       </TooltipTrigger>
       <TooltipPopup side="top">
         {intent === "promoted_queued_to_steer"
-          ? "Originally queued, then promoted to steer the active turn"
-          : "Steered the active turn"}
+          ? uiText("Originally queued, then promoted to steer the active turn")
+          : uiText("Steered the active turn")}
       </TooltipPopup>
     </Tooltip>
   );
@@ -759,7 +759,7 @@ const CollapsibleUserMessageBody = memo(function CollapsibleUserMessageBody(prop
               onClick={() => setExpanded((value) => !value)}
               className="-ml-1"
             >
-              {expanded ? uiText("Show less") : "Show full message"}
+              {expanded ? uiText("Show less") : uiText("Show full message")}
             </Button>
           ) : null}
           {props.footer ? (

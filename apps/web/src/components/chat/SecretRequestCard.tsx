@@ -139,7 +139,7 @@ function PendingSecretRequestForm(props: {
           />
         </div>
         <Button type="submit" disabled={submitting || secret.trim().length === 0}>
-          Save securely
+          {uiText("Save securely")}
         </Button>
       </div>
       {error !== null ? (

@@ -1,3 +1,4 @@
+import { uiFormat, uiText } from "@t3tools/shared/ui-turkish";
 import type {
   KeybindingCommand,
   ProjectId,
@@ -83,7 +84,7 @@ export function useProjectScriptEditing(input: {
         Cause.fail(
           new EnvironmentAuthorizationError({
             requiredScope: AuthSettingsWriteScope,
-            message: "This connection cannot change keyboard shortcuts.",
+            message: uiText("This connection cannot change keyboard shortcuts."),
           }),
         ),
       );
@@ -255,14 +256,14 @@ export function useProjectScriptEditing(input: {
     if (result._tag === "Success") {
       toastManager.add({
         type: "success",
-        title: `Deleted action "${deletedName ?? "Unknown"}"`,
+        title: uiFormat('Deleted action "{0}"', [deletedName ?? "Unknown"]),
       });
     } else if (!isAtomCommandInterrupted(result)) {
       const error = squashAtomCommandFailure(result);
       toastManager.add(
         stackedThreadToast({
           type: "error",
-          title: "Could not delete action",
+          title: uiText("Could not delete action"),
           description: error instanceof Error ? error.message : "An unexpected error occurred.",
         }),
       );
