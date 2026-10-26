@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { DesktopUpdateActionResult, DesktopUpdateState } from "@t3tools/contracts";
 
 export type DesktopUpdateButtonAction = "download" | "install" | "none";
@@ -161,6 +162,6 @@ export function getDesktopUpdateIdleTooltip(
 ) {
   const disabledReason = getDesktopUpdateDisabledReason(state);
   return disabledReason
-    ? { title: "Updates unavailable", detail: disabledReason }
+    ? { title: uiText("Updates unavailable"), detail: disabledReason }
     : { title: "Check for updates", detail: null };
 }

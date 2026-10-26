@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { PermissionChecklist, PermissionContinueButton } from "../permissions/PermissionChecklist";
 import { usePermissionStatus } from "../permissions/usePermissionStatus";
 import {
@@ -22,7 +23,7 @@ import {
 } from "./SnapShotSetupDialog.logic";
 
 const SETUP_STEPS = [
-  { id: "access", label: "Access" },
+  { id: "access", label: uiText("Access") },
   { id: "shortcut", label: "Shortcut" },
 ] as const;
 
@@ -49,8 +50,8 @@ const GNOME_ACCESS_COPY = {
     description: "Enable T3 Code SnapShots to start capturing windows.",
   },
   enabled: {
-    title: "Capture is ready",
-    description: "Next, choose your shortcut.",
+    title: uiText("Capture is ready"),
+    description: uiText("Next, choose your shortcut."),
   },
   unsupported: {
     title: "Automatic capture isn't available",
@@ -157,8 +158,8 @@ export function SnapShotSetupDialog({
         : helperBackend
           ? helper?.status === "ready"
             ? {
-                title: "Capture is ready",
-                description: "Next, choose your shortcut.",
+                title: uiText("Capture is ready"),
+                description: uiText("Next, choose your shortcut."),
               }
             : helper?.status === "error"
               ? {
@@ -175,8 +176,8 @@ export function SnapShotSetupDialog({
                 }
           : backend === "niri"
             ? {
-                title: "Capture is ready",
-                description: "Next, choose your shortcut.",
+                title: uiText("Capture is ready"),
+                description: uiText("Next, choose your shortcut."),
               }
             : backend === "picker"
               ? {
@@ -327,7 +328,7 @@ export function SnapShotSetupDialog({
                     disabled={busy}
                     onClick={() => void onAction("retry-shortcut")}
                   >
-                    {state.mode === "portal" ? "Shortcut permissions" : "Try again"}
+                    {state.mode === "portal" ? "Shortcut permissions" : uiText("Try again")}
                   </Button>
                 ) : null}
               </div>
@@ -344,7 +345,7 @@ export function SnapShotSetupDialog({
             ) : null}
             {details.length > 0 || (step === "access" && (backend === "gnome" || helperBackend)) ? (
               <details className="text-xs text-muted-foreground">
-                <summary className="cursor-pointer">Advanced</summary>
+                <summary className="cursor-pointer">{uiText("Advanced")}</summary>
                 <div className="mt-3 space-y-3">
                   {details.map((detail) => (
                     <p key={detail} className="break-words">
@@ -382,11 +383,11 @@ export function SnapShotSetupDialog({
         <WizardFooter>
           {step !== "access" ? (
             <Button variant="ghost" disabled={busy} onClick={() => changeStep("access")}>
-              Back
+              {uiText("Back")}
             </Button>
           ) : null}
           <Button variant="ghost" disabled={busy} onClick={() => void onClose(false)}>
-            {wasEnabled ? "Close" : "Finish later"}
+            {wasEnabled ? uiText("Close") : "Finish later"}
           </Button>
           {step === "access" ? (
             helperBackend && !accessReady && helper?.status !== "ready" ? (
@@ -398,11 +399,11 @@ export function SnapShotSetupDialog({
                 }
               >
                 {checking
-                  ? "Checking…"
+                  ? uiText("Checking…")
                   : busy
-                    ? "Installing…"
+                    ? uiText("Installing…")
                     : helper?.status === "error"
-                      ? "Check again"
+                      ? uiText("Check again")
                       : helper?.status === "update-required"
                         ? "Update helper"
                         : "Install helper"}
@@ -420,12 +421,12 @@ export function SnapShotSetupDialog({
                 }
               >
                 {checking
-                  ? "Checking…"
+                  ? uiText("Checking…")
                   : busy
                     ? install
-                      ? "Installing…"
+                      ? uiText("Installing…")
                       : enable
-                        ? "Enabling…"
+                        ? uiText("Enabling…")
                         : "Working…"
                     : install
                       ? extension?.status === "update-required"
@@ -433,7 +434,7 @@ export function SnapShotSetupDialog({
                         : "Install extension"
                       : enable
                         ? "Enable extension"
-                        : "Check again"}
+                        : uiText("Check again")}
               </Button>
             ) : (
               <PermissionContinueButton
@@ -450,8 +451,8 @@ export function SnapShotSetupDialog({
                     : backend === "direct"
                       ? "Allow capture"
                       : !accessReady && !macPermissions
-                        ? "Try again"
-                        : "Continue"}
+                        ? uiText("Try again")
+                        : uiText("Continue")}
               </PermissionContinueButton>
             )
           ) : !configShortcut ? (
@@ -463,7 +464,7 @@ export function SnapShotSetupDialog({
                 if (!shortcutChanged || (await onSaveShortcut())) await onClose(true);
               }}
             >
-              {busy ? "Saving…" : shortcutChanged ? "Save and finish" : "Done"}
+              {busy ? uiText("Saving…") : shortcutChanged ? "Save and finish" : uiText("Done")}
             </Button>
           ) : null}
         </WizardFooter>

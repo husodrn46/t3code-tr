@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { Check, Copy } from "lucide";
 import { useRef } from "react";
 import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
@@ -38,7 +39,7 @@ export function DiffFilePathCopyButton({ filePath }: { filePath: string }) {
         />
       </TooltipTrigger>
       <TooltipPopup>
-        <p>{isCopied ? "Copied" : "Copy path"}</p>
+        <p>{isCopied ? uiText("Copied") : uiText("Copy path")}</p>
       </TooltipPopup>
     </Tooltip>
   );

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   buildTraitsTriggerDisplay,
   getDescriptorStringValue,
@@ -62,7 +63,7 @@ export function readPromptUltrathink(prompt: string): PromptUltrathink {
 }
 
 const SAVED_OPTION_LABELS: Readonly<Record<string, string>> = {
-  agent: "Agent",
+  agent: uiText("Agent"),
   effort: "Effort",
   reasoningEffort: "Reasoning effort",
   variant: "Reasoning",
@@ -110,7 +111,7 @@ type TraitsPersistence =
 function DefaultBadge() {
   return (
     <Badge variant="outline" size="sm" className="min-w-0">
-      Default
+      {uiText("Default")}
     </Badge>
   );
 }
@@ -497,7 +498,7 @@ export const TraitsMenuContent = memo(function TraitsMenuContentImpl({
                 {(["on", "off"] as const).map((value) => (
                   <MenuRadioItem key={value} value={value} hideIndicator closeOnClick>
                     <span className="flex w-full min-w-0 items-center justify-between gap-3">
-                      <span>{value === "on" ? "On" : "Off"}</span>
+                      <span>{value === "on" ? uiText("On") : uiText("Off")}</span>
                     </span>
                   </MenuRadioItem>
                 ))}

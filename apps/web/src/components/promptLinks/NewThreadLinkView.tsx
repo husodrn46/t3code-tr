@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { scopeProjectRef, scopeThreadRef } from "@t3tools/client-runtime/environment";
 import { getCloneDestinationPath } from "@t3tools/client-runtime/operations/projects";
 import {
@@ -192,7 +193,7 @@ export function NewThreadLinkView({ link }: { readonly link: NewThreadLink }) {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Clone failed",
+            title: uiText("Clone failed"),
             description: error instanceof Error ? error.message : "An error occurred.",
           }),
         );
@@ -304,7 +305,8 @@ export function NewThreadLinkView({ link }: { readonly link: NewThreadLink }) {
           description="Clone it to work on it here, or start without a project."
         >
           <Button size="sm" onClick={() => void cloneRepository(state.repository)}>
-            Clone {name}
+            {uiText("Clone ")}
+            {name}
           </Button>
           <Button size="sm" variant="outline" onClick={openWithoutProject}>
             Use without project
@@ -360,7 +362,7 @@ function PullRequestLinkCheckout({
           )
         }
       >
-        {handoff !== null ? "Checking out..." : "Check out"}
+        {handoff !== null ? uiText("Checking out...") : uiText("Check out")}
       </Button>
     </LinkPage>
   );

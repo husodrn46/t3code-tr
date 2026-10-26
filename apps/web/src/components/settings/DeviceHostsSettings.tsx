@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { DeviceToolVersions } from "../device/DeviceToolVersions";
 import { DeviceHostAvailability } from "../device/DeviceHostAvailability";
 import { useAtomValue } from "@effect/atom-react";
@@ -132,7 +133,7 @@ export function DeviceHostsSettings(props: { environmentId: EnvironmentId | null
   return (
     <SettingsRow
       id="device-hosts"
-      title="Device hosts"
+      title={uiText("Device hosts")}
       serverScoped
       settingKeys={["deviceHosts"]}
       description="Add remote machines with simulator or emulator runtimes installed, and the selected environments will connect over SSH and set up device tools automatically."
@@ -481,7 +482,7 @@ function DeviceHostList({
                           {result.versions}
                           {result.check?.status === "local" ? (
                             <p className="text-xs text-muted-foreground">
-                              Already available locally
+                              {uiText("Already available locally")}
                             </p>
                           ) : (
                             <DeviceHostAvailability
@@ -501,7 +502,9 @@ function DeviceHostList({
                 first.versions
               )}
               {!compact && check?.status === "local" ? (
-                <p className="mt-1 text-xs text-muted-foreground">Already available locally</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {uiText("Already available locally")}
+                </p>
               ) : null}
               {!compact && error ? (
                 <div className="mt-1" role="status">
@@ -547,9 +550,9 @@ function DeviceHostList({
                 <MoreVertical />
               </MenuTrigger>
               <MenuPopup align="end">
-                <MenuItem onClick={() => onEdit(host)}>Edit</MenuItem>
+                <MenuItem onClick={() => onEdit(host)}>{uiText("Edit")}</MenuItem>
                 <MenuItem variant="destructive" onClick={() => onRemove(host)}>
-                  Remove
+                  {uiText("Remove")}
                 </MenuItem>
                 {compact
                   ? retryable.map((result) => (
@@ -560,7 +563,7 @@ function DeviceHostList({
                           retryHost(result.environmentId, result.host.id, result.environmentId)
                         }
                       >
-                        {retrying === result.environmentId ? "Retrying" : "Retry"} from{" "}
+                        {retrying === result.environmentId ? "Retrying" : uiText("Retry")} from{" "}
                         {result.label}
                         {result.address ? ` (${result.address})` : null}
                       </MenuItem>
@@ -579,7 +582,11 @@ function DeviceHostList({
                 else void testConnection(host);
               }}
             >
-              {canRetry ? (retrying === host.id ? "Retrying…" : "Retry") : "Test connection"}
+              {canRetry
+                ? retrying === host.id
+                  ? uiText("Retrying…")
+                  : uiText("Retry")
+                : "Test connection"}
             </Button>
           </div>
         );

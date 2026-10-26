@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { RefreshIcon } from "~/components/ui/refresh-icon";
 import type {
   ContextMenuItem as TreeContextMenuItem,
@@ -211,7 +212,7 @@ export default function FileBrowserPanel({
           [
             ...fileMenuItems,
             { id: "copy-mention", label: "Copy mention" },
-            { id: "add-to-chat", label: "Add to chat" },
+            { id: "add-to-chat", label: uiText("Add to chat") },
           ],
           position,
         );
@@ -246,7 +247,7 @@ export default function FileBrowserPanel({
           if (!composer) {
             toastManager.add({
               type: "error",
-              title: "Unable to add to chat",
+              title: uiText("Unable to add to chat"),
               description: "Open a chat for this project and try again.",
             });
             return;
@@ -255,7 +256,7 @@ export default function FileBrowserPanel({
           if (!inserted) {
             toastManager.add({
               type: "error",
-              title: "Unable to add to chat",
+              title: uiText("Unable to add to chat"),
               description: "The chat isn't ready to accept input right now.",
             });
           }
@@ -306,7 +307,7 @@ export default function FileBrowserPanel({
       row.kind === "directory" &&
       row.isExpanded &&
       loadingDirectoriesRef.current.has(item.path.replace(/\/$/, ""))
-        ? { icon: "t3-tree-icon-loading", title: "Loading…" }
+        ? { icon: "t3-tree-icon-loading", title: uiText("Loading…") }
         : null,
     search: false,
     onSearchChange: (value) => setQuery(value ?? ""),
@@ -533,8 +534,8 @@ export default function FileBrowserPanel({
                   variant="ghost"
                   aria-label={
                     expandAll || allDirectoriesExpanded
-                      ? "Collapse all folders"
-                      : "Expand all folders"
+                      ? uiText("Collapse all folders")
+                      : uiText("Expand all folders")
                   }
                   onClick={toggleAllDirectories}
                 />
@@ -546,7 +547,9 @@ export default function FileBrowserPanel({
               />
             </TooltipTrigger>
             <TooltipPopup>
-              {expandAll || allDirectoriesExpanded ? "Collapse all folders" : "Expand all folders"}
+              {expandAll || allDirectoriesExpanded
+                ? uiText("Collapse all folders")
+                : uiText("Expand all folders")}
             </TooltipPopup>
           </Tooltip>
         ) : null}

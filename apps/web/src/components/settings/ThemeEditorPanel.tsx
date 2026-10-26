@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { MousePointer2Icon, PaintbrushIcon, PlusIcon, XIcon } from "lucide-react";
 import { ChevronDown, ChevronUp } from "lucide";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
@@ -103,7 +104,7 @@ const THEME_EDITOR_ROLE_GROUPS: ReadonlyArray<{
         role: "border",
         roles: ["border", "toolbarBorder", "sidebarBorder"],
       },
-      { id: "input", label: "Input", role: "input", roles: ["input"] },
+      { id: "input", label: uiText("Input"), role: "input", roles: ["input"] },
     ],
   },
   {
@@ -158,7 +159,7 @@ const THEME_EDITOR_ROLE_GROUPS: ReadonlyArray<{
   },
   {
     id: "search",
-    title: "Search",
+    title: uiText("Search"),
     families: [
       {
         id: "search-matches",
@@ -222,7 +223,7 @@ const THEME_EDITOR_ROLE_GROUPS: ReadonlyArray<{
       },
       {
         id: "warning",
-        label: "Warning",
+        label: uiText("Warning"),
         role: "warning",
         roles: ["warning", "warningForeground", "warningSurface"],
       },
@@ -895,7 +896,7 @@ export function ThemeEditorPanel({
     // a real disabled attribute would swallow the pointer events.
     const button = (
       <Toggle aria-disabled={lockReason !== null} value={appearance}>
-        {appearance === "light" ? "Light" : "Dark"}
+        {appearance === "light" ? uiText("Light") : uiText("Dark")}
       </Toggle>
     );
     if (lockReason === null) return button;
@@ -909,7 +910,7 @@ export function ThemeEditorPanel({
 
   const renderAppearanceButtons = () => (
     <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] items-center gap-3">
-      <span className="text-sm font-medium">Appearance</span>
+      <span className="text-sm font-medium">{uiText("Appearance")}</span>
       <ToggleGroup
         aria-label="Theme appearance"
         variant="segmented"
@@ -950,7 +951,7 @@ export function ThemeEditorPanel({
           />
         ) : null}
         <label className="ml-auto flex shrink-0 cursor-pointer items-center gap-2 pt-0.5 text-sm font-medium">
-          <span>Advanced</span>
+          <span>{uiText("Advanced")}</span>
           <Switch
             aria-label="Use advanced theme colors"
             checked={isAdvanced}
@@ -1084,7 +1085,7 @@ export function ThemeEditorPanel({
 
   return (
     <div
-      aria-label={isEditing ? "Edit theme" : "Create theme"}
+      aria-label={isEditing ? uiText("Edit theme") : uiText("Create theme")}
       className={cn(
         "dialog-glass fixed z-[110] flex max-h-[min(42rem,calc(100dvh-6rem))] w-[min(26rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl border text-popover-foreground",
         position === null && "bottom-4 right-4",
@@ -1108,7 +1109,7 @@ export function ThemeEditorPanel({
       >
         <div className="flex min-w-0 flex-1 items-baseline gap-2">
           <h2 className="shrink-0 truncate text-sm font-medium">
-            {isEditing ? "Edit theme" : "Create theme"}
+            {isEditing ? uiText("Edit theme") : uiText("Create theme")}
           </h2>
           {isMinimized ? null : (
             <p className="truncate text-xs text-muted-foreground">
@@ -1137,7 +1138,7 @@ export function ThemeEditorPanel({
                 }}
               >
                 <MousePointer2Icon />
-                {isInspecting ? "Cancel" : "Inspect"}
+                {isInspecting ? uiText("Cancel") : "Inspect"}
               </Button>
             }
           />
@@ -1180,14 +1181,14 @@ export function ThemeEditorPanel({
           </div>
           <div className="flex items-center justify-end gap-2 border-t border-border/70 px-3 py-2">
             <Button size="sm" variant="ghost" onClick={() => onOpenChange(false)}>
-              Cancel
+              {uiText("Cancel")}
             </Button>
             <Button disabled={!name.trim()} size="sm" onClick={handleSubmit}>
               {isEditing ? (
                 mergeTarget ? (
                   `Merge into “${mergeTarget.label}”`
                 ) : (
-                  "Save changes"
+                  uiText("Save changes")
                 )
               ) : mergeTarget ? (
                 <>
@@ -1197,7 +1198,7 @@ export function ThemeEditorPanel({
               ) : (
                 <>
                   <PaintbrushIcon />
-                  Create theme
+                  {uiText("Create theme")}
                 </>
               )}
             </Button>

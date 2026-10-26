@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ChevronRightIcon, ExternalLinkIcon, SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -204,7 +205,7 @@ function LicenseManifestError({ message, onRetry }: { message: string; onRetry: 
         </p>
       </div>
       <Button type="button" size="xs" variant="outline" onClick={onRetry}>
-        Try again
+        {uiText("Try again")}
       </Button>
     </div>
   );

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 export const CODE_BLOCK_LANGUAGES = [
   { id: "", label: "Plain text" },
   { id: "bash", label: "Bash" },
@@ -6,7 +7,7 @@ export const CODE_BLOCK_LANGUAGES = [
   { id: "csharp", label: "C#" },
   { id: "css", label: "CSS" },
   { id: "dart", label: "Dart" },
-  { id: "diff", label: "Diff" },
+  { id: "diff", label: uiText("Diff") },
   { id: "dockerfile", label: "Dockerfile" },
   { id: "elixir", label: "Elixir" },
   { id: "go", label: "Go" },

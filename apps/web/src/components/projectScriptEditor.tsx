@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   AuthOrchestrationOperateScope,
   AuthSettingsWriteScope,
@@ -62,10 +63,10 @@ import { Textarea } from "./ui/textarea";
 
 const SCRIPT_ICONS: Array<{ id: ProjectScriptIcon; label: string }> = [
   { id: "play", label: "Play" },
-  { id: "test", label: "Test" },
+  { id: "test", label: uiText("Test") },
   { id: "lint", label: "Lint" },
   { id: "configure", label: "Configure" },
-  { id: "build", label: "Build" },
+  { id: "build", label: uiText("Build", { context: "script" }) },
   { id: "debug", label: "Debug" },
 ];
 
@@ -210,7 +211,9 @@ export function ProjectScriptEditorDialog({
             <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogClose render={<Button variant="outline" />}>Cancel</AlertDialogClose>
+            <AlertDialogClose render={<Button variant="outline" />}>
+              {uiText("Cancel")}
+            </AlertDialogClose>
             <Button
               variant="destructive"
               disabled={!canEditActions}
@@ -421,7 +424,7 @@ function ProjectScriptEditorForm({
         <form id={formId} onSubmit={submit}>
           <fieldset className="space-y-4" disabled={isSaving || !canEditActions}>
             <div className="space-y-1.5">
-              <Label htmlFor="script-name">Name</Label>
+              <Label htmlFor="script-name">{uiText("Name")}</Label>
               <div className="flex items-center gap-2">
                 <Popover onOpenChange={setIconPickerOpen} open={iconPickerOpen}>
                   <PopoverTrigger
@@ -465,7 +468,7 @@ function ProjectScriptEditorForm({
                 <Input
                   id="script-name"
                   autoFocus
-                  placeholder="Test"
+                  placeholder={uiText("Test")}
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                 />
@@ -476,7 +479,7 @@ function ProjectScriptEditorForm({
               <Input
                 disabled={!canWriteSettings}
                 id="script-keybinding"
-                placeholder="Press shortcut"
+                placeholder={uiText("Press shortcut")}
                 value={keybinding}
                 readOnly
                 onKeyDown={captureKeybinding}
@@ -487,7 +490,7 @@ function ProjectScriptEditorForm({
               </p>
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="script-command">Command</Label>
+              <Label htmlFor="script-command">{uiText("Command")}</Label>
               <Textarea
                 id="script-command"
                 placeholder="bun test"
@@ -558,14 +561,14 @@ function ProjectScriptEditorForm({
             disabled={isSaving || !canEditActions}
             onClick={() => onRequestDelete(name)}
           >
-            Delete
+            {uiText("Delete")}
           </Button>
         )}
         <Button type="button" variant="outline" onClick={close}>
-          Cancel
+          {uiText("Cancel")}
         </Button>
         <Button form={formId} type="submit" disabled={isSaving || !canEditActions}>
-          {isSaving ? "Saving…" : isEditing ? "Save changes" : "Save action"}
+          {isSaving ? uiText("Saving…") : isEditing ? uiText("Save changes") : "Save action"}
         </Button>
       </DialogFooter>
     </>

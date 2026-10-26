@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   EditorId,
   EnvironmentId,
@@ -111,7 +112,7 @@ export function ThreadDetailsPanel(props: ThreadDetailsPanelProps) {
         <>
           <ThreadDetailsSection
             headingId="thread-details-workspace-heading"
-            title="Workspace"
+            title={uiText("Workspace")}
             separated={false}
             showHeading={false}
           >

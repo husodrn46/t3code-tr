@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { connectionStatusTitle } from "@t3tools/client-runtime/connection";
 import * as Option from "effect/Option";
@@ -759,7 +760,7 @@ function ScheduledTaskRow({
             <MenuPopup align="end">
               <MenuItem onClick={onEdit}>
                 <PencilIcon />
-                Edit
+                {uiText("Edit")}
               </MenuItem>
               {isWebhook ? (
                 <MenuItem onClick={() => setDeliveriesOpen(true)}>
@@ -769,13 +770,13 @@ function ScheduledTaskRow({
               ) : (
                 <MenuItem onClick={() => void act("run")}>
                   <PlayIcon />
-                  Run now
+                  {uiText("Run now")}
                 </MenuItem>
               )}
               <MenuSeparator />
               <MenuItem onClick={() => void act("delete")}>
                 <Trash2Icon />
-                Delete
+                {uiText("Delete")}
               </MenuItem>
             </MenuPopup>
           </Menu>
@@ -937,7 +938,7 @@ function WebhookDeliveriesDialog({
         <DialogFooter>
           {selectedId !== null ? (
             <Button variant="outline" size="sm" onClick={() => setSelectedId(null)}>
-              Back
+              {uiText("Back")}
             </Button>
           ) : (
             <Button
@@ -946,10 +947,10 @@ function WebhookDeliveriesDialog({
               disabled={deliveriesQuery.isPending}
               onClick={deliveriesQuery.refresh}
             >
-              Refresh
+              {uiText("Refresh")}
             </Button>
           )}
-          <DialogClose render={<Button size="sm" />}>Done</DialogClose>
+          <DialogClose render={<Button size="sm" />}>{uiText("Done")}</DialogClose>
         </DialogFooter>
       </DialogPopup>
     </Dialog>
@@ -1024,7 +1025,7 @@ function WebhookEndpointField({
           onClick={() => copyToClipboard(url, undefined)}
         >
           <CopyIcon />
-          {isCopied ? "Copied" : "Copy"}
+          {isCopied ? uiText("Copied") : uiText("Copy")}
         </Button>
         <Button
           size="sm"
@@ -1355,7 +1356,7 @@ function ScheduledTaskEditorForm({
               This scheduled task no longer exists.
             </p>
           ) : null}
-          <Field label="Name" htmlFor="scheduled-task-title">
+          <Field label={uiText("Name")} htmlFor="scheduled-task-title">
             <Input
               id="scheduled-task-title"
               placeholder="e.g. Check for Sentry issues"
@@ -1367,7 +1368,7 @@ function ScheduledTaskEditorForm({
           </Field>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <Field label="Project" htmlFor="scheduled-task-project">
+            <Field label={uiText("Project")} htmlFor="scheduled-task-project">
               <Select
                 value={selectedProjectId}
                 onValueChange={(projectId) =>
@@ -1397,7 +1398,7 @@ function ScheduledTaskEditorForm({
               </Select>
             </Field>
 
-            <Field label="Workspace" htmlFor="scheduled-task-workspace">
+            <Field label={uiText("Workspace")} htmlFor="scheduled-task-workspace">
               <Select
                 value={draft.workspaceMode}
                 onValueChange={(value) =>
@@ -1461,7 +1462,7 @@ function ScheduledTaskEditorForm({
             />
           </Field>
 
-          <Field label="Model">
+          <Field label={uiText("Model")}>
             <div>
               <ProviderModelPicker
                 environmentId={environmentId}
@@ -1492,7 +1493,7 @@ function ScheduledTaskEditorForm({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <Label>Schedule</Label>
               <ToggleGroup
-                aria-label="Schedule type"
+                aria-label={uiText("Schedule type")}
                 value={[draft.scheduleMode]}
                 onValueChange={(values) => {
                   const mode = values[0] as ScheduleMode | undefined;
@@ -1633,7 +1634,7 @@ function ScheduledTaskEditorForm({
                       <Input
                         id="scheduled-task-signature-prefix"
                         value={draft.signaturePrefix}
-                        placeholder="None"
+                        placeholder={uiText("None")}
                         onChange={(event) =>
                           setDraft((current) => ({
                             ...current,
@@ -1759,7 +1760,7 @@ function ScheduledTaskEditorForm({
 
       <DialogFooter>
         <DialogClose render={<Button variant="outline" size="sm" disabled={saving} />}>
-          Cancel
+          {uiText("Cancel")}
         </DialogClose>
         <Button
           size="sm"

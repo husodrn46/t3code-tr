@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   PREVIEW_VIEWPORT_MAX_AREA,
   PREVIEW_VIEWPORT_MAX_DIMENSION,
@@ -28,7 +29,7 @@ import { ScreenRotationIcon } from "./ScreenRotationIcon";
 
 const RESPONSIVE_VALUE = "responsive";
 const SELECT_ITEMS = [
-  { value: RESPONSIVE_VALUE, label: "Responsive" },
+  { value: RESPONSIVE_VALUE, label: uiText("Responsive") },
   ...PREVIEW_VIEWPORT_PRESETS.map((preset) => ({ value: preset.id, label: preset.label })),
 ];
 
@@ -193,9 +194,9 @@ export function BrowserDeviceToolbar({
           <SelectValue />
         </SelectTrigger>
         <SelectPopup align="start" alignItemWithTrigger={false}>
-          <SelectItem value={RESPONSIVE_VALUE}>Responsive</SelectItem>
+          <SelectItem value={RESPONSIVE_VALUE}>{uiText("Responsive")}</SelectItem>
           <SelectGroup>
-            <SelectGroupLabel>Standard</SelectGroupLabel>
+            <SelectGroupLabel>{uiText("Standard")}</SelectGroupLabel>
             {PREVIEW_VIEWPORT_PRESETS.map((preset) => (
               <SelectItem key={preset.id} value={preset.id}>
                 <span className="flex w-full items-center justify-between gap-5">

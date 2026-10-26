@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useComposerTypingGuard } from "./useComposerTypingGuard";
 import { insertAttachmentReferencesForDraft } from "./composerAttachmentReferences";
 import { DESKTOP_PASTE_AS_TEXT_EVENT } from "../../lib/desktopPasteAsText";
@@ -2136,7 +2137,7 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
       event?.preventDefault();
       toastManager.add({
         type: "info",
-        title: "Still bringing attached context into this message.",
+        title: uiText("Still bringing attached context into this message."),
         description: "Send again once its chip resolves.",
       });
       return;
@@ -2791,7 +2792,7 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
         toastManager.add({
           type: "error",
           title: "Unable to add folder",
-          description: "The composer is busy; try again once it is ready.",
+          description: uiText("The composer is busy; try again once it is ready."),
         });
         break;
       }
@@ -2865,8 +2866,8 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
     onInsertRejected: () => {
       toastManager.add({
         type: "error",
-        title: "Unable to add to chat",
-        description: "The composer is busy; try again once it is ready.",
+        title: uiText("Unable to add to chat"),
+        description: uiText("The composer is busy; try again once it is ready."),
       });
     },
   });
@@ -2962,7 +2963,7 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
         toastManager.add({
           type: "error",
           title: "Unable to add thread",
-          description: "The composer is busy; try again once it is ready.",
+          description: uiText("The composer is busy; try again once it is ready."),
         });
         return;
       }
@@ -3707,8 +3708,8 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
                 {composerSuggestionsVisible && composerMenuItems.length === 0
                   ? isComposerMenuLoading
                     ? composerTriggerKind === "pull-request"
-                      ? "Finding pull request..."
-                      : "Searching workspace files..."
+                      ? uiText("Finding pull request...")
+                      : uiText("Searching workspace files...")
                     : composerMenuEmptyState
                   : ""}
               </div>

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ChevronDownIcon, PaperclipIcon } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -30,7 +31,7 @@ export function ScrollToEndButton(props: {
       style={{ bottom: props.bottom }}
     >
       <Button
-        aria-label="Scroll to end"
+        aria-label={uiText("Scroll to end")}
         onPointerDown={(event) => event.preventDefault()}
         onClick={props.onScrollToEnd}
         className="pointer-events-auto"
@@ -38,7 +39,7 @@ export function ScrollToEndButton(props: {
         variant="glass"
       >
         <ChevronDownIcon className="size-3.5" />
-        Scroll to end
+        {uiText("Scroll to end")}
       </Button>
     </div>
   );

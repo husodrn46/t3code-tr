@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { AuthSettingsWriteScope, type EnvironmentId, sessionGrantsScope } from "@t3tools/contracts";
 import { ChevronDownIcon, PlusIcon, RotateCcwIcon, XIcon } from "lucide-react";
@@ -306,7 +307,7 @@ export function UsagePriceOverrides({
                     closeOnClick={false}
                     onCheckedChange={(checked) => selectEnvironments(checked ? null : new Set())}
                   >
-                    All environments
+                    {uiText("All environments")}
                   </MenuCheckboxItem>
                   <MenuSeparator />
                   {environments.map((environment) => (
@@ -584,7 +585,7 @@ export function UsagePriceOverrides({
                         ? `Not saved · ${result.error}`
                         : result?.status === "saved"
                           ? "Saved"
-                          : "Saving…"}
+                          : uiText("Saving…")}
                     </span>
                   </div>
                 );
@@ -611,10 +612,10 @@ export function UsagePriceOverrides({
               onClick={() => void save(failedDestinations.length > 0)}
             >
               {pending
-                ? "Saving…"
+                ? uiText("Saving…")
                 : failedDestinations.length > 0
                   ? "Retry failed saves"
-                  : "Save changes"}
+                  : uiText("Save changes")}
             </Button>
           </div>
         </DialogFooter>

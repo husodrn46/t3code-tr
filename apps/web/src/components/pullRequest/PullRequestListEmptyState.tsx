@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { RefreshIcon } from "~/components/ui/refresh-icon";
 import { PlusIcon, SearchIcon } from "lucide-react";
 
@@ -81,7 +82,7 @@ export function PullRequestListEmptyState({
         <EmptyContent>
           <Button size="sm" onClick={() => openCommandPalette({ open: "add-project" })}>
             <PlusIcon className="size-3.5" />
-            Add project
+            {uiText("Add project")}
           </Button>
         </EmptyContent>
       </Empty>
@@ -116,7 +117,7 @@ export function PullRequestListEmptyState({
           </Button>
           <Button size="sm" variant="outline" disabled={refreshing} onClick={onRefresh}>
             <RefreshIcon size="sm" refreshing={refreshing} />
-            {refreshing ? "Checking..." : "Check again"}
+            {refreshing ? uiText("Checking...") : uiText("Check again")}
           </Button>
         </div>
       </Empty>
@@ -142,7 +143,7 @@ export function PullRequestListEmptyState({
         ) : null}
         <Button size="sm" variant="outline" disabled={refreshing} onClick={onRefresh}>
           <RefreshIcon size="sm" refreshing={refreshing} />
-          {refreshing ? "Checking..." : "Check again"}
+          {refreshing ? uiText("Checking...") : uiText("Check again")}
         </Button>
       </div>
     </Empty>

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { SourceControlProviderKind } from "@t3tools/contracts";
 import { ExternalLinkIcon, TriangleAlertIcon } from "lucide-react";
 
@@ -34,7 +35,7 @@ export function PullRequestDiffUnavailableState({
       <div className="flex flex-wrap justify-center gap-2">
         <Button size="sm" variant="default" onClick={onRetry}>
           <RefreshIcon />
-          Try again
+          {uiText("Try again")}
         </Button>
         <Button
           size="sm"
@@ -42,7 +43,8 @@ export function PullRequestDiffUnavailableState({
           render={<a href={url} target="_blank" rel="noopener noreferrer" />}
         >
           <ExternalLinkIcon aria-hidden />
-          Open on {providerName}
+          {uiText("Open on ")}
+          {providerName}
         </Button>
       </div>
       <details className="w-full max-w-lg text-xs text-muted-foreground">

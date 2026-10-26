@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { DeviceHubAccess } from "@t3tools/client-runtime/state/deviceHubAccess";
 import type { DevicePermission, DeviceSummary, DeviceTextSize } from "@t3tools/contracts";
 import { ChevronDown, X } from "lucide-react";
@@ -22,13 +23,13 @@ import { type DeviceEventLogEntry, subscribeDeviceEventLog } from "./deviceHubAp
 
 const TEXT_SIZES: ReadonlyArray<{ value: DeviceTextSize; label: string }> = [
   { value: "small", label: "Small" },
-  { value: "default", label: "Default" },
+  { value: "default", label: uiText("Default") },
   { value: "large", label: "Large" },
   { value: "extra-large", label: "Extra large" },
 ];
 
 const COLOR_FILTERS = [
-  { value: "none", label: "None" },
+  { value: "none", label: uiText("None") },
   { value: "grayscale", label: "Grayscale" },
   { value: "red-green", label: "Red / green (protanopia)" },
   { value: "green-red", label: "Green / red (deuteranopia)" },
@@ -36,34 +37,34 @@ const COLOR_FILTERS = [
 ] as const;
 
 const ORIENTATIONS = [
-  { value: "portrait", label: "Portrait" },
+  { value: "portrait", label: uiText("Portrait") },
   { value: "landscape_left", label: "Landscape left" },
   { value: "portrait_upside_down", label: "Upside down" },
   { value: "landscape_right", label: "Landscape right" },
 ] as const;
 
 const IOS_PERMISSIONS: ReadonlyArray<{ value: DevicePermission; label: string }> = [
-  { value: "camera", label: "Camera" },
-  { value: "microphone", label: "Microphone" },
-  { value: "photos", label: "Photos" },
-  { value: "contacts", label: "Contacts" },
-  { value: "calendar", label: "Calendar" },
+  { value: "camera", label: uiText("Camera") },
+  { value: "microphone", label: uiText("Microphone") },
+  { value: "photos", label: uiText("Photos") },
+  { value: "contacts", label: uiText("Contacts") },
+  { value: "calendar", label: uiText("Calendar") },
   { value: "reminders", label: "Reminders" },
-  { value: "location", label: "Location" },
-  { value: "notifications", label: "Notifications" },
-  { value: "motion", label: "Motion" },
+  { value: "location", label: uiText("Location") },
+  { value: "notifications", label: uiText("Notifications") },
+  { value: "motion", label: uiText("Motion") },
   { value: "media-library", label: "Media library" },
   { value: "faceid", label: "Face ID" },
 ];
 
 const ANDROID_PERMISSIONS: ReadonlyArray<{ value: DevicePermission; label: string }> = [
-  { value: "camera", label: "Camera" },
-  { value: "microphone", label: "Microphone" },
-  { value: "photos", label: "Photos" },
-  { value: "contacts", label: "Contacts" },
-  { value: "calendar", label: "Calendar" },
-  { value: "location", label: "Location" },
-  { value: "notifications", label: "Notifications" },
+  { value: "camera", label: uiText("Camera") },
+  { value: "microphone", label: uiText("Microphone") },
+  { value: "photos", label: uiText("Photos") },
+  { value: "contacts", label: uiText("Contacts") },
+  { value: "calendar", label: uiText("Calendar") },
+  { value: "location", label: uiText("Location") },
+  { value: "notifications", label: uiText("Notifications") },
   { value: "motion", label: "Physical activity" },
 ];
 
@@ -164,9 +165,9 @@ export function DeviceToolsPanel(props: {
         </Section>
 
         <Section title={isIos ? "Simulator" : "Emulator"}>
-          <Row label="Appearance">
+          <Row label={uiText("Appearance")}>
             <ToggleGroup
-              aria-label="Appearance"
+              aria-label={uiText("Appearance")}
               value={settings?.appearance ? [settings.appearance] : []}
               disabled={disabled}
               onValueChange={(value) => {
@@ -175,8 +176,8 @@ export function DeviceToolsPanel(props: {
                   void act({ type: "setAppearance", value: next });
               }}
             >
-              <Toggle value="light">Light</Toggle>
-              <Toggle value="dark">Dark</Toggle>
+              <Toggle value="light">{uiText("Light")}</Toggle>
+              <Toggle value="dark">{uiText("Dark")}</Toggle>
             </ToggleGroup>
           </Row>
           <Row label="Text size">
@@ -202,7 +203,7 @@ export function DeviceToolsPanel(props: {
                     }
                   }}
                 >
-                  <Toggle value="clear">Clear</Toggle>
+                  <Toggle value="clear">{uiText("Clear")}</Toggle>
                   <Toggle value="tinted">Tinted</Toggle>
                 </ToggleGroup>
               </Row>
@@ -456,7 +457,7 @@ function LocationSection(props: {
     Math.abs(parsed.latitude) <= 90 &&
     Math.abs(parsed.longitude) <= 180;
   return (
-    <Section title="Location">
+    <Section title={uiText("Location")}>
       <div className="flex gap-1.5">
         <Input
           size="compact"
@@ -523,7 +524,7 @@ function LocationSection(props: {
               void props.onClear();
             }}
           >
-            Clear
+            {uiText("Clear")}
           </Button>
         ) : null}
       </div>
@@ -548,7 +549,7 @@ function PermissionsSection(props: {
   const decide = (decision: "grant" | "revoke" | "reset") =>
     void props.onDecide(resolvedAppId, permission, decision);
   return (
-    <Section title="Permissions">
+    <Section title={uiText("Permissions")}>
       <Input
         size="compact"
         font="mono"
@@ -582,7 +583,7 @@ function PermissionsSection(props: {
           disabled={props.disabled || !resolvedAppId}
           onClick={() => decide("revoke")}
         >
-          Revoke
+          {uiText("Revoke")}
         </Button>
         {props.canReset ? (
           <Button

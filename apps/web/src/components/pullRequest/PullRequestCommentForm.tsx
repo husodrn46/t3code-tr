@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomCommand } from "~/state/use-atom-command";
 import type { EnvironmentId, PullRequestDetailView, PullRequestRef } from "@t3tools/contracts";
 import { SendIcon } from "lucide-react";
@@ -133,7 +134,7 @@ export function PullRequestCommentForm({
                   {submitting === "close"
                     ? "Closing..."
                     : inlineConfirm.isArmed("close")
-                      ? "Confirm close?"
+                      ? uiText("Confirm close?")
                       : "Close with comment"}
                 </span>
               </span>
@@ -151,7 +152,7 @@ export function PullRequestCommentForm({
           onClick={() => void submit("comment")}
         >
           <SendIcon className="size-3.5" />
-          {submitting === "comment" ? "Posting..." : "Comment"}
+          {submitting === "comment" ? "Posting..." : uiText("Comment")}
         </Button>
       </div>
     </div>

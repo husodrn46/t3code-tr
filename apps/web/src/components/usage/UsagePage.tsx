@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ChatGptUsageButton } from "../settings/ChatGptUsageButton";
 import { usesChatGptSharing } from "@t3tools/shared/usageLimits";
 import { RefreshIcon } from "~/components/ui/refresh-icon";
@@ -859,7 +860,7 @@ function UsageOverview({
           />
           <Metric
             loading={loadingPartial}
-            label="Output"
+            label={uiText("Output")}
             value={formatTokens(merged.outputTokens)}
           />
           <Metric
@@ -914,7 +915,7 @@ function UsageOverview({
           >
             {(
               [
-                { value: "model", label: "Model" },
+                { value: "model", label: uiText("Model") },
                 { value: "time", label: shownHourly ? "Hour" : "Day" },
               ] as const
             ).map((option) => (
@@ -930,10 +931,10 @@ function UsageOverview({
             <thead>
               <tr className="border-b border-border text-right text-xs text-muted-foreground">
                 <th className="py-2 pr-3 text-left font-normal">#</th>
-                <th className="w-full py-2 text-left font-normal">Model</th>
-                <th className="py-2 pl-6 font-normal">Cost</th>
+                <th className="w-full py-2 text-left font-normal">{uiText("Model")}</th>
+                <th className="py-2 pl-6 font-normal">{uiText("Cost")}</th>
                 <th className="hidden py-2 pl-6 font-normal sm:table-cell">Share</th>
-                <th className="py-2 pl-6 font-normal">Tokens</th>
+                <th className="py-2 pl-6 font-normal">{uiText("Tokens")}</th>
               </tr>
             </thead>
             <tbody>
@@ -1018,8 +1019,8 @@ function UsageOverview({
                       {PROVIDER_PRESENTATION[provider].label}
                     </th>
                   ))}
-                  <th className="py-2 pl-4 text-right font-normal">Total</th>
-                  <th className="py-2 pl-4 text-right font-normal">Tokens</th>
+                  <th className="py-2 pl-4 text-right font-normal">{uiText("Total")}</th>
+                  <th className="py-2 pl-4 text-right font-normal">{uiText("Tokens")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -1352,7 +1353,7 @@ function UsageEnvironmentFilter({
           closeOnClick={false}
           onCheckedChange={(checked) => onSelectionChange(checked ? null : new Set())}
         >
-          All environments
+          {uiText("All environments")}
         </MenuCheckboxItem>
         <MenuSeparator />
         {environments.map((environment) => {

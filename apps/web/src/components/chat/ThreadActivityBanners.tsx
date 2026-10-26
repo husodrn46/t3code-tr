@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   OrchestrationV2PendingBackgroundTask,
   OrchestrationV2ProviderGoal,
@@ -84,7 +85,7 @@ export function goalBannerItem(input: {
           variant="ghost"
           onClick={() => void onSendCommand("/goal clear", "Failed to clear goal.")}
         >
-          Clear
+          {uiText("Clear")}
         </Button>
       </>
     ),
@@ -137,7 +138,7 @@ export function backgroundWorkBannerItem(input: {
                       aria-label={`${presentation.items.length === 1 ? "Show" : "Open"} subagent ${item.label}`}
                       onClick={() => onOpenThread(childThreadId)}
                     >
-                      {presentation.items.length === 1 ? "Show" : item.label}
+                      {presentation.items.length === 1 ? uiText("Show") : item.label}
                     </InlineButton>
                     {separator}
                   </span>
@@ -152,7 +153,7 @@ export function backgroundWorkBannerItem(input: {
         disabled={input.stopDisabled}
         onClick={() => void input.onStop()}
       >
-        {input.stopping ? "Stopping..." : "Stop"}
+        {input.stopping ? "Stopping..." : uiText("Stop")}
       </Button>
     ),
   };

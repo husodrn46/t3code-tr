@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   createPreviewFramePainter,
   createPreviewStreamClient,
@@ -797,7 +798,7 @@ export function ServerBrowserSurface(props: {
             aria-label="Choose files for the page"
           >
             <p className="text-sm">
-              The page asks for {fileChooser.multiple ? "files" : "a file"}.
+              The page asks for {fileChooser.multiple ? uiText("files") : "a file"}.
             </p>
             <input
               ref={fileInputRef}
@@ -813,10 +814,10 @@ export function ServerBrowserSurface(props: {
             />
             <div className="flex justify-end gap-2">
               <Button variant="outline" size="sm" onClick={() => answerFileChooser([])}>
-                Cancel
+                {uiText("Cancel")}
               </Button>
               <Button size="sm" onClick={() => fileInputRef.current?.click()}>
-                Choose {fileChooser.multiple ? "files" : "file"}
+                Choose {fileChooser.multiple ? uiText("files") : uiText("file")}
               </Button>
             </div>
           </div>
@@ -843,7 +844,7 @@ export function ServerBrowserSurface(props: {
                     size="sm"
                     onClick={() => send({ type: "dialog", accept: false })}
                   >
-                    Dismiss
+                    {uiText("Dismiss")}
                   </Button>
                   <Button
                     size="sm"
@@ -872,7 +873,7 @@ export function ServerBrowserSurface(props: {
           </p>
           <CommandBlock command={hostSetup.command} className="w-full max-w-md text-left" />
           <Button variant="outline" size="sm" onClick={() => setHostSetup(null)}>
-            Try again
+            {uiText("Try again")}
           </Button>
         </div>
       ) : null}
@@ -891,7 +892,7 @@ export function ServerBrowserSurface(props: {
               refreshPreviewStreamAccess(environmentId);
             }}
           >
-            Reconnect
+            {uiText("Reconnect")}
           </Button>
         </div>
       ) : null}

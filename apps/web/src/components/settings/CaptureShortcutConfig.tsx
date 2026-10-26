@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   isModifierPairShortcut,
   type DesktopCaptureConfigApplied,
@@ -201,16 +202,16 @@ export function CaptureShortcutConfig({
                 onClick={() => void apply()}
               >
                 {working === "writing"
-                  ? "Saving…"
+                  ? uiText("Saving…")
                   : changed
                     ? preview.operation === "install"
                       ? "Save shortcut"
                       : "Remove shortcut"
-                    : "Done"}
+                    : uiText("Done")}
               </Button>
             ) : null}
             <Button variant="ghost" disabled={actionBusy} onClick={() => setPreview(null)}>
-              Cancel
+              {uiText("Cancel")}
             </Button>
           </div>
         </>
@@ -247,7 +248,7 @@ export function CaptureShortcutConfig({
         </p>
       ) : null}
       <details className="text-xs text-muted-foreground">
-        <summary className="cursor-pointer">Advanced</summary>
+        <summary className="cursor-pointer">{uiText("Advanced")}</summary>
         <div className="mt-3 space-y-3">
           {error?.detail || result?.warning ? (
             <div className="space-y-1">
@@ -320,7 +321,7 @@ export function CaptureShortcutConfig({
               if (state.shortcutBinding) copyToClipboard(state.shortcutBinding);
             }}
           >
-            {isCopied ? "Copied" : "Copy shortcut"}
+            {isCopied ? uiText("Copied") : "Copy shortcut"}
           </Button>
           <p>
             Turn capture off in T3 Code to stop it. Remove the shortcut from {desktop} to free up

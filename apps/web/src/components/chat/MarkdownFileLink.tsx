@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { formatFilePathForClipboard } from "@t3tools/client-runtime/media-actions";
 import {
   isAtomCommandInterrupted,
@@ -86,7 +87,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to open file",
+            title: uiText("Unable to open file"),
             description: error instanceof Error ? error.message : "An error occurred.",
           }),
         );
@@ -98,7 +99,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to open file",
+            title: uiText("Unable to open file"),
             description: cause instanceof Error ? cause.message : "An error occurred.",
           }),
         );
@@ -136,7 +137,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to open file in browser",
+            title: uiText("Unable to open file in browser"),
             description: error instanceof Error ? error.message : "An error occurred.",
           }),
         );
@@ -148,7 +149,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to open file in browser",
+            title: uiText("Unable to open file in browser"),
             description: cause instanceof Error ? cause.message : "An error occurred.",
           }),
         );
@@ -174,7 +175,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to reveal file",
+            title: uiText("Unable to reveal file"),
             description: error instanceof Error ? error.message : "An error occurred.",
           }),
         );
@@ -186,7 +187,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to reveal file",
+            title: uiText("Unable to reveal file"),
             description: cause instanceof Error ? cause.message : "An error occurred.",
           }),
         );
@@ -200,7 +201,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
         stackedThreadToast({
           type: "error",
           title: `Failed to copy ${title.toLowerCase()}`,
-          description: "Clipboard API unavailable.",
+          description: uiText("Clipboard API unavailable."),
         }),
       );
       return;
@@ -251,7 +252,7 @@ export const MarkdownFileLink = memo(function MarkdownFileLink({
           ...(onOpenMedia ? ([{ id: "preview-media", label: "Preview media" }] as const) : []),
           ...(onOpen ? ([{ id: "open", label: openInEditorMenuLabel }] as const) : []),
           ...(onOpenInBrowser
-            ? ([{ id: "open-in-browser", label: "Open in integrated browser" }] as const)
+            ? ([{ id: "open-in-browser", label: uiText("Open in integrated browser") }] as const)
             : []),
           ...(onReveal && revealLabel ? ([{ id: "reveal", label: revealLabel }] as const) : []),
           ...copyItems.map(({ id, label }) => ({ id, label })),

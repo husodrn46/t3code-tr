@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useState } from "react";
 import type { ProviderAuthMethod } from "@t3tools/contracts";
 import { RadioGroup, Radio } from "../ui/radio-group";
@@ -61,7 +62,7 @@ export function ChatGptAccountPicker({
             ))}
             <label className="flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-3 text-sm">
               <Radio value="chatgpt-change-account" />
-              <span className="font-medium">Use a different account</span>
+              <span className="font-medium">{uiText("Use a different account")}</span>
             </label>
           </RadioGroup>
         </div>

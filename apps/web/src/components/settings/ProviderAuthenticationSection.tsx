@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   isAtomCommandInterrupted,
   squashAtomCommandFailure,
@@ -159,11 +160,11 @@ export function ProviderAuthenticationSection({
 
   return (
     <SettingsRow
-      title="Account"
+      title={uiText("Account")}
       description={
         signedIn && !active && provider.auth.email?.trim() ? (
           <span>
-            Signed in as{" "}
+            {uiText("Signed in as")}{" "}
             <RedactedSensitiveText
               key={provider.auth.email}
               value={provider.auth.email}
@@ -268,7 +269,7 @@ export function ProviderAuthenticationSection({
                   )
                 }
               >
-                Cancel
+                {uiText("Cancel")}
               </Button>
             ) : !active && !needsExternalSetup && provider.setup?.canAuthenticate !== false ? (
               <Button
@@ -293,7 +294,7 @@ export function ProviderAuthenticationSection({
                   ? "Change account"
                   : auth?.phase === "failed" || auth?.phase === "cancelled"
                     ? "Retry sign-in"
-                    : "Sign in"}
+                    : uiText("Sign in")}
               </Button>
             ) : null}
             {!active && signedIn && (provider.auth.canLogout ?? provider.setup?.canAuthenticate) ? (
@@ -457,7 +458,7 @@ export function ProviderAuthenticationSection({
                 className="w-fit"
                 disabled={disabled || !values.callback?.trim()}
               >
-                Continue
+                {uiText("Continue")}
               </Button>
             </form>
           ) : null}

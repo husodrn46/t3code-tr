@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { MessageSquareDashedIcon, PlusIcon } from "lucide-react";
 
 import { openCommandPalette } from "../commandPaletteBus";
@@ -22,7 +23,7 @@ export function NoProjectsHero() {
         <Empty size="hero" className="flex-1">
           <div className="w-full max-w-lg px-8 py-12">
             <EmptyHeader className="max-w-none">
-              <EmptyTitle>What should we work on?</EmptyTitle>
+              <EmptyTitle>{uiText("What should we work on?")}</EmptyTitle>
               <EmptyDescription>
                 {scratchTargetEnvironmentId === null
                   ? "Add a project to start your first thread."
@@ -31,7 +32,7 @@ export function NoProjectsHero() {
               <div className="mt-6 flex justify-center gap-2">
                 <Button size="sm" onClick={() => openCommandPalette({ open: "add-project" })}>
                   <PlusIcon className="size-4" />
-                  Add project
+                  {uiText("Add project")}
                 </Button>
                 {scratchTargetEnvironmentId === null ? null : (
                   <Button

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useState } from "react";
 
 import { Button } from "~/components/ui/button";
@@ -42,7 +43,7 @@ export function PreviewFileNotShown({
           </Button>
           {downloadUrl ? (
             <Button type="button" size="sm" render={<a href={downloadUrl} download={fileName} />}>
-              Download
+              {uiText("Download")}
             </Button>
           ) : null}
         </div>
@@ -93,7 +94,7 @@ export function PreviewUnreachable({ url, code, description, onReload, move }: P
             size="sm"
             onClick={() => setShowDetails((value) => !value)}
           >
-            {showDetails ? "Hide details" : "Details"}
+            {showDetails ? "Hide details" : uiText("Details")}
           </Button>
           <div className="flex-1" />
           {move ? (
@@ -102,7 +103,7 @@ export function PreviewUnreachable({ url, code, description, onReload, move }: P
             </Button>
           ) : null}
           <Button type="button" size="sm" onClick={onReload}>
-            Reload
+            {uiText("Reload")}
           </Button>
         </div>
       </div>

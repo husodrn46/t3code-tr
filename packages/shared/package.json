@@ -506,6 +506,14 @@
     "./cloneUrl": {
       "types": "./src/cloneUrl.ts",
       "import": "./src/cloneUrl.ts"
+    },
+    "./ui-turkish": {
+      "types": "./src/ui-turkish.ts",
+      "default": "./src/ui-turkish.ts"
+    },
+    "./personalBuild": {
+      "types": "./src/personalBuild.ts",
+      "default": "./src/personalBuild.ts"
     }
   },
   "scripts": {

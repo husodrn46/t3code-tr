@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { DevicePlatform, EnvironmentId } from "@t3tools/contracts";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -563,7 +564,7 @@ export function DeviceStreamView(props: {
                     clientRef.current?.start();
                   }}
                 >
-                  Reconnect
+                  {uiText("Reconnect")}
                 </Button>
               ) : null}
             </DeviceLoadingView>

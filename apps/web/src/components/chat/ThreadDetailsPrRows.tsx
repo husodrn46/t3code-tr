@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ThreadDetailsControl } from "./ThreadDetailsControl";
 import type { EnvironmentId, ScopedThreadRef, ThreadPullRequestLink } from "@t3tools/contracts";
 import {
@@ -124,7 +125,7 @@ export function ThreadDetailsPrRows({
         className="w-full active:scale-100"
       >
         <MorphIcon aria-hidden className="size-4 shrink-0" icon={expanded ? Minus : Plus} />
-        {expanded ? "Show less" : `Show ${rest.length} more`}
+        {expanded ? uiText("Show less") : `Show ${rest.length} more`}
       </ThreadDetailsControl>
     </>
   );

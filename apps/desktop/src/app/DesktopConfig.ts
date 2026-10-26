@@ -1,4 +1,5 @@
 import { OtlpHeadersFromString, OtlpProtocol } from "@t3tools/shared/observability";
+import { PERSONAL_BUILD } from "@t3tools/shared/personalBuild";
 import * as Config from "effect/Config";
 import * as ConfigProvider from "effect/ConfigProvider";
 import * as Option from "effect/Option";
@@ -56,7 +57,9 @@ export const DesktopConfig = Config.all({
     Config.withDefault("http/json"),
   ),
   appImagePath: trimmedString("APPIMAGE"),
-  disableAutoUpdate: optionalBoolean("T3CODE_DISABLE_AUTO_UPDATE"),
+  disableAutoUpdate: Config.Boolean("T3CODE_DISABLE_AUTO_UPDATE").pipe(
+    Config.withDefault(PERSONAL_BUILD.manualUpdatesOnly),
+  ),
   mockUpdates: optionalBoolean("T3CODE_DESKTOP_MOCK_UPDATES"),
   mockUpdateServerPort: Config.Port("T3CODE_DESKTOP_MOCK_UPDATE_SERVER_PORT").pipe(
     Config.withDefault(3000),

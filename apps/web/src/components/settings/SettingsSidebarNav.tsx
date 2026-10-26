@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   lazy,
   Suspense,
@@ -255,7 +256,7 @@ export function SettingsSidebarNav({ pathname }: { pathname: string }) {
                   setActiveResultIndex(0);
                 }}
                 onKeyDown={handleSearchKeyDown}
-                placeholder="Search"
+                placeholder={uiText("Search")}
                 aria-label="Search settings"
                 role="combobox"
                 aria-autocomplete="list"

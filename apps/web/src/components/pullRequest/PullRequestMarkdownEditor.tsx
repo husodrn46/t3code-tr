@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useState } from "react";
 import {
   AuthSourceControlWriteScope,
@@ -88,7 +89,7 @@ export function PullRequestMarkdownEditor({
           if (mode === "write" || mode === "preview") setPreview(mode === "preview");
         }}
       >
-        <Toggle value="write">Write</Toggle>
+        <Toggle value="write">{uiText("Write")}</Toggle>
         <Toggle value="preview">Preview</Toggle>
       </ToggleGroup>
       {preview ? (
@@ -117,7 +118,7 @@ export function PullRequestMarkdownEditor({
       )}
       <div className="flex justify-end gap-2">
         <Button size="xs" variant="ghost" disabled={saving} onClick={onCancel}>
-          Cancel
+          {uiText("Cancel")}
         </Button>
         <Button
           size="xs"
@@ -133,7 +134,7 @@ export function PullRequestMarkdownEditor({
             onSave(draft);
           }}
         >
-          {saving ? "Saving..." : "Save"}
+          {saving ? uiText("Saving...") : uiText("Save")}
         </Button>
       </div>
     </div>

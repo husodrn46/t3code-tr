@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { EnvironmentId } from "@t3tools/contracts";
 import { Atom } from "effect/reactivity";
@@ -108,8 +109,10 @@ function UpdateEverythingDialogContent({
         ) : null}
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogClose render={<Button variant="outline" />}>Cancel</AlertDialogClose>
-        <Button onClick={onConfirm}>Update</Button>
+        <AlertDialogClose render={<Button variant="outline" />}>
+          {uiText("Cancel")}
+        </AlertDialogClose>
+        <Button onClick={onConfirm}>{uiText("Update")}</Button>
       </AlertDialogFooter>
     </>
   );

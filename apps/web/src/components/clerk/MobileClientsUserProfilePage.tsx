@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { RelayClientDeviceRecord } from "@t3tools/contracts/relay";
 import { SmartphoneIcon } from "lucide-react";
 
@@ -28,7 +29,7 @@ function MobileClientStatusBadge({
 }) {
   return (
     <Badge variant={enabled ? "success" : "outline"}>
-      {label}: {enabled ? "On" : "Off"}
+      {label}: {enabled ? uiText("On") : uiText("Off")}
     </Badge>
   );
 }
@@ -111,7 +112,7 @@ export function MobileClientsUserProfilePage() {
 
   return (
     <ClerkUserProfilePage
-      title="Mobile clients"
+      title={uiText("Mobile clients")}
       description="Mobile devices that get notifications from your environments."
       action={
         <ClerkUserProfileRefreshButton
@@ -133,7 +134,7 @@ export function MobileClientsUserProfilePage() {
               <p className="mt-0.5 text-xs text-muted-foreground">{devicesState.error}</p>
             </div>
             <Button size="xs" variant="outline" onClick={devicesState.refresh}>
-              Try again
+              {uiText("Try again")}
             </Button>
           </div>
         ) : null}

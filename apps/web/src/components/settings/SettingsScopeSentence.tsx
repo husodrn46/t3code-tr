@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { resolveEnvironmentMachineKind } from "@t3tools/contracts";
 import { useLocation } from "@tanstack/react-router";
 import { CheckIcon, ChevronDownIcon, LayersIcon } from "lucide-react";
@@ -256,7 +257,7 @@ function EnvironmentScopeMenu({
             ? "Unavailable environment"
             : singleEnvironment
               ? "No environments"
-              : "All environments"
+              : uiText("All environments")
       }
       value={environmentValue}
       onChange={(next) => onChange(selectEnvironmentAxis(value, next))}
@@ -266,7 +267,7 @@ function EnvironmentScopeMenu({
           ? null
           : {
               value: ALL_ENVIRONMENTS_VALUE,
-              label: "All environments",
+              label: uiText("All environments"),
               icon: <LayersIcon aria-hidden className="size-3.5 shrink-0" />,
             }
       }
@@ -307,7 +308,7 @@ function ProjectScopeMenu({ value, groups, environments, onChange }: SettingsSco
       value={projectAxisValue(value)}
       onChange={(next) => onChange(selectProjectAxis(value, next))}
       searchLabel="Search projects"
-      allOption={{ value: ALL_PROJECTS_VALUE, label: "All projects" }}
+      allOption={{ value: ALL_PROJECTS_VALUE, label: uiText("All projects") }}
       options={projects.map(({ group, machines }) => {
         const sameName = projects.filter(
           (other) =>

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { PullRequestInvolvement, PullRequestListState } from "@t3tools/contracts";
 import {
   CalendarArrowDownIcon,
@@ -17,14 +18,18 @@ import type { PullRequestListSort } from "./pullRequestListPreferences";
 import { PullRequestGlyph } from "./pullRequestIcons";
 
 export const INVOLVEMENT_TABS = [
-  { value: "all", label: "All", Icon: LayersIcon },
+  { value: "all", label: uiText("All"), Icon: LayersIcon },
   { value: "reviewing", label: "Reviewing", Icon: EyeIcon },
   { value: "authored", label: "Authored", Icon: PenLineIcon },
 ] as const satisfies ReadonlyArray<PullRequestFilterOption<PullRequestInvolvement>>;
 
 export const STATE_TABS = [
-  { value: "all", label: "All", Icon: LayersIcon },
-  { value: "open", label: "Open", Icon: PullRequestGlyph.pullRequest },
+  { value: "all", label: uiText("All"), Icon: LayersIcon },
+  {
+    value: "open",
+    label: uiText("Open", { context: "status" }),
+    Icon: PullRequestGlyph.pullRequest,
+  },
   { value: "closed", label: "Closed", Icon: PullRequestGlyph.closed },
   { value: "merged", label: "Merged", Icon: PullRequestGlyph.merged },
 ] as const satisfies ReadonlyArray<PullRequestFilterOption<PullRequestListState>>;

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { lucideIconNames } from "./lib/lucideIconByName";
 export { PROJECT_ICON_COLORS, projectIconColorClassName } from "./projectIconColors";
 
@@ -37,7 +38,7 @@ export const PROJECT_EMOJIS: ReadonlyArray<{ readonly emoji: string; readonly la
   { emoji: "⚡", label: "Lightning" },
   { emoji: "🌐", label: "Web" },
   { emoji: "📱", label: "Mobile" },
-  { emoji: "🖥️", label: "Desktop" },
+  { emoji: "🖥️", label: uiText("Desktop") },
   { emoji: "⌨️", label: "Keyboard" },
   { emoji: "⚙️", label: "Gear" },
   { emoji: "🗄️", label: "Database" },

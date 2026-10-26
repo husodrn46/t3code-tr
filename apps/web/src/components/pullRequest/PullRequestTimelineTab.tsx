@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomCommand } from "~/state/use-atom-command";
 import type {
   EnvironmentId,
@@ -239,7 +240,7 @@ function ConversationCard({
           {editable !== null && !editing ? (
             <PullRequestEditButton
               className="-mt-1"
-              aria-label="Edit comment"
+              aria-label={uiText("Edit comment")}
               onClick={() => setEditing(true)}
             />
           ) : null}
@@ -264,7 +265,7 @@ function ConversationCard({
             cwd={cwd}
             environmentId={reactions.environmentId}
             threadRef={reactions.threadRef}
-            label="Edit comment"
+            label={uiText("Edit comment")}
             saving={saving}
             onSave={(body) => void save(body)}
             onCancel={() => setEditing(false)}
@@ -410,10 +411,12 @@ function ReviewThreadEvent({
         {thread.isResolved ? (
           <span className="inline-flex shrink-0 items-center gap-1 font-medium text-success-foreground">
             <CircleCheckIcon aria-hidden className="size-3" />
-            Resolved
+            {uiText("Resolved")}
           </span>
         ) : null}
-        {dismissed ? <span className="shrink-0 font-medium">Review dismissed</span> : null}
+        {dismissed ? (
+          <span className="shrink-0 font-medium">{uiText("Review dismissed")}</span>
+        ) : null}
         {thread.isOutdated ? <span className="shrink-0 font-medium">Outdated</span> : null}
         {expanded ? null : (
           <span className="shrink-0">
@@ -523,7 +526,7 @@ function LifecycleEvent({ event }: { event: PullRequestTimelineEvent }) {
           }
         : {
             icon: <PullRequestGlyph.closed className="size-3.5" />,
-            label: "Pull request closed",
+            label: uiText("Pull request closed"),
           };
 
   return (

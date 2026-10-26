@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { parseChangeRequestUrl } from "@t3tools/shared/changeRequestUrl";
 import { useAtomValue } from "@effect/atom-react";
 import { usePullRequestStack } from "~/state/usePullRequestStack";
@@ -194,7 +195,7 @@ const TABS: ReadonlyArray<{ value: PullRequestDetailTab; label: string }> = [
   { value: "summary", label: "Summary" },
   { value: "guide", label: "Guide" },
   { value: "timeline", label: "Timeline" },
-  { value: "code", label: "Code" },
+  { value: "code", label: uiText("Code") },
 ];
 
 // The diff viewer pulls in its worker pool, so load it only when the reader approaches Code.
@@ -804,7 +805,7 @@ export function PullRequestDetailPanel({
       toastManager.add({
         type: "error",
         title: "Could not open a thread",
-        description: "Try again from the project, or open a thread first.",
+        description: uiText("Try again from the project, or open a thread first."),
       });
       return;
     }
@@ -829,7 +830,7 @@ export function PullRequestDetailPanel({
       toastManager.add({
         type: "success",
         title: "Added to the composer",
-        description: "The task is in the composer — read it over, then send.",
+        description: uiText("The task is in the composer — read it over, then send."),
       });
       return;
     }
@@ -867,7 +868,7 @@ export function PullRequestDetailPanel({
       toastManager.update(toastId, {
         type: "error",
         title: "Could not open a thread for the checkout",
-        description: "Try again from the project, or open a thread first.",
+        description: uiText("Try again from the project, or open a thread first."),
       });
       return;
     }
@@ -931,7 +932,7 @@ export function PullRequestDetailPanel({
         ? {
             type: "success",
             title: "Checkout ready",
-            description: "The task is in the composer — read it over, then send.",
+            description: uiText("The task is in the composer — read it over, then send."),
           }
         : OFF_HEAD_PULL_REQUEST_CHECKOUT_TOAST,
     );
@@ -1570,7 +1571,7 @@ export function PullRequestDetailPanel({
               ) : (
                 <PullRequestChecksStatusLine
                   className="text-muted-foreground"
-                  aria-label={checksSummary ? `Checks: ${checksSummary}` : "Checks"}
+                  aria-label={checksSummary ? `Checks: ${checksSummary}` : uiText("Checks")}
                   icon={
                     checksState !== null ? (
                       <PullRequestChecksPopover

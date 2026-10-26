@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import type { ServerUpdateState } from "@t3tools/client-runtime/state/server";
 import { useState } from "react";
@@ -134,9 +135,9 @@ export function useAutoBalanceUpdateBanner(
           variant="ghost"
           label={
             failed > 0
-              ? "Retry"
+              ? uiText("Retry")
               : targets.length === machines.length
-                ? "Update all"
+                ? uiText("Update all")
                 : `Update ${targets.length} ${targets.length === 1 ? "machine" : "machines"}`
           }
         />

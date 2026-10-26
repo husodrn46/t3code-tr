@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { scopeThreadRef, scopedThreadKey } from "@t3tools/client-runtime/environment";
 import { settlePromise } from "@t3tools/client-runtime/state/runtime";
 import { previewStreamDownloadUrl } from "@t3tools/client-runtime/preview/server-browser-stream";
@@ -275,7 +276,7 @@ export function PreviewView({
       if (error instanceof BrowserSettingsReadError) {
         toastManager.add({
           type: "error",
-          title: "Unable to open browser",
+          title: uiText("Unable to open browser"),
           description: error.message,
         });
       }
@@ -541,7 +542,7 @@ export function PreviewView({
                 stackedThreadToast({
                   type: "error",
                   title: "Unable to copy recording path",
-                  description: "Clipboard API unavailable.",
+                  description: uiText("Clipboard API unavailable."),
                   actionProps: revealAction,
                 }),
               );

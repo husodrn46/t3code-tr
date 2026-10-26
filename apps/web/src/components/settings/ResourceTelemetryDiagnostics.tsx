@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ProcessSignalActions } from "./ProcessSignalActions";
 import { AuthEnvironmentMaintainScope } from "@t3tools/contracts";
 import { RefreshIcon } from "~/components/ui/refresh-icon";
@@ -278,9 +279,15 @@ function AggregateCard({
       </div>
       <div className="mt-3.5 grid grid-cols-2 gap-x-4 gap-y-2.5">
         <MetricPair label="CPU" value={`${aggregate.currentCpuPercent.toFixed(1)}%`} />
-        <MetricPair label="Memory" value={formatBytes(aggregate.currentRssBytes)} />
-        <MetricPair label="Read" value={formatRate(aggregate.ioReadBytesPerSecond)} />
-        <MetricPair label="Write" value={formatRate(aggregate.ioWriteBytesPerSecond)} />
+        <MetricPair label={uiText("Memory")} value={formatBytes(aggregate.currentRssBytes)} />
+        <MetricPair
+          label={uiText("Read", { context: "metric" })}
+          value={formatRate(aggregate.ioReadBytesPerSecond)}
+        />
+        <MetricPair
+          label={uiText("Write", { context: "metric" })}
+          value={formatRate(aggregate.ioWriteBytesPerSecond)}
+        />
       </div>
     </div>
   );
@@ -444,8 +451,14 @@ function ResourceHistoryChart({
                 <div className="space-y-0.5">
                   <div>CPU avg {bucket.avgCpuPercent.toFixed(1)}%</div>
                   <div>CPU peak {bucket.maxCpuPercent.toFixed(1)}%</div>
-                  <div>Read {formatBytes(bucket.ioReadBytes)}</div>
-                  <div>Write {formatBytes(bucket.ioWriteBytes)}</div>
+                  <div>
+                    {uiText("Read ")}
+                    {formatBytes(bucket.ioReadBytes)}
+                  </div>
+                  <div>
+                    {uiText("Write ")}
+                    {formatBytes(bucket.ioWriteBytes)}
+                  </div>
                 </div>
               </TooltipPopup>
             </Tooltip>
@@ -578,11 +591,11 @@ function ProcessTable({
           </colgroup>
           <thead className="sticky top-0 z-10 border-b border-border/60 bg-card text-3xs uppercase tracking-widest text-muted-foreground/65">
             <tr>
-              <th className="px-4 py-2 font-semibold sm:pl-5">Process</th>
+              <th className="px-4 py-2 font-semibold sm:pl-5">{uiText("Process")}</th>
               <th className="px-3 py-2 font-semibold">Category</th>
               <th className="px-3 py-2 text-right font-semibold">CPU</th>
-              <th className="px-3 py-2 text-right font-semibold">CPU Time</th>
-              <th className="px-3 py-2 text-right font-semibold">Memory</th>
+              <th className="px-3 py-2 text-right font-semibold">{uiText("CPU Time")}</th>
+              <th className="px-3 py-2 text-right font-semibold">{uiText("Memory")}</th>
               <th className="px-3 py-2 text-right font-semibold">Read/s</th>
               <th className="px-3 py-2 text-right font-semibold">Write/s</th>
               <th className="px-3 py-2 text-right font-semibold">Read Total</th>
@@ -682,13 +695,17 @@ function HistoryProcessTable({
           </colgroup>
           <thead className="sticky top-0 z-10 border-b border-border/60 bg-card text-3xs uppercase tracking-widest text-muted-foreground/65">
             <tr>
-              <th className="px-4 py-2 font-semibold sm:pl-5">Process</th>
+              <th className="px-4 py-2 font-semibold sm:pl-5">{uiText("Process")}</th>
               <th className="px-3 py-2 font-semibold">Category</th>
-              <th className="px-3 py-2 text-right font-semibold">CPU Time</th>
+              <th className="px-3 py-2 text-right font-semibold">{uiText("CPU Time")}</th>
               <th className="px-3 py-2 text-right font-semibold">Peak CPU</th>
               <th className="px-3 py-2 text-right font-semibold">Peak Mem</th>
-              <th className="px-3 py-2 text-right font-semibold">Read</th>
-              <th className="px-3 py-2 text-right font-semibold">Write</th>
+              <th className="px-3 py-2 text-right font-semibold">
+                {uiText("Read", { context: "metric" })}
+              </th>
+              <th className="px-3 py-2 text-right font-semibold">
+                {uiText("Write", { context: "metric" })}
+              </th>
               <th className="px-3 py-2 text-right font-semibold">Samples</th>
               <th className="px-3 py-2 text-right font-semibold sm:pr-5">PID</th>
             </tr>
@@ -769,7 +786,7 @@ function AttributionTable({ entries }: { entries: ReadonlyArray<ResourceAttribut
             <th className="px-3 py-2 text-right font-semibold">Logical Read</th>
             <th className="px-3 py-2 text-right font-semibold">Logical Write</th>
             <th className="px-3 py-2 text-right font-semibold">Count</th>
-            <th className="px-3 py-2 text-right font-semibold sm:pr-5">Time</th>
+            <th className="px-3 py-2 text-right font-semibold sm:pr-5">{uiText("Time")}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-border/50">
@@ -1067,7 +1084,7 @@ export function ResourceTelemetryDiagnostics({
                 aggregate={snapshot.groups.backend}
               />
               <AggregateCard
-                label="Desktop"
+                label={uiText("Desktop")}
                 accentClass="bg-info/80"
                 aggregate={snapshot.groups.electron}
               />

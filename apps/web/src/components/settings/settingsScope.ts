@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { EnvironmentId } from "@t3tools/contracts";
 
 import type {
@@ -143,7 +144,7 @@ export function resolveSettingsScope(
   }
   return {
     kind: "all",
-    label: "All environments",
+    label: uiText("All environments"),
     members: [],
     environmentIds: environments.map((candidate) => candidate.environmentId),
   };

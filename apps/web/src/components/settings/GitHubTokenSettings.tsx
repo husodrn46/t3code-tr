@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { EnvironmentId } from "@t3tools/contracts";
 import { ExternalLinkIcon } from "lucide-react";
 import { useState } from "react";
@@ -83,7 +84,7 @@ export function GitHubTokenSettings({
         </p>
         <div className="grid gap-3 sm:grid-cols-[12rem_1fr]">
           <div className="grid gap-1.5">
-            <Label htmlFor={`github-token-host-${environmentId}`}>Host</Label>
+            <Label htmlFor={`github-token-host-${environmentId}`}>{uiText("Host")}</Label>
             <Input
               id={`github-token-host-${environmentId}`}
               autoComplete="off"
@@ -118,11 +119,11 @@ export function GitHubTokenSettings({
                 disabled={saving}
                 onClick={() => void save(normalizedHost, "")}
               >
-                Remove
+                {uiText("Remove")}
               </Button>
             ) : null}
             <Button type="submit" size="xs" disabled={!normalizedHost || !draft.trim() || saving}>
-              Save
+              {uiText("Save")}
             </Button>
           </div>
         </div>

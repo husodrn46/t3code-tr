@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
@@ -98,7 +99,7 @@ const handleCheckForUpdatesMenuClick = Effect.gen(function* () {
     });
     yield* electronDialog.showMessageBox({
       type: "info",
-      title: "Updates unavailable",
+      title: uiText("Updates unavailable"),
       message: "Automatic updates are not available right now.",
       detail: disabledReason.value,
       buttons: ["OK"],
@@ -169,12 +170,12 @@ export const make = Effect.gen(function* () {
         submenu: [
           { role: "about", label: `About ${environment.displayName}` },
           {
-            label: "Check for Updates...",
+            label: uiText("Check for Updates..."),
             click: checkForUpdatesClick,
           },
           { type: "separator" },
           {
-            label: "Settings...",
+            label: uiText("Settings..."),
             accelerator: "CmdOrCtrl+,",
             click: settingsClick,
           },
@@ -192,13 +193,13 @@ export const make = Effect.gen(function* () {
 
     template.push(
       {
-        label: "File",
+        label: uiText("File"),
         submenu: [
           ...(environment.platform === "darwin"
             ? []
             : [
                 {
-                  label: "Settings...",
+                  label: uiText("Settings..."),
                   accelerator: "CmdOrCtrl+,",
                   click: settingsClick,
                 },
@@ -208,7 +209,7 @@ export const make = Effect.gen(function* () {
         ],
       },
       {
-        label: "Edit",
+        label: uiText("Edit"),
         submenu: [
           { role: "undo" },
           { role: "redo" },
@@ -217,7 +218,7 @@ export const make = Effect.gen(function* () {
           { role: "copy" },
           { role: "paste" },
           {
-            label: "Paste as Text",
+            label: uiText("Paste as Text"),
             accelerator: "CmdOrCtrl+Shift+V",
             click: pasteAsTextClick,
           },
@@ -236,29 +237,33 @@ export const make = Effect.gen(function* () {
         ],
       },
       {
-        label: "View",
+        label: uiText("View"),
         submenu: [
           /*
             Not the reload, DevTools or zoom roles: those act on the focused
             webContents, so with a browser page focused they reload or zoom
             the guest page and the app UI appears stuck.
           */
-          { label: "Reload", accelerator: "CmdOrCtrl+R", click: mainContentsClick("reload") },
           {
-            label: "Force Reload",
+            label: uiText("Reload"),
+            accelerator: "CmdOrCtrl+R",
+            click: mainContentsClick("reload"),
+          },
+          {
+            label: uiText("Force Reload"),
             accelerator: "Shift+CmdOrCtrl+R",
             click: mainContentsClick("forceReload"),
           },
           {
-            label: "Toggle Developer Tools",
+            label: uiText("Toggle Developer Tools"),
             accelerator: environment.platform === "darwin" ? "Alt+Command+I" : "Ctrl+Shift+I",
             click: mainContentsClick("toggleDevTools"),
           },
           { type: "separator" },
-          { label: "Actual Size", accelerator: "CmdOrCtrl+0", click: zoomClick("reset") },
-          { label: "Zoom In", accelerator: "CmdOrCtrl+=", click: zoomClick("in") },
+          { label: uiText("Actual Size"), accelerator: "CmdOrCtrl+0", click: zoomClick("reset") },
+          { label: uiText("Zoom In"), accelerator: "CmdOrCtrl+=", click: zoomClick("in") },
           {
-            label: "Zoom In",
+            label: uiText("Zoom In"),
             accelerator: "CmdOrCtrl+Plus",
             visible: false,
             click: zoomClick("in"),
@@ -266,30 +271,30 @@ export const make = Effect.gen(function* () {
           ...(environment.platform === "darwin"
             ? [
                 {
-                  label: "Zoom In",
+                  label: uiText("Zoom In"),
                   accelerator: "CmdOrCtrl+Shift+=",
                   visible: false,
                   click: zoomClick("in"),
                 },
               ]
             : []),
-          { label: "Zoom Out", accelerator: "CmdOrCtrl+-", click: zoomClick("out") },
+          { label: uiText("Zoom Out"), accelerator: "CmdOrCtrl+-", click: zoomClick("out") },
           // The numeric keypad sends its own key codes, so the number-row
           // accelerators above never match it.
           {
-            label: "Actual Size",
+            label: uiText("Actual Size"),
             accelerator: "CmdOrCtrl+num0",
             visible: false,
             click: zoomClick("reset"),
           },
           {
-            label: "Zoom In",
+            label: uiText("Zoom In"),
             accelerator: "CmdOrCtrl+numadd",
             visible: false,
             click: zoomClick("in"),
           },
           {
-            label: "Zoom Out",
+            label: uiText("Zoom Out"),
             accelerator: "CmdOrCtrl+numsub",
             visible: false,
             click: zoomClick("out"),
@@ -303,7 +308,7 @@ export const make = Effect.gen(function* () {
         role: "help",
         submenu: [
           {
-            label: "Check for Updates...",
+            label: uiText("Check for Updates..."),
             click: checkForUpdatesClick,
           },
         ],

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { scopeThreadRef } from "@t3tools/client-runtime/environment";
 import { deriveThreadQueueWorkflowState } from "@t3tools/client-runtime/state/thread-workflows";
 import { assistantCitationsToPlainText } from "@t3tools/shared/assistantCitations";
@@ -247,7 +248,9 @@ export function QueuedRunsControl({
           <ComposerBanner.Icon>
             <ListOrderedIcon />
           </ComposerBanner.Icon>
-          <ComposerBanner.Content className="text-muted-foreground">Queued</ComposerBanner.Content>
+          <ComposerBanner.Content className="text-muted-foreground">
+            {uiText("Queued")}
+          </ComposerBanner.Content>
           <ComposerBanner.Actions>
             <ComposerBanner.Count>{items.length}</ComposerBanner.Count>
             <ComposerBanner.ToggleIcon expanded={expanded} />
@@ -397,7 +400,7 @@ export function QueuedRunsControl({
                         aria-label="Cancel editing queued message"
                         onClick={props.onCancelEdit}
                       >
-                        Cancel
+                        {uiText("Cancel")}
                       </Button>
                     ) : (
                       <>
@@ -441,7 +444,7 @@ export function QueuedRunsControl({
                               }}
                             >
                               <CornerUpRightIcon />
-                              {workflow?.canSendNow ? "Send now" : "Steer"}
+                              {workflow?.canSendNow ? "Send now" : uiText("Steer")}
                             </Button>
                           </TooltipTrigger>
                           <TooltipPopup>

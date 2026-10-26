@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { DevicePlatform } from "@t3tools/contracts";
 import {
   Camera,
@@ -71,7 +72,7 @@ export function DeviceControlsRail(props: {
           <>
             <RailButton
               tooltipSide={popupSide}
-              label="Back"
+              label={uiText("Back")}
               disabled={inputDisabled}
               onClick={() => handle?.pressButton("back")}
             >
@@ -91,7 +92,7 @@ export function DeviceControlsRail(props: {
                   <Button
                     size="icon-sm"
                     variant="ghost"
-                    aria-label="Rotate device"
+                    aria-label={uiText("Rotate device")}
                     disabled={controls.disabled}
                   />
                 }
@@ -102,7 +103,7 @@ export function DeviceControlsRail(props: {
                 <MenuItem
                   onClick={() => void controls.act({ type: "setOrientation", value: "portrait" })}
                 >
-                  Portrait
+                  {uiText("Portrait")}
                 </MenuItem>
                 <MenuItem
                   onClick={() =>
@@ -117,7 +118,7 @@ export function DeviceControlsRail(props: {
         ) : (
           <RailButton
             tooltipSide={popupSide}
-            label="Rotate device"
+            label={uiText("Rotate device")}
             disabled={inputDisabled || !!view.keyboard?.attached}
             onClick={() => handle?.rotate()}
           >
@@ -139,8 +140,8 @@ export function DeviceControlsRail(props: {
               <Button
                 size="icon-sm"
                 variant="ghost"
-                aria-label="Device text size"
-                title="Device text size"
+                aria-label={uiText("Device text size")}
+                title={uiText("Device text size")}
                 disabled={controls.disabled || !settings?.textSize}
               />
             }
@@ -180,7 +181,7 @@ export function DeviceControlsRail(props: {
         </Menu>
         <RailButton
           tooltipSide={popupSide}
-          label="Device tools"
+          label={uiText("Device tools")}
           pressed={props.toolsOpen}
           onClick={props.onTools}
         >
@@ -200,8 +201,8 @@ export function DeviceControlsRail(props: {
               <Button
                 size="icon-sm"
                 variant="ghost"
-                aria-label="More device actions"
-                title="More device actions"
+                aria-label={uiText("More device actions")}
+                title={uiText("More device actions")}
               />
             }
           >

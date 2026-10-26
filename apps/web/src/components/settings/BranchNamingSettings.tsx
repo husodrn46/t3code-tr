@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useRef } from "react";
 import { BranchNamingMode, DEFAULT_SERVER_SETTINGS } from "@t3tools/contracts";
 
@@ -61,7 +62,7 @@ export function BranchNamingSettings() {
               }
             }}
           >
-            <SelectTrigger size="sm" aria-label="Worktree branch naming">
+            <SelectTrigger size="sm" aria-label={uiText("Worktree branch naming")}>
               <SelectValue>
                 {(value: BranchNamingMode | null) => (value === null ? "Mixed" : MODES[value])}
               </SelectValue>
@@ -102,7 +103,7 @@ export function BranchNamingSettings() {
               onChange={() => {
                 prefixEdited.current = true;
               }}
-              placeholder={prefixMixed ? "Mixed" : "No prefix"}
+              placeholder={prefixMixed ? uiText("Mixed") : "No prefix"}
               defaultValue={prefixMixed ? "" : settings.branchNamePrefix}
               onBlur={(event) => {
                 const value = event.target.value.trim();

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { settingsScopeEnvironmentLabels } from "./settingsScopeAxis";
 import { Spinner } from "~/components/ui/spinner";
 import { ArchiveIcon, ArchiveX } from "lucide-react";
@@ -131,7 +132,7 @@ export function ArchivedThreadsPanel() {
     const clicked = await api.contextMenu.show(
       [
         { id: "unarchive", label: "Unarchive" },
-        { id: "delete", label: "Delete", destructive: true },
+        { id: "delete", label: uiText("Delete"), destructive: true },
       ],
       position,
     );
@@ -162,7 +163,7 @@ export function ArchivedThreadsPanel() {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Failed to delete thread",
+            title: uiText("Failed to delete thread"),
             description: error instanceof Error ? error.message : "An error occurred.",
           }),
         );

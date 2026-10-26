@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { SessionPermissions } from "./SessionPermissions";
 import {
   ChevronRightIcon,
@@ -293,7 +294,7 @@ export function SavedBackendListRow({
             onClick={() => setPermissionsOpen((open) => !open)}
             className="inline-flex shrink-0 items-center gap-0.5 rounded-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ring"
           >
-            Permissions
+            {uiText("Permissions")}
             <ChevronRightIcon
               aria-hidden
               className={cn(
@@ -361,7 +362,7 @@ export function SavedBackendListRow({
           serverLabel={`${environment.label} server`}
           fromVersion={lastDescriptor?.serverVersion}
           targetVersion={APP_VERSION}
-          label={serverUpdateState.status === "failed" ? "Retry update" : "Update"}
+          label={serverUpdateState.status === "failed" ? uiText("Retry update") : uiText("Update")}
         />
       ) : null}
       {showUpdateAction ? (
@@ -373,7 +374,7 @@ export function SavedBackendListRow({
           desktopAppUpdate={supportsDesktopAppUpdate(environment.serverConfig)}
           threadContinuation={supportsServerUpdateThreadContinuation(environment.serverConfig)}
           targetVersion={versionMismatch.clientVersion}
-          label={serverUpdateState.status === "failed" ? "Retry update" : "Update"}
+          label={serverUpdateState.status === "failed" ? uiText("Retry update") : uiText("Update")}
           appearance="icon"
         />
       ) : null}
@@ -593,7 +594,9 @@ function ConfiguredCloudLinkRow({ canManageRelay }: { readonly canManageRelay: b
                     : "T3 Connect is on. Reachability has not been checked yet."
                 : managedTunnelOutOfSync
                   ? "T3 Connect is out of sync. This environment is linked only to publish agent activity, so other devices cannot connect. Turn T3 Connect on to repair it."
-                  : "Make this environment available to your other devices through T3 Connect."
+                  : uiText(
+                      "Make this environment available to your other devices through T3 Connect.",
+                    )
           }
           status={operationError ?? primaryCloudLinkState.error ?? reachabilityStatus}
           control={

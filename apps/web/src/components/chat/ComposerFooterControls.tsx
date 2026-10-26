@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   ModelSelection,
   ProviderInstanceId,
@@ -82,7 +83,7 @@ export const ComposerFooterModeControls = memo(function ComposerFooterModeContro
             />
           )}
           <span data-composer-control-label className="sr-only sm:not-sr-only">
-            {props.interactionMode === "plan" ? "Plan" : "Build"}
+            {props.interactionMode === "plan" ? uiText("Plan") : uiText("Build")}
           </span>
         </TooltipTrigger>
         <TooltipPopup side="top">{interactionModeTooltip}</TooltipPopup>

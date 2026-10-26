@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   AuthOrchestrationOperateScope,
   AuthProvidersManageScope,
@@ -373,7 +374,11 @@ export function AcpSessionManagementSection(props: {
                   disabled={!canRead || loading || projectId === null}
                   onClick={() => void loadSessions()}
                 >
-                  {loading ? "Loading" : sessions.length === 0 ? "List sessions" : "Refresh"}
+                  {loading
+                    ? uiText("Loading")
+                    : sessions.length === 0
+                      ? "List sessions"
+                      : uiText("Refresh")}
                 </Button>
               </>
             ) : null}
@@ -414,7 +419,7 @@ export function AcpSessionManagementSection(props: {
                           ? "Imported"
                           : importingSessionId === session.sessionId
                             ? "Importing"
-                            : "Import"}
+                            : uiText("Import")}
                       </Button>
                       {canDelete ? (
                         <Button
@@ -428,7 +433,7 @@ export function AcpSessionManagementSection(props: {
                           }
                           onClick={() => void deleteNativeSession(session)}
                         >
-                          {deletingSessionId === session.sessionId ? "Deleting" : "Delete"}
+                          {deletingSessionId === session.sessionId ? "Deleting" : uiText("Delete")}
                         </Button>
                       ) : null}
                     </div>
@@ -446,7 +451,7 @@ export function AcpSessionManagementSection(props: {
                 disabled={!canRead || loading}
                 onClick={() => void loadSessions(nextCursor)}
               >
-                {loading ? "Loading" : "Load more"}
+                {loading ? uiText("Loading") : "Load more"}
               </Button>
             ) : null}
           </>
@@ -469,7 +474,11 @@ export function AcpSessionManagementSection(props: {
               disabled={!canRead || loadingProviders || projectId === null}
               onClick={() => void loadProviders()}
             >
-              {loadingProviders ? "Loading" : providers.length === 0 ? "List providers" : "Refresh"}
+              {loadingProviders
+                ? uiText("Loading")
+                : providers.length === 0
+                  ? "List providers"
+                  : uiText("Refresh")}
             </Button>
           </div>
 
@@ -520,7 +529,7 @@ export function AcpSessionManagementSection(props: {
                           {provider.providerId}
                         </p>
                         <p className="text-3xs text-muted-foreground">
-                          {provider.current === null ? "Disabled" : "Configured"}
+                          {provider.current === null ? uiText("Disabled") : "Configured"}
                           {provider.required ? " · Required" : ""}
                         </p>
                       </div>
@@ -537,7 +546,9 @@ export function AcpSessionManagementSection(props: {
                           }
                           onClick={() => void saveProvider(provider)}
                         >
-                          {savingProviderId === provider.providerId ? "Saving" : "Save"}
+                          {savingProviderId === provider.providerId
+                            ? uiText("Saving")
+                            : uiText("Save")}
                         </Button>
                         {!provider.required && provider.current !== null ? (
                           <Button

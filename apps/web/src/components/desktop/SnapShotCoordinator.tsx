@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   type DesktopPendingSnapShot,
   type DesktopSnapShotEvent,
@@ -377,7 +378,7 @@ export function SnapShotCoordinator() {
               "delivery",
               stackedThreadToast({
                 type: "error",
-                title: "Snapshot failed",
+                title: uiText("Snapshot failed"),
                 description: `Capture ${item.id}: ${
                   error instanceof Error ? error.message : "Try the capture again."
                 }`,
@@ -393,7 +394,7 @@ export function SnapShotCoordinator() {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Snapshot failed",
+            title: uiText("Snapshot failed"),
             description: error instanceof Error ? error.message : "Try the capture again.",
           }),
         );
@@ -463,7 +464,7 @@ export function SnapShotCoordinator() {
             toastManager.add(
               stackedThreadToast({
                 type: "error",
-                title: "Snapshot failed",
+                title: uiText("Snapshot failed"),
                 description: state.message ?? "Try the capture again.",
               }),
             );

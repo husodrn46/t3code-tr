@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomCommand } from "~/state/use-atom-command";
 import { scopeProjectRef } from "@t3tools/client-runtime/environment";
 import {
@@ -74,7 +75,7 @@ const ACTION_SUCCESS_LABELS: Record<PullRequestAction, string> = {
   merge: "Merge requested",
   ready: "Marked ready for review",
   draft: "Converted to draft",
-  close: "Pull request closed",
+  close: uiText("Pull request closed"),
   reopen: "Pull request reopened",
   "update-branch": "Branch updated with the base branch",
   "enable-auto-merge": "Auto-merge enabled",
@@ -295,7 +296,7 @@ export function usePullRequestHandoffs({
       toastManager.add({
         type: "error",
         title: "Could not open a thread",
-        description: "Try again from the project, or open a thread first.",
+        description: uiText("Try again from the project, or open a thread first."),
       });
       return;
     }
@@ -335,7 +336,7 @@ export function usePullRequestHandoffs({
       toastManager.update(toastId, {
         type: "error",
         title: "Could not open a thread for the checkout",
-        description: "Try again from the project, or open a thread first.",
+        description: uiText("Try again from the project, or open a thread first."),
       });
       return;
     }
@@ -396,7 +397,7 @@ export function usePullRequestHandoffs({
         ? {
             type: "success",
             title: "Checkout ready",
-            description: "The task is in the composer — read it over, then send.",
+            description: uiText("The task is in the composer — read it over, then send."),
           }
         : OFF_HEAD_PULL_REQUEST_CHECKOUT_TOAST,
     );

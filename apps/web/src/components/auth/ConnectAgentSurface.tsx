@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   type AuthMcpApprovalDecision,
   type AuthMcpApprovalDetails,
@@ -29,7 +30,7 @@ const accessConfig: Record<
   { readonly label: string; readonly description: string; readonly icon: LucideIcon }
 > = {
   "read-only": {
-    label: "Read only",
+    label: uiText("Read only"),
     description: "Read projects and threads. Cannot start, message or change anything.",
     icon: EyeIcon,
   },
@@ -220,7 +221,7 @@ export function ConnectAgentSurface() {
         {oneClick ? null : (
           <div className="space-y-2">
             <label className="text-sm font-medium" htmlFor="connect-agent-pairing-code">
-              Pairing code
+              {uiText("Pairing code")}
             </label>
             <Input
               id="connect-agent-pairing-code"
@@ -249,7 +250,7 @@ export function ConnectAgentSurface() {
 
         <div className="flex flex-wrap gap-2">
           <Button disabled={!canApprove} type="submit">
-            {pending === "approve" ? "Approving…" : "Approve"}
+            {pending === "approve" ? "Approving…" : uiText("Approve")}
           </Button>
           <Button
             disabled={pending !== null}

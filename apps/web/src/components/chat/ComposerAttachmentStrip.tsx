@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   ChatAttachment,
   ChatFileAttachment,
@@ -690,13 +691,13 @@ export function ComposerAttachButton({
               size="icon-sm"
               onPointerDown={(event) => event.preventDefault()}
               onClick={() => inputRef.current?.click()}
-              aria-label="Attach files"
+              aria-label={uiText("Attach files")}
             />
           }
         >
           <PaperclipIcon />
         </TooltipTrigger>
-        <TooltipPopup>Attach files</TooltipPopup>
+        <TooltipPopup>{uiText("Attach files")}</TooltipPopup>
       </Tooltip>
     </>
   );

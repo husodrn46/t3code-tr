@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useScopedSettingsWriteAllowed } from "./useScopedSettings";
 import { SettingsIcon } from "lucide-react";
 import { useState } from "react";
@@ -53,7 +54,7 @@ type BackgroundActivityProfileOption = BackgroundActivityProfile | "advanced";
 
 const BACKGROUND_ACTIVITY_PROFILE_OPTION_LABELS: Record<BackgroundActivityProfileOption, string> = {
   ...BACKGROUND_ACTIVITY_PROFILE_LABELS,
-  advanced: "Advanced",
+  advanced: uiText("Advanced"),
 };
 
 const BACKGROUND_ACTIVITY_PROFILE_DESCRIPTIONS: Record<BackgroundActivityProfile, string> = {
@@ -211,7 +212,7 @@ function BackgroundActivityAdvancedDialog({
                     <NumberFieldIncrement aria-label="Increase Git fetch interval" />
                   </NumberFieldGroup>
                 </NumberField>
-                <span className="text-xs text-muted-foreground">seconds</span>
+                <span className="text-xs text-muted-foreground">{uiText("seconds")}</span>
               </div>
             </div>
 
@@ -250,7 +251,7 @@ function BackgroundActivityAdvancedDialog({
                     <NumberFieldIncrement aria-label="Increase provider health interval" />
                   </NumberFieldGroup>
                 </NumberField>
-                <span className="text-xs text-muted-foreground">seconds</span>
+                <span className="text-xs text-muted-foreground">{uiText("seconds")}</span>
               </div>
             </div>
 
@@ -288,7 +289,7 @@ function BackgroundActivityAdvancedDialog({
                     <NumberFieldIncrement aria-label="Increase active host power interval" />
                   </NumberFieldGroup>
                 </NumberField>
-                <span className="text-xs text-muted-foreground">seconds</span>
+                <span className="text-xs text-muted-foreground">{uiText("seconds")}</span>
               </div>
             </div>
 
@@ -326,7 +327,7 @@ function BackgroundActivityAdvancedDialog({
                     <NumberFieldIncrement aria-label="Increase idle host power interval" />
                   </NumberFieldGroup>
                 </NumberField>
-                <span className="text-xs text-muted-foreground">seconds</span>
+                <span className="text-xs text-muted-foreground">{uiText("seconds")}</span>
               </div>
             </div>
 
@@ -365,7 +366,7 @@ function BackgroundActivityAdvancedDialog({
           >
             Reset all
           </Button>
-          <Button onClick={() => onOpenChange(false)}>Done</Button>
+          <Button onClick={() => onOpenChange(false)}>{uiText("Done")}</Button>
         </DialogFooter>
       </DialogPopup>
     </Dialog>

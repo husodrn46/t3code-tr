@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { EnvironmentProject } from "@t3tools/client-runtime/state/shell";
 import type { Dispatch } from "react";
 import type { ThreadPreviewState } from "../../previewStateStore";
@@ -116,7 +117,7 @@ export function useRightPanelActions(input: RightPanelActionsInput) {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Unable to open browser",
+            title: uiText("Unable to open browser"),
             description: error.message,
           }),
         );
@@ -238,8 +239,8 @@ export function useRightPanelActions(input: RightPanelActionsInput) {
       toastManager.add(
         stackedThreadToast({
           type: "error",
-          title: "Failed to copy path",
-          description: "Clipboard API unavailable.",
+          title: uiText("Failed to copy path"),
+          description: uiText("Clipboard API unavailable."),
         }),
       );
       return;
@@ -253,7 +254,7 @@ export function useRightPanelActions(input: RightPanelActionsInput) {
       () => {
         toastManager.add({
           type: "success",
-          title: "Path copied",
+          title: uiText("Path copied"),
           description: clipboardPath,
         });
       },
@@ -261,7 +262,7 @@ export function useRightPanelActions(input: RightPanelActionsInput) {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: "Failed to copy path",
+            title: uiText("Failed to copy path"),
             description: error instanceof Error ? error.message : "An error occurred.",
           }),
         );

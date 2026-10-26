@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   type ModelCapabilities,
   ProviderDriverKind,
@@ -53,7 +54,7 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
       label: "Speed",
       type: "select",
       choices: [
-        { id: "default", label: "Standard", isDefault: true },
+        { id: "default", label: uiText("Standard"), isDefault: true },
         { id: "fast", label: "Fast" },
       ],
     },
@@ -72,12 +73,12 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
       ],
     },
     { id: "fastMode", label: "Fast Mode", type: "boolean" },
-    { id: "thinking", label: "Thinking", type: "boolean" },
+    { id: "thinking", label: uiText("Thinking"), type: "boolean" },
   ],
   [ProviderDriverKind.make("cursor")]: [
     { id: "reasoning", label: "Reasoning", type: "select", choices: EFFORT_CHOICES },
     { id: "fastMode", label: "Fast Mode", type: "boolean" },
-    { id: "thinking", label: "Thinking", type: "boolean" },
+    { id: "thinking", label: uiText("Thinking"), type: "boolean" },
   ],
   [ProviderDriverKind.make("grok")]: [
     { id: "reasoningEffort", label: "Reasoning", type: "select", choices: EFFORT_CHOICES },
@@ -85,10 +86,10 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
   [ProviderDriverKind.make("pi")]: [
     {
       id: "thinking",
-      label: "Thinking",
+      label: uiText("Thinking"),
       type: "select",
       choices: [
-        { id: "off", label: "Off" },
+        { id: "off", label: uiText("Off") },
         { id: "minimal", label: "Minimal" },
         { id: "low", label: "Low" },
         { id: "medium", label: "Medium", isDefault: true },
@@ -102,11 +103,11 @@ export const DESCRIPTOR_PRESETS_BY_KIND: Partial<
     { id: "variant", label: "Reasoning", type: "select", choices: EFFORT_CHOICES },
     {
       id: "agent",
-      label: "Agent",
+      label: uiText("Agent"),
       type: "select",
       choices: [
-        { id: "build", label: "Build", isDefault: true },
-        { id: "plan", label: "Plan" },
+        { id: "build", label: uiText("Build"), isDefault: true },
+        { id: "plan", label: uiText("Plan") },
       ],
     },
   ],

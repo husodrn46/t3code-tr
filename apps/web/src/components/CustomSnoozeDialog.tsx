@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useEffect, useId, useState } from "react";
 import { create } from "zustand";
 import {
@@ -96,7 +97,7 @@ function CustomSnoozeDialog() {
           <DialogPanel>
             <div className="flex flex-col gap-4">
               <ToggleGroup
-                aria-label="Schedule type"
+                aria-label={uiText("Schedule type")}
                 className="w-full *:flex-1"
                 value={[mode]}
                 onValueChange={(next) => {
@@ -148,7 +149,7 @@ function CustomSnoozeDialog() {
                       </Popover>
                     </div>
                     <Label className="flex min-w-0 flex-col items-stretch" htmlFor={`${id}-time`}>
-                      Time
+                      {uiText("Time")}
                       <Input
                         nativeInput
                         id={`${id}-time`}
@@ -215,9 +216,9 @@ function CustomSnoozeDialog() {
           </DialogPanel>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => finish(null)}>
-              Cancel
+              {uiText("Cancel")}
             </Button>
-            <Button type="submit">Snooze</Button>
+            <Button type="submit">{uiText("Snooze")}</Button>
           </DialogFooter>
         </form>
       </DialogPopup>

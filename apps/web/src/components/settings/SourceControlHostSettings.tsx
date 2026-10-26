@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { EnvironmentId } from "@t3tools/contracts";
 import type { SourceControlClientDefinition } from "@t3tools/client-runtime/source-control-clients";
 import { useState } from "react";
@@ -66,7 +67,7 @@ export function SourceControlHostSettings({
               void save(Object.fromEntries(Object.keys(saved ?? {}).map((key) => [key, ""])))
             }
           >
-            Remove
+            {uiText("Remove")}
           </Button>
         </div>
       ) : null}

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   type LinkedPrompt,
   parseNewThreadLink,
@@ -115,7 +116,7 @@ function HostedPromptLinkLanding({
       <StandalonePage tone="error">
         <StandalonePageHeader
           eyebrow={APP_DISPLAY_NAME}
-          title="Could not open the link"
+          title={uiText("Could not open the link")}
           description={summary.error}
         />
       </StandalonePage>

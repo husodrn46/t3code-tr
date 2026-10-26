@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useComposerMenuState } from "../chat/useComposerMenuState";
 import { useOrchestrationCommand } from "../../state/use-orchestration-command";
 import { AuthOrchestrationOperateScope } from "@t3tools/contracts";
@@ -278,7 +279,7 @@ function ProjectDetail({
   const renameGroup = async (nextTitle: string, wasEdited: boolean) => {
     const title = nextTitle.trim();
     if (!title) {
-      toastManager.add({ type: "warning", title: "Project title cannot be empty" });
+      toastManager.add({ type: "warning", title: uiText("Project title cannot be empty") });
       return;
     }
     if (
@@ -385,7 +386,7 @@ function ProjectDetail({
       onClick={() => void removeMembers([member])}
       aria-label={`Remove checkout ${member.workspaceRoot}`}
     >
-      Remove
+      {uiText("Remove")}
     </Button>
   );
   const checkoutChoices = (
@@ -465,7 +466,7 @@ function ProjectDetail({
             Can't find a setting? Keep this project picked above and hop to any other settings page.
           </AlertDescription>
         </Alert>
-        <SettingsSection id="project-overview" title="Project" hideTitle>
+        <SettingsSection id="project-overview" title={uiText("Project")} hideTitle>
           {!canEditGroup ? (
             <p className="px-3 py-2 text-sm text-muted-foreground sm:px-4">
               {group.memberProjects.length > 1
@@ -474,7 +475,7 @@ function ProjectDetail({
             </p>
           ) : null}
           <SettingsRow
-            title="Name"
+            title={uiText("Name")}
             description="The shared name for this project group in the sidebar and thread lists."
             control={
               <Input
@@ -557,7 +558,7 @@ function ProjectDetail({
                 ? "Remove checkout"
                 : group.memberProjects.length > 1
                   ? "Remove this project everywhere"
-                  : "Remove project"
+                  : uiText("Remove project")
             }
             description={
               hasOtherMembers
@@ -578,7 +579,7 @@ function ProjectDetail({
                   ? "Remove checkout"
                   : group.memberProjects.length > 1
                     ? "Remove all entries"
-                    : "Remove project"}
+                    : uiText("Remove project")}
               </Button>
             }
           />

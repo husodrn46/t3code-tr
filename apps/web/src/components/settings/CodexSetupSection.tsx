@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { AuthProvidersManageScope } from "@t3tools/contracts";
 import { useEnvironmentScope } from "../../state/session";
 import {
@@ -79,7 +80,7 @@ export function CodexSetupSection(props: CodexSetupSectionProps) {
           existingReady ? (
             props.provider?.auth.email?.trim() ? (
               <>
-                Signed in as{" "}
+                {uiText("Signed in as")}{" "}
                 <RedactedSensitiveText
                   value={props.provider.auth.email.trim()}
                   ariaLabel="Toggle account email visibility"
@@ -104,10 +105,10 @@ export function CodexSetupSection(props: CodexSetupSectionProps) {
           existingReady ? (
             <span className="inline-flex items-center gap-1.5 text-xs font-medium text-success-foreground">
               <CheckIcon className="size-3.5" />
-              Ready
+              {uiText("Ready")}
             </span>
           ) : existingChecking ? (
-            <span className="text-xs text-muted-foreground">Checking...</span>
+            <span className="text-xs text-muted-foreground">{uiText("Checking...")}</span>
           ) : existingAuthenticated ? (
             <span className="text-xs text-muted-foreground">{existingSummary.headline}</span>
           ) : (
@@ -119,7 +120,7 @@ export function CodexSetupSection(props: CodexSetupSectionProps) {
                 props.onModeChange("managed");
               }}
             >
-              Continue with ChatGPT
+              {uiText("Continue with ChatGPT")}
             </ChatGptConnectionButton>
           )
         }
@@ -138,12 +139,12 @@ export function CodexSetupSection(props: CodexSetupSectionProps) {
           description={<CodexSignInDescription />}
           control={
             <Button size="sm" variant="outline" className="min-w-44" disabled>
-              Open sign-in page
+              {uiText("Open sign-in page")}
             </Button>
           }
           secondaryControl={
             <Button size="sm" variant="ghost-muted" disabled>
-              Cancel
+              {uiText("Cancel")}
             </Button>
           }
         />
@@ -564,7 +565,7 @@ function ManagedCodexSetup({
   ) : authenticated ? (
     provider?.auth.email?.trim() ? (
       <>
-        Signed in as{" "}
+        {uiText("Signed in as")}{" "}
         <RedactedSensitiveText
           value={provider.auth.email.trim()}
           ariaLabel="Toggle account email visibility"
@@ -618,9 +619,9 @@ function ManagedCodexSetup({
           : auth?.phase === "waiting"
             ? remoteWeb
               ? "Open ChatGPT sign-in"
-              : "Open sign-in page"
+              : uiText("Open sign-in page")
             : presentation === "onboarding"
-              ? "Open sign-in page"
+              ? uiText("Open sign-in page")
               : "Signing in..."}
     </Button>
   );
@@ -748,7 +749,7 @@ function ManagedCodexSetup({
             ) : authenticated ? (
               provider?.auth.email?.trim() ? (
                 <>
-                  Signed in as{" "}
+                  {uiText("Signed in as")}{" "}
                   <RedactedSensitiveText
                     value={provider.auth.email.trim()}
                     ariaLabel="Toggle account email visibility"
@@ -783,7 +784,7 @@ function ManagedCodexSetup({
             authenticated && !busy ? (
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-success-foreground">
                 <CheckIcon className="size-3.5" />
-                Ready
+                {uiText("Ready")}
               </span>
             ) : authActive ? (
               waitingControl
@@ -804,7 +805,7 @@ function ManagedCodexSetup({
                   ? "Setting up..."
                   : hasSavedAccount
                     ? "Reconnect account"
-                    : "Continue with ChatGPT"}
+                    : uiText("Continue with ChatGPT")}
               </ChatGptConnectionButton>
             )
           }
@@ -827,7 +828,7 @@ function ManagedCodexSetup({
                     );
                 }}
               >
-                Cancel
+                {uiText("Cancel")}
               </Button>
             ) : !authActive && !authenticated && hasSavedAccount ? (
               <Button
@@ -836,7 +837,7 @@ function ManagedCodexSetup({
                 disabled={unavailable || busy}
                 onClick={() => void setup("chatgpt-change-account")}
               >
-                Use a different account
+                {uiText("Use a different account")}
               </Button>
             ) : !authActive && !authenticated && allowExistingCli ? (
               <Button
@@ -884,7 +885,7 @@ function ManagedCodexSetup({
                       onSignInCancelled?.();
                     }}
                   >
-                    Cancel
+                    {uiText("Cancel")}
                   </Button>
                 )}
               </>
@@ -904,7 +905,7 @@ function ManagedCodexSetup({
                   );
                 }}
               >
-                Cancel
+                {uiText("Cancel")}
               </Button>
             ) : authenticated ? (
               <>
@@ -943,7 +944,7 @@ function ManagedCodexSetup({
                     ? "Setting up..."
                     : hasSavedAccount
                       ? "Reconnect account"
-                      : "Continue with ChatGPT"}
+                      : uiText("Continue with ChatGPT")}
                 </ChatGptConnectionButton>
                 {hasSavedAccount ? (
                   <Button
@@ -952,7 +953,7 @@ function ManagedCodexSetup({
                     disabled={unavailable || busy}
                     onClick={() => void setup("chatgpt-change-account")}
                   >
-                    Use a different account
+                    {uiText("Use a different account")}
                   </Button>
                 ) : null}
               </>
@@ -1010,7 +1011,9 @@ export function CodexManagedRuntimeFields({
               aria-label="Codex binary path"
               value={executablePath}
               title={executablePath}
-              placeholder={installation.error ? "Could not read runtime path" : "Not installed"}
+              placeholder={
+                installation.error ? "Could not read runtime path" : uiText("Not installed")
+              }
               disabled
             />
           </div>
@@ -1025,7 +1028,7 @@ export function CodexManagedRuntimeFields({
               aria-label="Codex home path"
               value={provider?.runtimePaths?.homePath ?? ""}
               title={provider?.runtimePaths?.homePath}
-              placeholder="Unavailable"
+              placeholder={uiText("Unavailable")}
               disabled
             />
           </div>
@@ -1044,7 +1047,7 @@ export function CodexManagedRuntimeFields({
               aria-label="Codex shadow home path"
               value={provider?.runtimePaths?.shadowHomePath ?? ""}
               title={provider?.runtimePaths?.shadowHomePath ?? undefined}
-              placeholder={provider?.runtimePaths ? "Not used" : "Unavailable"}
+              placeholder={provider?.runtimePaths ? "Not used" : uiText("Unavailable")}
               disabled
             />
           </div>

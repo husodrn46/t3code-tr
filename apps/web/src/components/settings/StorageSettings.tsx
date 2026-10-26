@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   StorageCleanupReport,
   StorageCleanupSettings,
@@ -84,10 +85,10 @@ function WorktreesDirectoryRow() {
       control={
         <Input
           key={`${scopeKey}:${mixed}:${settings.worktreesDirectory}`}
-          aria-label="Worktree location"
+          aria-label={uiText("Worktree location")}
           autoCapitalize="none"
           spellCheck={false}
-          placeholder={mixed ? "Mixed" : "Default"}
+          placeholder={mixed ? uiText("Mixed") : uiText("Default")}
           defaultValue={mixed ? "" : settings.worktreesDirectory}
           onChange={() => {
             edited.current = true;
@@ -156,7 +157,7 @@ function RetentionControl({
           </NumberFieldGroup>
         </NumberField>
       ) : (
-        <span className="text-xs text-muted-foreground">Off</span>
+        <span className="text-xs text-muted-foreground">{uiText("Off")}</span>
       )}
       <Switch
         aria-label={label}
@@ -219,7 +220,7 @@ function CleanupResults({
                   <span className="text-foreground/80">{environmentLabel}</span>
                   {entry.projectPath && (
                     <>
-                      <span>Project</span>
+                      <span>{uiText("Project")}</span>
                       <code className="text-foreground/80">{entry.projectPath}</code>
                     </>
                   )}
@@ -391,7 +392,7 @@ function CleanupSection() {
               disabled={pending || !hasRules || !state.some((entry) => entry.allowed)}
               onClick={() => void deleteNow()}
             >
-              {pending ? "Deleting…" : "Delete now"}
+              {pending ? "Deleting…" : uiText("Delete now")}
             </Button>
           }
         />
@@ -527,18 +528,18 @@ export function StorageSettingsPanel() {
                 <SelectTrigger size="sm" aria-label="Automatic worktree cleanup">
                   <SelectValue>
                     {mixedModes
-                      ? "Mixed"
+                      ? uiText("Mixed")
                       : mode === "inherit"
                         ? "Inherit"
                         : mode === "off"
-                          ? "Off"
-                          : "Custom"}
+                          ? uiText("Off")
+                          : uiText("Custom")}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectPopup align="end" alignItemWithTrigger={false}>
                   <SelectItem value="inherit">Inherit</SelectItem>
-                  <SelectItem value="off">Off</SelectItem>
-                  <SelectItem value="custom">Custom</SelectItem>
+                  <SelectItem value="off">{uiText("Off")}</SelectItem>
+                  <SelectItem value="custom">{uiText("Custom")}</SelectItem>
                 </SelectPopup>
               </Select>
             }
@@ -655,10 +656,13 @@ export function StorageSettingsPanel() {
                         updateWorktree({ worktreeKeepWhen: next });
                     }}
                   >
-                    <SelectTrigger size="sm" aria-label="Keep worktrees with local changes">
+                    <SelectTrigger
+                      size="sm"
+                      aria-label={uiText("Keep worktrees with local changes")}
+                    >
                       <SelectValue>
                         {ruleStatus("worktreeKeepWhen")
-                          ? "Mixed"
+                          ? uiText("Mixed")
                           : KEEP_WHEN_LABELS[settings.worktreeKeepWhen]}
                       </SelectValue>
                     </SelectTrigger>
@@ -676,7 +680,7 @@ export function StorageSettingsPanel() {
       </SettingsSection>
 
       {!isProjectScope && (
-        <SettingsSection id="storage-artifacts" title="Artifacts and logs">
+        <SettingsSection id="storage-artifacts" title={uiText("Artifacts and logs")}>
           <SettingsRow
             title="Delete old browser artifacts"
             status={ruleStatus("browserArtifactsAfterDays")}

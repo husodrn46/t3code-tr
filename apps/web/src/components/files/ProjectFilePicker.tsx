@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import { useState, type ReactNode } from "react";
 
@@ -53,7 +54,7 @@ function getEmptyStateMessage(query: string, error: string | null, isPending: bo
 function EmptyProjectFilePicker() {
   return (
     <CommandPaletteContent
-      aria-label="File picker"
+      aria-label={uiText("File picker")}
       escapeLabel="Back"
       footerActionLabel="Open file"
       inputProps={{ disabled: true, placeholder: "Search files…" }}
@@ -110,7 +111,7 @@ function OpenProjectFilePicker(props: ProjectFilePickerProps & { target: ActiveP
 
   return (
     <CommandPaletteContent
-      aria-label="File picker"
+      aria-label={uiText("File picker")}
       autoHighlight="always"
       escapeLabel="Back"
       footerActionLabel="Open file"

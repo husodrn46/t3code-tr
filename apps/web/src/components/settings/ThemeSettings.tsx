@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   CheckIcon,
   CopyIcon,
@@ -350,7 +351,7 @@ function ThemeLibraryCard({
                           </Button>
                         }
                       />
-                      <TooltipPopup>Edit theme</TooltipPopup>
+                      <TooltipPopup>{uiText("Edit theme")}</TooltipPopup>
                     </Tooltip>
                   ) : null}
                   {onDownload ? (
@@ -540,7 +541,7 @@ export function ThemeLibrary({
       stackedThreadToast({
         type: "error",
         title: "Couldn’t save theme selection",
-        description: "Try again.",
+        description: uiText("Try again."),
       }),
     );
   };
@@ -550,7 +551,7 @@ export function ThemeLibrary({
       stackedThreadToast({
         type: "error",
         title: "Couldn’t remove theme",
-        description: "Try again.",
+        description: uiText("Try again."),
       }),
     );
   };
@@ -699,7 +700,11 @@ export function ThemeLibrary({
                 isActive ? "text-foreground" : "text-muted-foreground",
               )}
             >
-              {mode === "system" ? "System" : mode === "light" ? "Light" : "Dark"}
+              {mode === "system"
+                ? uiText("System")
+                : mode === "light"
+                  ? uiText("Light")
+                  : uiText("Dark")}
             </span>
           </button>
         );
@@ -855,7 +860,7 @@ export function ThemeLibrary({
             }
           >
             <PaintbrushIcon />
-            Create theme
+            {uiText("Create theme")}
           </Button>
           <Button size="xs" variant="outline" onClick={() => onImportOpenChange(true)}>
             <PlusIcon />
@@ -970,7 +975,9 @@ export function ThemeLibrary({
             </div>
           ) : null}
           <AlertDialogFooter>
-            <AlertDialogClose render={<Button variant="outline" />}>Cancel</AlertDialogClose>
+            <AlertDialogClose render={<Button variant="outline" />}>
+              {uiText("Cancel")}
+            </AlertDialogClose>
             <Button
               disabled={themeIdsToRemove.length === 0}
               variant="destructive"

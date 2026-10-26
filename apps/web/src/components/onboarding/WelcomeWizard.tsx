@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAuth } from "@clerk/react";
 import { useAtomValue } from "@effect/atom-react";
 import type {
@@ -236,7 +237,7 @@ export function WelcomeWizard({
             <div className="flex items-baseline gap-1.5" role="img" aria-label="T3 Code">
               <T3Wordmark className="h-4 w-auto shrink-0" aria-hidden />
               <span className="text-2xl font-medium tracking-tight text-muted-foreground">
-                Code
+                {uiText("Code")}
               </span>
             </div>
           }
@@ -362,7 +363,7 @@ function ConnectionStep({
                   </span>
                   <span className="shrink-0 text-xs text-muted-foreground">
                     {!environment.entry.enabled && environment.connection.phase !== "unsupported"
-                      ? "Off"
+                      ? uiText("Off")
                       : presentSavedCloudEnvironmentConnection(environment.connection).buttonLabel}
                   </span>
                 </span>
@@ -451,7 +452,7 @@ function ConnectionStep({
           disabled={!ready || isPairing}
           onClick={onContinue}
         >
-          Continue
+          {uiText("Continue")}
           <ArrowRightIcon className="size-3.5" />
         </Button>
       </div>
@@ -499,7 +500,7 @@ function ConnectAccountOption({
             {!isLoaded
               ? "Loading sign-in…"
               : !isSignedIn
-                ? "Sign in"
+                ? uiText("Sign in")
                 : !discoveryReady
                   ? "Loading computers…"
                   : null}
@@ -630,7 +631,7 @@ function PairingForm({
               Need a pairing link?
             </CollapsibleTrigger>
             <Button type="submit" disabled={isPairing || pairingUrl.trim().length === 0}>
-              {isPairing ? "Pairing..." : "Pair"}
+              {isPairing ? uiText("Pairing...") : "Pair"}
             </Button>
           </div>
           <CollapsiblePanel>
@@ -690,7 +691,7 @@ function AgentsStep({
       </ScrollArea>
       <div className="mt-6 flex justify-end">
         <Button autoFocus onClick={onContinue}>
-          Continue
+          {uiText("Continue")}
           <ArrowRightIcon className="size-3.5" />
         </Button>
       </div>
@@ -982,12 +983,12 @@ function AgentCard({
         {providerState === "ready" ? (
           <span className="inline-flex items-center gap-1.5 text-xs font-medium text-success-foreground">
             <CheckIcon className="size-3.5" />
-            Ready
+            {uiText("Ready")}
           </span>
         ) : providerState === "checking" ? (
-          <span className="text-xs text-muted-foreground">Checking...</span>
+          <span className="text-xs text-muted-foreground">{uiText("Checking...")}</span>
         ) : providerState === "disabled" ? (
-          <span className="text-xs text-muted-foreground">Disabled</span>
+          <span className="text-xs text-muted-foreground">{uiText("Disabled")}</span>
         ) : providerState === "attention" ? (
           <span className="text-xs text-muted-foreground">{summary.headline}</span>
         ) : (
@@ -998,7 +999,7 @@ function AgentCard({
             disabled={terminalOpen || !terminalAvailable}
           >
             <TerminalIcon className="size-3.5" />
-            {providerState === "signIn" ? "Sign in" : "Install"}
+            {providerState === "signIn" ? uiText("Sign in") : "Install"}
           </Button>
         )}
       </div>
@@ -1116,8 +1117,8 @@ function AgentInstallTerminal({
             "This connection cannot control terminals."
           ) : setupState === "writeFailed" ? (
             <>
-              Run <code className="rounded bg-muted px-1 font-mono">{command}</code> in this
-              terminal.
+              {uiText("Run ")}
+              <code className="rounded bg-muted px-1 font-mono">{command}</code> in this terminal.
             </>
           ) : setupState === "ready" ? (
             "Review the command, then press Enter to run it."
@@ -1139,11 +1140,11 @@ function AgentInstallTerminal({
                 }
               }}
             >
-              Retry
+              {uiText("Retry")}
             </Button>
           ) : null}
           <Button size="xs" variant="ghost-muted" onClick={onClose}>
-            Close
+            {uiText("Close")}
           </Button>
         </div>
       </div>
@@ -1437,7 +1438,7 @@ function ImportStep({
               disabled={isImporting || selected.length === candidates.length}
               onClick={() => setSelectedPaths(new Set(candidates.map((item) => item.key)))}
             >
-              Select all
+              {uiText("Select all")}
             </Button>
             <Button
               variant="ghost"
@@ -1480,7 +1481,7 @@ function ImportStep({
                   >
                     <span>Could not check projects. {scan.error}</span>
                     <Button variant="ghost" size="sm" onClick={scan.refresh}>
-                      Retry
+                      {uiText("Retry")}
                     </Button>
                   </div>
                 ) : scanCandidates.length === 0 ? (

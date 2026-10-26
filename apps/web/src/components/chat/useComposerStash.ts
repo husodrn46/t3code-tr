@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { ChatComposerProps } from "./ChatComposer";
 import {
   type ComposerContextRecord,
@@ -473,7 +474,7 @@ export function useComposerStash(input: {
     if (pendingDraftWork.has(attachmentTargetKeyRef.current)) {
       toastManager.add({
         type: "info",
-        title: "Still bringing attached context into this message.",
+        title: uiText("Still bringing attached context into this message."),
         description: "Stash again once its chip resolves.",
       });
       return;

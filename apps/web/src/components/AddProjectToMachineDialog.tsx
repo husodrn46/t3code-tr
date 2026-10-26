@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useParams } from "@tanstack/react-router";
 import { scopeProjectRef } from "@t3tools/client-runtime/environment";
 import {
@@ -210,10 +211,11 @@ function AddProjectToMachineDialog({ request }: { request: AddProjectToMachineRe
           }}
         >
           <DialogHeader>
-            <DialogTitle>Add to another machine</DialogTitle>
+            <DialogTitle>{uiText("Add to another machine")}</DialogTitle>
             <DialogDescription>
-              Clone {project?.repositoryIdentity?.displayName ?? project?.title} and bring the local
-              files git does not track.
+              {uiText("Clone ")}
+              {project?.repositoryIdentity?.displayName ?? project?.title} and bring the local files
+              git does not track.
             </DialogDescription>
           </DialogHeader>
           <DialogPanel>
@@ -333,7 +335,7 @@ function AddProjectToMachineDialog({ request }: { request: AddProjectToMachineRe
                           )
                         }
                       >
-                        {selectedFiles.size === copyable.length ? "None" : "All"}
+                        {selectedFiles.size === copyable.length ? uiText("None") : uiText("All")}
                       </Button>
                     </>
                   ) : null}
@@ -374,10 +376,10 @@ function AddProjectToMachineDialog({ request }: { request: AddProjectToMachineRe
           </DialogPanel>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={close}>
-              Cancel
+              {uiText("Cancel")}
             </Button>
             <Button type="submit" disabled={unavailable || submitting}>
-              {submitting ? "Starting…" : `Clone to ${target?.label ?? "machine"}`}
+              {submitting ? uiText("Starting…") : `Clone to ${target?.label ?? "machine"}`}
             </Button>
           </DialogFooter>
         </form>

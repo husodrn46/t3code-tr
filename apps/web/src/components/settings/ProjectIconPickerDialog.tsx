@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import * as Schema from "effect/Schema";
 import { deriveProjectIdentity } from "../../projectIdentity";
 import { ProjectMonogram } from "../ProjectMonogram";
@@ -107,7 +108,7 @@ export function ProjectIconPickerDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPopup className="w-full sm:w-[32rem]">
         <DialogHeader>
-          <DialogTitle>Choose project icon</DialogTitle>
+          <DialogTitle>{uiText("Choose project icon")}</DialogTitle>
           <DialogDescription>Choose an icon, emoji, or monogram.</DialogDescription>
         </DialogHeader>
         <DialogPanel className="flex min-h-0 flex-col">
@@ -247,7 +248,7 @@ export function ProjectIconPickerDialog({
         </DialogPanel>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {uiText("Cancel")}
           </Button>
           <Button onClick={save} disabled={mode === "monogram" && !validMonogram}>
             Save icon

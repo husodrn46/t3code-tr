@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { scopeProjectRef } from "@t3tools/client-runtime/environment";
 import type { ThreadContextRecord } from "@t3tools/contracts";
 import { Link } from "@tanstack/react-router";
@@ -42,7 +43,7 @@ export function ThreadContextChip(props: {
         {props.unreadable
           ? "On another machine, so this machine's agent can't read it. Remove it or switch back to send."
           : shell
-            ? "Open thread"
+            ? uiText("Open thread")
             : "Thread no longer available"}
       </TooltipPopup>
     </Tooltip>

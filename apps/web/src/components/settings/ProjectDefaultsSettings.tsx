@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import {
   DEFAULT_SERVER_SETTINGS,
   type ModelSelection,
@@ -144,7 +145,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
       settingKeys={["defaultModelSelection"]}
       mixed={mixedModel}
       id="default-model"
-      title="Model"
+      title={uiText("Model")}
       description={
         isProjectScope
           ? "Model for new threads in this project."
@@ -213,7 +214,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
       settingKeys={["defaultThreadEnvMode"]}
       mixed={mixedWorkspace}
       id={searchableSetting("new-threads").id}
-      title="Workspace"
+      title={uiText("Workspace")}
       description={
         isProjectScope
           ? "Where new threads in this project start."
@@ -258,7 +259,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
   return (
     <SettingsSection
       id={category === "source-control" ? "source-control-defaults" : "project-defaults"}
-      title={category === "source-control" ? "Repositories" : "New threads"}
+      title={category === "source-control" ? "Repositories" : uiText("New threads")}
     >
       {category === "project" ? (
         <>
@@ -303,7 +304,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
                   )}
                   <SelectValue>
                     {mixedPermissions
-                      ? "Mixed"
+                      ? uiText("Mixed")
                       : runtimeModeConfig[settings.defaultRuntimeMode].label}
                   </SelectValue>
                 </SelectTrigger>
@@ -384,7 +385,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
             settingKeys={["defaultAutoPull"]}
             mixed={mixedAutoPull}
             id="automatic-pull"
-            title="Automatically pull"
+            title={uiText("Automatically pull")}
             description={
               isProjectScope
                 ? "Keeps this project's default branch current when the checkout has no local changes or commits."
@@ -425,7 +426,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
             }
             control={
               <Switch
-                aria-label="Remove agent credits when merging"
+                aria-label={uiText("Remove agent credits when merging")}
                 mixed={mixedAgentCredits}
                 checked={mixedAgentCredits ? false : settings.removeAgentCreditsOnMerge}
                 onCheckedChange={(enabled) =>

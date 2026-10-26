@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type * as React from "react";
 import type {
   EnvironmentId,
@@ -108,7 +109,7 @@ function ChecksBody({
                     });
                   }}
                 >
-                  Details
+                  {uiText("Details")}
                 </button>
               )}
             </li>
@@ -122,7 +123,7 @@ function ChecksBody({
           aria-expanded={showAll}
           onClick={() => setShowAll(!showAll)}
         >
-          {showAll ? "Show less" : "Show all"}
+          {showAll ? uiText("Show less") : "Show all"}
         </Button>
       ) : null}
     </>

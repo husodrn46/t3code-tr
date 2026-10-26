@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useAtomValue } from "@effect/atom-react";
 import type {
   EnvironmentId,
@@ -166,7 +167,7 @@ export function PullRequestActionsMenu({
         />
         <MenuItem disabled={refreshing} onClick={() => void refreshFromHost()}>
           <RefreshIcon size="sm" refreshing={refreshing} />
-          Refresh
+          {uiText("Refresh")}
         </MenuItem>
         <MenuItem disabled={handoff !== null} onClick={askAboutPullRequest}>
           <MessageCircleQuestionIcon className="mt-1 size-3.5 shrink-0 self-start" />
@@ -190,7 +191,7 @@ export function PullRequestActionsMenu({
         </MenuItem>
         <MenuItem disabled={handoff !== null || !canFixFindings} onClick={startFixFindings}>
           <HammerIcon className="size-3.5" />
-          {handoff === "findings" ? "Preparing..." : handoffLabels.fixFindings}
+          {handoff === "findings" ? uiText("Preparing...") : handoffLabels.fixFindings}
         </MenuItem>
         {canWriteGuide ? (
           <MenuItem disabled={guideRunning} onClick={writeGuide}>
@@ -219,18 +220,18 @@ export function PullRequestActionsMenu({
                 ) : (
                   <PullRequestGlyph.draft className="size-3.5" />
                 )}
-                {detail.isDraft ? "Ready for review" : "Convert to draft"}
+                {detail.isDraft ? uiText("Ready for review") : "Convert to draft"}
               </MenuItem>
             ) : null}
             {showsMergeNow ? (
               <MenuItem
                 closeOnClick={inlineConfirm.isArmed("merge")}
-                aria-label={inlineConfirm.isArmed("merge") ? "Confirm merge?" : "Merge now"}
+                aria-label={inlineConfirm.isArmed("merge") ? uiText("Confirm merge?") : "Merge now"}
                 disabled={actionPending}
                 {...inlineConfirm.props("merge", () => void perform("merge", selectedMergeMethod))}
               >
                 <PullRequestGlyph.merged className="size-3.5" />
-                {inlineConfirm.isArmed("merge") ? "Confirm merge?" : "Merge now"}
+                {inlineConfirm.isArmed("merge") ? uiText("Confirm merge?") : "Merge now"}
               </MenuItem>
             ) : null}
             {autoMergeArmed && can("disable-auto-merge") ? (
@@ -243,7 +244,7 @@ export function PullRequestActionsMenu({
                 closeOnClick={inlineConfirm.isArmed("enable-auto-merge")}
                 aria-label={
                   inlineConfirm.isArmed("enable-auto-merge")
-                    ? "Confirm auto-merge?"
+                    ? uiText("Confirm auto-merge?")
                     : "Enable auto-merge"
                 }
                 disabled={actionPending}
@@ -254,7 +255,7 @@ export function PullRequestActionsMenu({
               >
                 <PullRequestGlyph.merged className="size-3.5" />
                 {inlineConfirm.isArmed("enable-auto-merge")
-                  ? "Confirm auto-merge?"
+                  ? uiText("Confirm auto-merge?")
                   : "Enable auto-merge"}
               </MenuItem>
             ) : null}
@@ -296,7 +297,7 @@ export function PullRequestActionsMenu({
         </MenuItem>
         <MenuItem onClick={() => copyReference(detail.url, "PR link")}>
           <LinkIcon className="size-3.5" />
-          Copy link
+          {uiText("Copy link")}
           <MenuShortcut>
             {shortcutLabelForCommand(keybindings, "thread.copyReference")}
           </MenuShortcut>
@@ -313,13 +314,15 @@ export function PullRequestActionsMenu({
             <MenuSeparator />
             <MenuItem
               closeOnClick={inlineConfirm.isArmed("close")}
-              aria-label={inlineConfirm.isArmed("close") ? "Confirm close?" : "Close pull request"}
+              aria-label={
+                inlineConfirm.isArmed("close") ? uiText("Confirm close?") : "Close pull request"
+              }
               variant="destructive"
               disabled={actionPending}
               {...inlineConfirm.props("close", () => void perform("close"))}
             >
               <PullRequestGlyph.closed className="size-3.5" />
-              {inlineConfirm.isArmed("close") ? "Confirm close?" : "Close pull request"}
+              {inlineConfirm.isArmed("close") ? uiText("Confirm close?") : "Close pull request"}
             </MenuItem>
           </>
         ) : detail.state === "closed" && can("reopen") ? (

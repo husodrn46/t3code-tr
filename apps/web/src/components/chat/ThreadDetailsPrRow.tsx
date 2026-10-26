@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { PullRequestChangeBreakdownRows } from "../pullRequest/PullRequestChangeBreakdownStat";
 import { ThreadDetailsControl } from "./ThreadDetailsControl";
 import { PullRequestGlyph } from "../pullRequest/pullRequestIcons";
@@ -298,7 +299,7 @@ export function ThreadDetailsPrRow({
               <FileDiffIcon className="size-3 shrink-0 stroke-muted-foreground" />
               <div className="min-w-0 flex items-baseline gap-1 truncate text-foreground/75">
                 {detail.changedFiles.toLocaleString()}{" "}
-                {detail.changedFiles === 1 ? "file" : "files"}
+                {detail.changedFiles === 1 ? uiText("file") : uiText("files")}
                 <PullRequestDiffStat additions={detail.additions} deletions={detail.deletions} />
               </div>
             </div>
@@ -317,7 +318,7 @@ export function ThreadDetailsPrRow({
   const trailingAction =
     rowAction === "resolve"
       ? {
-          label: "Resolve",
+          label: uiText("Resolve"),
           pendingLabel: "Preparing...",
           pending: handoff === "conflicts",
           destructive: true,
@@ -327,7 +328,7 @@ export function ThreadDetailsPrRow({
         }
       : rowAction === "ready"
         ? {
-            label: "Ready",
+            label: uiText("Ready"),
             pendingLabel: "Marking...",
             pending: actionPending,
             destructive: false,
@@ -347,7 +348,7 @@ export function ThreadDetailsPrRow({
             }
           : rowAction === "merge"
             ? {
-                label: "Merge",
+                label: uiText("Merge"),
                 pendingLabel: "Merging...",
                 pending: actionPending,
                 destructive: false,
@@ -480,7 +481,7 @@ export function ThreadDetailsPrRow({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogClose render={<Button variant="outline" size="sm" />}>
-                Cancel
+                {uiText("Cancel")}
               </AlertDialogClose>
               <Button
                 size="sm"
@@ -490,7 +491,7 @@ export function ThreadDetailsPrRow({
                   void perform("merge", selectedMergeMethod);
                 }}
               >
-                Merge
+                {uiText("Merge")}
               </Button>
             </AlertDialogFooter>
           </AlertDialogPopup>

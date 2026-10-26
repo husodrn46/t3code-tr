@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type {
   GitRunStackedActionResult,
   GitStackedAction,
@@ -159,7 +160,7 @@ export function buildMenuItems(
 
   const pushItem: GitActionMenuItem = {
     id: "push",
-    label: "Push",
+    label: uiText("Push"),
     disabled: !canPush,
     icon: "push",
     kind: "open_dialog",
@@ -239,7 +240,7 @@ export function resolveQuickAction(
   if (!gitStatus.hasUpstream) {
     if (!hasPrimaryRemote) {
       return {
-        label: "Publish repository",
+        label: uiText("Publish repository"),
         disabled: false,
         kind: "open_publish",
       };
@@ -254,7 +255,7 @@ export function resolveQuickAction(
         };
       }
       return {
-        label: "Push",
+        label: uiText("Push"),
         disabled: true,
         kind: "show_hint",
         hint: "No local commits to push.",
@@ -262,7 +263,7 @@ export function resolveQuickAction(
     }
     if (hasOpenPr || isDefaultRef) {
       return {
-        label: "Push",
+        label: uiText("Push"),
         disabled: false,
         kind: "run_action",
         action: isDefaultRef ? "commit_push" : "push",
@@ -296,7 +297,7 @@ export function resolveQuickAction(
   if (isAhead) {
     if (hasOpenPr || isDefaultRef) {
       return {
-        label: "Push",
+        label: uiText("Push"),
         disabled: false,
         kind: "run_action",
         action: isDefaultRef ? "commit_push" : "push",

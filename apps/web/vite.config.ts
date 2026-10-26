@@ -230,6 +230,7 @@ export default defineConfig(() => {
       ],
     },
     define: {
+      __T3CODE_UI_LOCALE__: JSON.stringify(process.env.T3CODE_UI_LANGUAGE ?? "tr-TR"),
       "import.meta.env.VITE_WS_URL": JSON.stringify(configuredWsUrl ?? ""),
       // Pinned explicitly rather than left to Vite's automatic VITE_ exposure:
       // under single-origin dev this must stay empty even when a `.env`

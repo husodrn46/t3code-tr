@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ProcessSignalActions } from "./ProcessSignalActions";
 import { resolveUsageAccess } from "@t3tools/client-runtime/state/usage-access";
 import { environmentSession } from "../../state/session";
@@ -234,7 +235,7 @@ function TraceIdCell({ traceId }: { traceId: string }) {
             </Button>
           }
         />
-        <TooltipPopup side="top">{copied ? "Copied" : "Copy full trace ID"}</TooltipPopup>
+        <TooltipPopup side="top">{copied ? uiText("Copied") : "Copy full trace ID"}</TooltipPopup>
       </Tooltip>
     </div>
   );
@@ -367,10 +368,10 @@ function ProcessDiagnosticsTable({
           </colgroup>
           <thead className="sticky top-0 z-10 border-b border-border/60 bg-card text-2xs uppercase tracking-widest text-muted-foreground/70">
             <tr>
-              <th className="px-4 py-2 font-semibold sm:pl-5">Name</th>
+              <th className="px-4 py-2 font-semibold sm:pl-5">{uiText("Name")}</th>
               <th className="px-3 py-2 text-right font-semibold">CPU</th>
-              <th className="px-3 py-2 text-right font-semibold">Memory</th>
-              <th className="px-3 py-2 font-semibold">Command</th>
+              <th className="px-3 py-2 text-right font-semibold">{uiText("Memory")}</th>
+              <th className="px-3 py-2 font-semibold">{uiText("Command")}</th>
               <th className="px-3 py-2 text-right font-semibold">PID</th>
               <th className="px-3 py-2 font-semibold">Type</th>
               <th className="p-2 text-right font-semibold sm:pr-4">Kill</th>
@@ -593,13 +594,13 @@ function ProcessResourceHistoryTable({
           </colgroup>
           <thead className="sticky top-0 z-10 border-b border-border/60 bg-card text-2xs uppercase tracking-widest text-muted-foreground/70">
             <tr>
-              <th className="px-4 py-2 font-semibold sm:pl-5">Process</th>
-              <th className="px-3 py-2 text-right font-semibold">CPU Time</th>
-              <th className="px-3 py-2 text-right font-semibold">Current</th>
+              <th className="px-4 py-2 font-semibold sm:pl-5">{uiText("Process")}</th>
+              <th className="px-3 py-2 text-right font-semibold">{uiText("CPU Time")}</th>
+              <th className="px-3 py-2 text-right font-semibold">{uiText("Current")}</th>
               <th className="px-3 py-2 text-right font-semibold">Average</th>
               <th className="px-3 py-2 text-right font-semibold">Peak</th>
               <th className="px-3 py-2 text-right font-semibold">Max Mem</th>
-              <th className="px-3 py-2 font-semibold">Command</th>
+              <th className="px-3 py-2 font-semibold">{uiText("Command")}</th>
               <th className="px-3 py-2 text-right font-semibold sm:pr-5">PID</th>
             </tr>
           </thead>
@@ -675,10 +676,14 @@ function DiagnosticsLastChecked({ checkedAt }: { checkedAt: DateTime.Utc | null 
     <span className="text-2xs text-muted-foreground/60">
       {relative.suffix ? (
         <>
-          Checked <span className="font-mono tabular-nums">{relative.value}</span> {relative.suffix}
+          {uiText("Checked ")}
+          <span className="font-mono tabular-nums">{relative.value}</span> {relative.suffix}
         </>
       ) : (
-        <>Checked {relative.value}</>
+        <>
+          {uiText("Checked ")}
+          {relative.value}
+        </>
       )}
     </span>
   );
@@ -966,7 +971,7 @@ export function DiagnosticsSettingsPanel() {
             tooltip="Total CPU across live child processes of the current server process. The desktop shell and other parent processes are not included."
           />
           <StatBlock
-            label="Memory"
+            label={uiText("Memory")}
             value={processData ? formatBytes(processData.totalRssBytes) : "..."}
             tooltip="Total resident memory across live child processes of the current server process. The desktop shell and other parent processes are not included."
           />
@@ -1023,7 +1028,7 @@ export function DiagnosticsSettingsPanel() {
       >
         <StatsGrid>
           <StatBlock
-            label="CPU Time"
+            label={uiText("CPU Time")}
             value={resourceData ? formatCpuTime(resourceData.totalCpuSecondsApprox) : "..."}
             tooltip="Approximate active CPU time for the T3 server root process and its descendants during the selected window. It grows only while sampled processes use CPU and older samples leave as the window moves."
           />
@@ -1266,7 +1271,9 @@ export function DiagnosticsSettingsPanel() {
               </colgroup>
               <thead className="border-b border-border/60 text-2xs uppercase tracking-widest text-muted-foreground/70">
                 <tr>
-                  <th className="whitespace-nowrap px-4 py-2.5 font-semibold sm:pl-5">Time</th>
+                  <th className="whitespace-nowrap px-4 py-2.5 font-semibold sm:pl-5">
+                    {uiText("Time")}
+                  </th>
                   <th className="whitespace-nowrap px-4 py-2.5 font-semibold">Level</th>
                   <th className="whitespace-nowrap px-4 py-2.5 font-semibold">Span</th>
                   <th className="whitespace-nowrap px-4 py-2.5 font-semibold">Message</th>

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { ProviderInstanceIcon } from "../chat/ProviderInstanceIcon";
 
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
@@ -359,7 +360,7 @@ export function AddProviderInstanceDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <WizardPopup size="wide">
         <WizardHeader
-          title="Add provider"
+          title={uiText("Add provider")}
           description={<>Add an account or configure a provider on {environmentLabel}.</>}
         >
           {isAcpRegistry ? (
@@ -399,7 +400,7 @@ export function AddProviderInstanceDialog({
             >
               <div className={cn("grid gap-2", wizardStep !== 0 && "hidden")}>
                 <div id="add-instance-driver-label" className="text-sm font-medium text-foreground">
-                  Provider
+                  {uiText("Provider")}
                 </div>
                 <RadioGroup
                   disabled={isPreparingRegistryAgent}
@@ -557,7 +558,7 @@ export function AddProviderInstanceDialog({
                 className={cn(wizardStep !== identityStep && "hidden")}
               >
                 <SettingsRow
-                  title={<label htmlFor="add-provider-label">Label</label>}
+                  title={<label htmlFor="add-provider-label">{uiText("Label")}</label>}
                   description={
                     <span id="add-provider-label-description">Shown in the provider list.</span>
                   }
@@ -611,7 +612,7 @@ export function AddProviderInstanceDialog({
                   }
                 />
                 <SettingsRow
-                  title="Accent color"
+                  title={uiText("Accent color")}
                   description="Optional marker shown in the picker."
                   control={
                     <ProviderAccentColorPicker
@@ -656,7 +657,7 @@ export function AddProviderInstanceDialog({
                   setWizardStep((step) => Math.max(0, step - 1));
                 }}
               >
-                {wizardStep === 0 ? "Cancel" : "Back"}
+                {wizardStep === 0 ? uiText("Cancel") : uiText("Back")}
               </Button>
               {wizardStep === 0 && driver === "codex" ? (
                 <>
@@ -674,7 +675,7 @@ export function AddProviderInstanceDialog({
                   disabled={isPreparingRegistryAgent}
                   onClick={() => navigateToStep(wizardStep + 1)}
                 >
-                  Next
+                  {uiText("Next")}
                 </Button>
               ) : (
                 <Button

@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { DownloadIcon } from "lucide-react";
 import { useSyncExternalStore } from "react";
 import type { RelayClientInstallProgressStage } from "@t3tools/contracts";
@@ -26,7 +27,7 @@ const installSteps: ReadonlyArray<{
   { stage: "waiting_for_lock", label: "Waiting for installer" },
   { stage: "downloading", label: "Downloading relay client" },
   { stage: "verifying", label: "Verifying download" },
-  { stage: "installing", label: "Installing relay client" },
+  { stage: "installing", label: uiText("Installing relay client") },
   { stage: "validating", label: "Validating executable" },
   { stage: "activating", label: "Activating installation" },
 ];
@@ -65,7 +66,7 @@ export function RelayClientInstallDialog() {
             <DownloadIcon aria-hidden className="size-4.5 text-muted-foreground" />
           </div>
           <DialogTitle>
-            {isInstalling ? "Installing relay client" : "Install relay client?"}
+            {isInstalling ? uiText("Installing relay client") : "Install relay client?"}
           </DialogTitle>
           <DialogDescription>
             {isInstalling
@@ -110,7 +111,7 @@ export function RelayClientInstallDialog() {
               variant="outline"
               onClick={() => respondToRelayClientInstallConfirmation(false)}
             >
-              Cancel
+              {uiText("Cancel")}
             </Button>
             <Button onClick={() => respondToRelayClientInstallConfirmation(true)}>
               Download and install

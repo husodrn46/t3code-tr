@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import type { DraftId } from "~/composerDraftStore";
 import { composerDraftHasUserContent, useComposerDraftStore } from "~/composerDraftStore";
 import { resolveEnvironmentMachineKind, type ScopedProjectRef } from "@t3tools/contracts";
@@ -146,7 +147,7 @@ export function DraftHeroHeadline({
 
   const pickerItems: readonly PickerItem[] = [
     ...menuEntries.map(({ group }) => ({ value: group.projectKey, label: group.displayName })),
-    { value: ADD_PROJECT_VALUE, label: "Add project" },
+    { value: ADD_PROJECT_VALUE, label: uiText("Add project") },
   ];
   const pickerSearch = pickerQuery.trim();
   const filteredPickerItems =
@@ -270,12 +271,12 @@ export function DraftHeroHeadline({
       </Tooltip>
       <ComboboxPopup align="center" className="w-72 overflow-hidden">
         <ComboboxSearchInput
-          aria-label="Search projects"
-          placeholder="Search projects..."
+          aria-label={uiText("Search projects")}
+          placeholder={uiText("Search projects...")}
           value={pickerQuery}
           onChange={(event) => setPickerQuery(event.target.value)}
         />
-        <ComboboxEmpty>No matching projects.</ComboboxEmpty>
+        <ComboboxEmpty>{uiText("No matching projects.")}</ComboboxEmpty>
         <ComboboxList>
           {(item: PickerItem) => {
             const entry = projectEntryByKey.get(item.value);
@@ -349,7 +350,7 @@ export function DraftHeroHeadline({
       ) : (
         <h1 className="w-full text-center font-normal text-2xl text-foreground tracking-tight sm:text-3xl">
           {isScratchDraft ? (
-            <>What should we work on?</>
+            <>{uiText("What should we work on?")}</>
           ) : canChooseProject ? (
             <>{projectSelector} to start</>
           ) : (

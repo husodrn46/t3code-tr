@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { useEffect, useEffectEvent, useId, useRef, useState } from "react";
 import * as Cause from "effect/Cause";
 import * as Option from "effect/Option";
@@ -123,7 +124,7 @@ export function EasDeviceHostsSettings(props: { environmentId: EnvironmentId | n
                     disabled={disabled}
                     onClick={() => setEditing({ host, isNew: false })}
                   >
-                    Edit
+                    {uiText("Edit")}
                   </Button>
                   <Button
                     size="sm"
@@ -131,7 +132,7 @@ export function EasDeviceHostsSettings(props: { environmentId: EnvironmentId | n
                     disabled={disabled}
                     onClick={() => void save(host, true)}
                   >
-                    Remove
+                    {uiText("Remove")}
                   </Button>
                 </div>
               </li>
@@ -277,7 +278,7 @@ function EasDeviceHostEditor(props: {
           </DialogHeader>
           <DialogPanel>
             <label className="block space-y-1.5 text-sm">
-              <span>Name</span>
+              <span>{uiText("Name")}</span>
               <Input
                 autoFocus
                 required
@@ -409,7 +410,7 @@ function EasDeviceHostEditor(props: {
           </DialogPanel>
           <DialogFooter>
             <Button type="button" variant="ghost" disabled={props.busy} onClick={props.onClose}>
-              Cancel
+              {uiText("Cancel")}
             </Button>
             <Button type="submit" disabled={props.busy || !valid}>
               {props.busy ? <Spinner size="xs" /> : null} Save host

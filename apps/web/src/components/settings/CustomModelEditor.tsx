@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { PlusIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import type { ProviderDriverKind, ServerProviderModel } from "@t3tools/contracts";
@@ -150,7 +151,7 @@ export function CustomModelEditor({
         onChange={(event) =>
           updateChoice(descriptor.key, choice.key, { label: event.target.value })
         }
-        placeholder="Label"
+        placeholder={uiText("Label")}
         className="min-w-0 flex-1"
         aria-label="Choice label"
       />
@@ -163,7 +164,7 @@ export function CustomModelEditor({
           }
           aria-label="Default choice"
         />
-        Default
+        {uiText("Default")}
       </label>
       <Button
         size="icon-micro"
@@ -194,7 +195,7 @@ export function CustomModelEditor({
           >
             <SelectTrigger size="compact" className="w-40" aria-label="Option id">
               <SelectValue>
-                {idSelectValue(descriptor) === CUSTOM_ID_VALUE ? "Custom…" : descriptor.id}
+                {idSelectValue(descriptor) === CUSTOM_ID_VALUE ? uiText("Custom…") : descriptor.id}
               </SelectValue>
             </SelectTrigger>
             <SelectPopup align="start" alignItemWithTrigger={false}>
@@ -206,7 +207,7 @@ export function CustomModelEditor({
                   </span>
                 </SelectItem>
               ))}
-              <SelectItem value={CUSTOM_ID_VALUE}>Custom…</SelectItem>
+              <SelectItem value={CUSTOM_ID_VALUE}>{uiText("Custom…")}</SelectItem>
             </SelectPopup>
           </Select>
         ) : null}
@@ -226,7 +227,7 @@ export function CustomModelEditor({
           size="compact"
           value={descriptor.label}
           onChange={(event) => updateDescriptor(descriptor.key, { label: event.target.value })}
-          placeholder="Label"
+          placeholder={uiText("Label")}
           className="min-w-0 flex-1"
           aria-label="Option label"
         />
@@ -363,10 +364,10 @@ export function CustomModelEditor({
 
       <div className="flex gap-2">
         <Button size="sm" variant="outline" onClick={handleSave}>
-          Save
+          {uiText("Save")}
         </Button>
         <Button size="sm" variant="ghost" onClick={onCancel}>
-          Cancel
+          {uiText("Cancel")}
         </Button>
       </div>
     </div>

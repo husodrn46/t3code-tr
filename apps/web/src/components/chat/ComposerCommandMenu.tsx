@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { formatProviderSkillDisplayName } from "@t3tools/shared/inlineSkills";
 import type { ComposerPathSearchTarget } from "@t3tools/client-runtime/state/threads";
 import {
@@ -143,8 +144,8 @@ export const ComposerCommandMenu = memo(function ComposerCommandMenu(props: {
                 ? props.triggerKind === "skill"
                   ? "Searching workspace skills..."
                   : props.triggerKind === "pull-request"
-                    ? "Finding pull request..."
-                    : "Searching workspace files..."
+                    ? uiText("Finding pull request...")
+                    : uiText("Searching workspace files...")
                 : (props.emptyStateText ??
                   (props.triggerKind === "skill"
                     ? "No skills found. Try / to browse provider commands."

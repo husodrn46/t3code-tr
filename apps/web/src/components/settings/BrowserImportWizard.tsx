@@ -1,3 +1,4 @@
+import { uiText } from "@t3tools/shared/ui-turkish";
 import { PermissionChecklist, PermissionContinueButton } from "../permissions/PermissionChecklist";
 import { usePermissionStatus } from "../permissions/usePermissionStatus";
 import type { BrowserImportSource } from "@t3tools/contracts";
@@ -199,7 +200,7 @@ function QuitStep({
       </DialogHeader>
       <DialogFooter>
         <Button variant="outline" onClick={onCancel}>
-          Cancel
+          {uiText("Cancel")}
         </Button>
         <Button onClick={onRechecked}>I&rsquo;ve quit it</Button>
       </DialogFooter>
@@ -304,14 +305,14 @@ function FullDiskAccessStep({
       </DialogPanel>
       <DialogFooter>
         <Button variant="outline" onClick={onCancel}>
-          Cancel
+          {uiText("Cancel")}
         </Button>
         <PermissionContinueButton
           ready={permission.isReady(["fullDiskAccess"])}
           busy={opening}
           onClick={onGranted}
         >
-          Continue
+          {uiText("Continue")}
         </PermissionContinueButton>
       </DialogFooter>
     </>
@@ -353,7 +354,7 @@ function ConfigureStep({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <section className="flex-1 space-y-2">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              From
+              {uiText("From")}
             </p>
             {source.profiles.map((profile) => (
               <SelectableTile
@@ -400,13 +401,13 @@ function ConfigureStep({
       </DialogPanel>
       <DialogFooter>
         <Button variant="outline" onClick={onCancel}>
-          Cancel
+          {uiText("Cancel")}
         </Button>
         <Button
           disabled={sourceProfileDirectory === "" || targetMissing || targetUncreatable}
           onClick={onImport}
         >
-          Import
+          {uiText("Import")}
         </Button>
       </DialogFooter>
     </>
@@ -494,7 +495,7 @@ function CheckingStep({
         <div className="flex items-center gap-3 py-2">
           <Spinner size="md" tone="muted" />
           <span className="text-sm text-muted-foreground">
-            {check === "fullDiskAccess" ? "Checking access…" : "Checking…"}
+            {check === "fullDiskAccess" ? "Checking access…" : uiText("Checking…")}
           </span>
         </div>
       </DialogPanel>
@@ -545,7 +546,7 @@ function DoneStep({
       ) : null}
       <DialogFooter>
         <DialogClose render={<Button />} onClick={onClose}>
-          Done
+          {uiText("Done")}
         </DialogClose>
       </DialogFooter>
     </>
@@ -571,9 +572,9 @@ function BlockedStep({
       </DialogHeader>
       <DialogFooter>
         <Button variant="outline" onClick={onClose}>
-          Close
+          {uiText("Close")}
         </Button>
-        {onRetry ? <Button onClick={onRetry}>Try again</Button> : null}
+        {onRetry ? <Button onClick={onRetry}>{uiText("Try again")}</Button> : null}
       </DialogFooter>
     </>
   );
